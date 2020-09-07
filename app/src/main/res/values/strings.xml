@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">VK Testers Mentoring</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Павел Милков</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_longrid">Лонгриды</string>
+    <string name="menu_gallery">Гелерея</string>
+    <string name="menu_slideshow">Мусор</string>
+    <string name="open">Открыть</string>
+    <string name="menu_bugs">"Отчетность "</string>
+    <string name="send_ur_count_rep">Запиши в это поле общее количество отчетов за неделю.</string>
+    <string name="send_ur_wanna_count_rep">Количество отчетов в неделю, которое ты хочешь выполнить.</string>
+    <string name="bad_scope">Вам нужно трудиться еще больше, чтобы достичь поставленной планки. Ваш коэффициент:</string>
+    <string name="register">Регистрация</string>
+    <string name="register_btn">"Зарегистрироваться "</string>
+    <string name="dicto">Диктофон</string>
+    <string name="upload">Загрузка</string>
+</resources>

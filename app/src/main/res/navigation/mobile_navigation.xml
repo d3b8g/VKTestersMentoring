@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="net.d3b8g.vktestersmentoring.ui.home.HomeFragment"
+        android:label="@string/menu_longrid"
+        tools:layout="@layout/fragment_longgrid"/>
+
+    <fragment
+        android:id="@+id/nav_bugs"
+        android:name="net.d3b8g.vktestersmentoring.ui.bugs.BugsFragment"
+        android:label="@string/menu_bugs"
+        tools:layout="@layout/fragment_bugs" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="net.d3b8g.vktestersmentoring.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_dicto"
+        android:name="net.d3b8g.vktestersmentoring.ui.dicto.Dictaphone"
+        android:label="@string/dicto"
+        tools:layout="@layout/fragment_dicta"/>
+    <fragment
+        android:id="@+id/nav_upload"
+        android:name="net.d3b8g.vktestersmentoring.ui.uploads.UploadURL"
+        android:label="@string/upload"
+        tools:layout="@layout/fragment_upload"/>
+</navigation>
