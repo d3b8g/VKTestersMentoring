@@ -14,10 +14,7 @@ import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.adapters.LongGridAdapter
 import net.d3b8g.vktestersmentoring.interfaces.LonggridCall
 import net.d3b8g.vktestersmentoring.modules.LongGridModule
-import net.d3b8g.vktestersmentoring.prefs.paramCt
-import net.d3b8g.vktestersmentoring.prefs.paramCtQ
-import net.d3b8g.vktestersmentoring.prefs.setQualityParam
-import net.d3b8g.vktestersmentoring.prefs.setReadParam
+import net.d3b8g.vktestersmentoring.prefs.*
 
 class HomeFragment : Fragment(),LonggridCall {
 
@@ -64,12 +61,15 @@ class HomeFragment : Fragment(),LonggridCall {
         cbRead.isChecked = item.hadRead
         cbRead.setOnClickListener {
             setReadParam(requireActivity(), paramCt("check_box_$pos",cbRead.isChecked))
+            adapter.update(requireContext())
+            if(getCountReads(requireActivity())==12) Toast.makeText(requireContext(),"Поздравляю, ты прочитал все статьи и стал отважным джедаеМ!",Toast.LENGTH_SHORT).show()
         }
         qProgress.setOnTouchListener { _, event ->
             if(event.action == MotionEvent.ACTION_DOWN){
                 qProgress.progress = event.x.toInt()*10/qProgress.width
                 progress_text.text = "${event.x.toInt()*10/qProgress.width}/10"
                 setQualityParam(requireActivity(), paramCtQ("quality_grid_$pos",event.x.toInt()*10/qProgress.width))
+                adapter.update(requireContext())
             }
             true
         }

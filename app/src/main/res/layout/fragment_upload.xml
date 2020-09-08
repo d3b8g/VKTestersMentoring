@@ -23,6 +23,21 @@
             android:layout_height="wrap_content"
             />
     </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:id="@+id/plug_attach"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/ic_attach"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:text="Изображение еще не загружено.Скопируйте и вставьте ссылку на изображение в инпут выше."
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
     <ImageView
         android:id="@+id/upload_image"
         android:layout_width="match_parent"

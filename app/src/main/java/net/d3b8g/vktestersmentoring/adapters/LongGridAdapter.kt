@@ -17,9 +17,11 @@ class LongGridAdapter(val terf:LonggridCall): RecyclerView.Adapter<RecyclerView.
     val lG:ArrayList<LongGridModule> = ArrayList()
 
     fun update(ct:Context){
+        lG.clear()
         val titleList = arrayListOf("Charles, Чарлик или Ваза, взгляд сквозь тело","DevTools — must have для тестирования сервисов","Уязвимости для новичков","Глоссарий","I want you for Special Forces","История одного террориста","Снимаем логи на Android","Качаем скилл создания хороших отчетов","Тестируем по правилам","Как избегать создания дубликатов","Как снять логи и крашлоги на iPhone","Через тернии к баллам")
         val linkList = arrayListOf("https://vk.com/@testpool-charles-charlik-ili-vaza-vzglyad-skvoz-telo","https://vk.com/@testpool-devtools-must-have-dlya-testirovaniya-servisov","https://vk.com/@testpool-uyazvimosti-dlya-novichkov","https://vk.com/@testpool-glossarii","https://vk.com/@testpool-i-want-you-for-special-forces","https://vk.com/@testpool-istoriya-horoshego-terrorista","https://vk.com/@testpool-snimaem-logi-na-android","https://vk.com/@testpool-kachaem-skilly-qa-cherez-otchety","https://vk.com/@testpool-testiruem-po-pravilam","https://vk.com/@testpool-dubli","https://vk.com/@testpool-ios-logs","https://vk.com/@testpool-cherez-ternii-k-ballam")
         for ( (index,title) in titleList.withIndex()) lG.add(LongGridModule(title = title, hadRead = getReadParam(ct, "check_box_$index"), quality = getQualityParam(ct, "quality_grid_$index"),link = linkList[index]))
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

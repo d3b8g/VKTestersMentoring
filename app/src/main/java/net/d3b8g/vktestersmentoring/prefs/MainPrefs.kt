@@ -38,6 +38,11 @@ fun getReadParam(ct:Context,param:String) : Boolean{
     val pref = ct.getSharedPreferences("Settings", MODE_PRIVATE)
     return pref.getBoolean(param,false)
 }
+fun getCountReads(ct:Context) : Int {
+    var returnBack = 0
+    for(i in 0..11) if(getReadParam(ct,"check_box_$i")) returnBack++
+    return returnBack
+}
 
 data class paramCtQ(var id:String,var value:Int)
 
