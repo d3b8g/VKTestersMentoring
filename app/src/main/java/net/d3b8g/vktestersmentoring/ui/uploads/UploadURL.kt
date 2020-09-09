@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 import net.d3b8g.vktestersmentoring.R
 
@@ -26,15 +27,19 @@ class UploadURL:Fragment() {
         val root = inflater.inflate(R.layout.fragment_upload, container, false)
         val url = root.findViewById<TextView>(R.id.upload_url)
         val img = root.findViewById<ImageView>(R.id.upload_image)
-        var plug = root.findViewById<LinearLayout>(R.id.plug_attach)
+        val plug = root.findViewById<LinearLayout>(R.id.plug_attach)
+        val tPlug = root.findViewById<TextInputLayout>(R.id.upload_l)
 
-        url.setOnEditorActionListener { textView, i, keyEvent ->
+        url.setOnEditorActionListener { it, i, keyEvent ->
             if(i ==  EditorInfo.IME_ACTION_DONE){
                 url.clearFocus()
                 val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(url.windowToken, 0)
                 Picasso.get().load(Uri.parse(url?.text.toString())).into(img)
-                plug.visibility = View.GONE
+                if(it.text.contains("https://") && it.text.split('/').size>3) plug.visibility = View.GONE
+                else{
+                    tPlug.error = "Инпут должен содержать ссылку."
+                }
                 true
             }
             false
