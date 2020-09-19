@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_gravity="bottom"
+    android:id="@+id/dicto_center"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="40dp">
+    <LinearLayout
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/colorBlueStandard"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/btn_action_player"
+        android:layout_width="39dp"
+        android:layout_height="match_parent"/>
+    <RelativeLayout
+        android:id="@+id/recording_backg"
+        android:layout_centerInParent="true"
+        android:padding="1dp"
+        android:background="@drawable/simple_shape"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/btn_action_player"
+        android:layout_width="25dp"
+        android:layout_height="25dp">
+        <ImageView
+            android:id="@+id/recording_stat"
+            android:background="@drawable/g_record"
+            android:layout_centerInParent="true"
+            android:animateLayoutChanges="true"
+            android:layout_width="21dp"
+            android:layout_height="21dp"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/status_recording"
+        android:text="Статус записи"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/recording_backg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

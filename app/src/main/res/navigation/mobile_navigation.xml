@@ -22,14 +22,16 @@
         android:name="net.d3b8g.vktestersmentoring.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/nav_dicto"
-        android:name="net.d3b8g.vktestersmentoring.ui.dicto.Dictaphone"
-        android:label="@string/dicto"
-        tools:layout="@layout/fragment_dicta"/>
+
     <fragment
         android:id="@+id/nav_upload"
         android:name="net.d3b8g.vktestersmentoring.ui.uploads.UploadURL"
         android:label="@string/upload"
         tools:layout="@layout/fragment_upload"/>
+
+    <fragment
+        android:id="@+id/nav_dictophone"
+        tools:layout="@layout/fragment_dicto"
+        android:label="@string/dicto"
+        android:name="net.d3b8g.vktestersmentoring.ui.dicto.Dictaphone"/>
 </navigation>

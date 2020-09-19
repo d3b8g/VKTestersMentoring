@@ -84,4 +84,9 @@ class GalleryFragment : Fragment() {
             else -> "У меня $count медиафайлов."
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.show()
+    }
 }
