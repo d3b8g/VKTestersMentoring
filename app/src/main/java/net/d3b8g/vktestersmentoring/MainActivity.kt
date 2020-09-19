@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //if(hadSplash(this,null))
         setContentView(R.layout.activity_main)
         PreferenceManager.getDefaultSharedPreferences(this).apply {
             if(!getBoolean("make_splash",false)){
