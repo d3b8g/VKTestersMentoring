@@ -2,9 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_height="match_parent">
-    <TextView
-        android:text="asd"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <ImageButton
+        android:id="@+id/btn_recording"
+        android:background="@drawable/ic_mic"
+        android:layout_width="128dp"
+        android:layout_height="128dp"/>
 </LinearLayout>
