@@ -5,6 +5,7 @@ import android.content.Intent
 import android.media.MediaRecorder
 import android.os.IBinder
 import android.text.format.DateFormat
+import android.util.Log
 import android.widget.Toast
 import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicro
 import net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath
@@ -17,12 +18,14 @@ class DictoCors:Service() {
         mMicro = MediaRecorder()
 
         val path_mic = File(audioPath)
-
+        path_mic.mkdirs()
         var file_out: File = File.createTempFile("${DateFormat.format("MM-dd_kk-mm", Date().time)}_audio",".3gp",path_mic)
 
         mMicro?.let {
             it.setAudioSource(MediaRecorder.AudioSource.MIC)
+            Log.e("RRR","1")
             try{
+                Log.e("RRR","2")
                 it.setAudioSamplingRate(44100)
                 it.setAudioEncodingBitRate(96000)
                 it.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)

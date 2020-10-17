@@ -7,6 +7,7 @@ import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class Dictaphone: Fragment() {
                         requireActivity(),
                         arrayOf(
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.RECORD_AUDIO
                         ),
                         502
@@ -70,6 +72,7 @@ class Dictaphone: Fragment() {
             502->{
                 if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
                     requireActivity().startService(Intent(requireContext(),DictoCors::class.java))
+                    btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
                 }else{
                     Toast.makeText(requireContext(),"Прокинь права приложению для микрофона",Toast.LENGTH_SHORT).show()
                 }

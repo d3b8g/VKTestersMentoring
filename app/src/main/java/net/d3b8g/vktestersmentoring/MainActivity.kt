@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView
 import net.d3b8g.vktestersmentoring.prefs.pMineName
 import net.d3b8g.vktestersmentoring.prefs.pMineVisits
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
+import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
 import net.d3b8g.vktestersmentoring.ui.splashscreen.SplashScreen
 
 class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter {
@@ -77,10 +78,11 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
     }
 
     override fun startRecordingComponents() {
+        recording_anim = true
         val transaction = (this as FragmentActivity).supportFragmentManager.beginTransaction()
         transaction.replace(mCenter.id, MediaCenter()).commit()
         mCenter.visibility = View.VISIBLE
-        Log.e("RRR","start")
+
     }
 
 }
