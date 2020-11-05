@@ -43,10 +43,5 @@
         android:text="@string/register_btn"
         android:layout_width="185dp"
         android:layout_height="wrap_content"/>
-    <ImageView
-        android:id="@+id/imgSr"
-        android:src="@drawable/background_splashscreen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>

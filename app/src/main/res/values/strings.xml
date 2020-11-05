@@ -19,4 +19,5 @@
     <string name="register_btn">"Зарегистрироваться "</string>
     <string name="dicto">Диктофон</string>
     <string name="upload">Загрузка</string>
+    <string name="string_url_photo_upload">Введите URL фотографии</string>
 </resources>
