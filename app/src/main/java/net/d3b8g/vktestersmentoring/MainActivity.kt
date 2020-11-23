@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         mCenter = findViewById(R.id.media_center)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_home, R.id.nav_bugs, R.id.nav_slideshow), drawerLayout)
+            setOf(R.id.nav_home, R.id.nav_bugs, R.id.nav_slideshow, R.id.nav_dictophone, R.id.nav_upload), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         navView.setupWithNavController(navController)

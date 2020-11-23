@@ -5,10 +5,10 @@
     <string name="nav_header_title">Павел Милков</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
 
     <string name="menu_longrid">Лонгриды</string>
-    <string name="menu_gallery">Гелерея</string>
+    <string name="menu_gallery">Галерея</string>
     <string name="menu_slideshow">Мусор</string>
     <string name="open">Открыть</string>
     <string name="menu_bugs">"Отчетность "</string>

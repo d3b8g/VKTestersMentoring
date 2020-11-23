@@ -36,6 +36,8 @@ class Dictaphone: Fragment() {
                 mMicro?.release()
                 mMicro = null
                 btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_mic))
+                mMicroActive = false
+                net.d3b8g.vktestersmentoring.ui.home.MediaCenter.recording_anim = false
             }else{
                 if(!checkAudioPerm() || Build.VERSION.SDK_INT>22){
                     ActivityCompat.requestPermissions(
@@ -50,12 +52,13 @@ class Dictaphone: Fragment() {
                 }else{
                     requireActivity().startService(Intent(requireContext(),DictoCors::class.java))
                     btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
+                    mMicroActive = true
                 }
+                (inflate.context as MediaCenter).startRecordingComponents()
+                btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
+                mMicroActive = true
             }
-
-            (inflate.context as MediaCenter).startRecordingComponents()
         }
-
         return inflate
     }
 
@@ -73,6 +76,7 @@ class Dictaphone: Fragment() {
                 if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
                     requireActivity().startService(Intent(requireContext(),DictoCors::class.java))
                     btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
+                    (requireActivity() as MediaCenter).startRecordingComponents()
                 }else{
                     Toast.makeText(requireContext(),"Прокинь права приложению для микрофона",Toast.LENGTH_SHORT).show()
                 }

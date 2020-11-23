@@ -19,13 +19,12 @@ class DictoCors:Service() {
 
         val path_mic = File(audioPath)
         path_mic.mkdirs()
+
         var file_out: File = File.createTempFile("${DateFormat.format("MM-dd_kk-mm", Date().time)}_audio",".3gp",path_mic)
 
         mMicro?.let {
             it.setAudioSource(MediaRecorder.AudioSource.MIC)
-            Log.e("RRR","1")
             try{
-                Log.e("RRR","2")
                 it.setAudioSamplingRate(44100)
                 it.setAudioEncodingBitRate(96000)
                 it.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)

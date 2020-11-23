@@ -27,7 +27,7 @@
             android:textSize="18sp"
             android:textColor="@android:color/white"
             android:layout_marginEnd="16dp"
-            android:text="У меня 16 медиафайлов."
+            android:text="У меня 0 медиафайлов."
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
@@ -53,6 +53,7 @@
         android:layout_height="60dp"
         android:inputType="none|textNoSuggestions" />
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="28dp"
         android:visibility="gone"
         android:id="@+id/rcv_gallery"
         android:layout_width="match_parent"

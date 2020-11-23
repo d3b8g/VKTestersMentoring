@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.back.DictoCors
+import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicroActive
 import net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath
 import java.io.File
 import java.util.*
@@ -58,18 +60,16 @@ class MediaCenter:Fragment() {
         mediaCenterAnimateRecording()
 
         if(recording_anim){
-            requireActivity().startService(Intent(requireContext(), DictoCors::class.java))
             btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_stop))
+            mediaCenterAnimateRecording()
             status_t.text = "Записываем аудио"
         }
         else {
-            mDicto?.let {
-                it?.stop()
-                it?.release()
-                if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
-                else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
-                status_t.text = "Запись остановлена"
-            }
+            mDicto?.stop()
+            mDicto?.release()
+            if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
+            else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
+            status_t.text = "Запись остановлена"
         }
 
         return inflate
@@ -90,6 +90,11 @@ class MediaCenter:Fragment() {
                     },1300)
                 }else {
                     b1.visibility = View.GONE
+                    mDicto?.stop()
+                    mDicto?.release()
+                    if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
+                    else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
+                    status_t.text = "Запись остановлена"
                 }
             }
         }.start()

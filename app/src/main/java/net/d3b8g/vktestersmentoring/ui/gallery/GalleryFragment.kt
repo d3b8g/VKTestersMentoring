@@ -1,6 +1,7 @@
 package net.d3b8g.vktestersmentoring.ui.gallery
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.adapters.GalleryAdapter
@@ -40,6 +42,10 @@ class GalleryFragment : Fragment() {
         plug = root.findViewById(R.id.gallery_plug)
         rcv = root.findViewById(R.id.rcv_gallery)
         rcv_plug = root.findViewById(R.id.rcv_plug)
+
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
+            Picasso.get().load(getString("user_img","https://sun9-31.userapi.com/impf/c845017/v845017958/16cb40/BcXfWFsRUCw.jpg?size=1920x1280&quality=96&proxy=1&sign=7592ba24714b362951ee433338fee195")).into(userImg)
+        }
 
         val rpt = root.findViewById<TextView>(R.id.rcv_plug_text)
         val openDict = root.findViewById<TextView>(R.id.go_to_dictophone)
@@ -88,5 +94,6 @@ class GalleryFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         (requireActivity() as AppCompatActivity).supportActionBar!!.show()
+
     }
 }

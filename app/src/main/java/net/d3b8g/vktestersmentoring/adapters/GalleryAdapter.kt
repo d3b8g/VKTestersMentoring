@@ -1,8 +1,11 @@
 package net.d3b8g.vktestersmentoring.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath
@@ -34,12 +37,12 @@ class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val itemView = layoutInflater.inflate(R.layout.cell_longrid, parent, false)
+        val itemView = layoutInflater.inflate(R.layout.cell_audio, parent, false)
         return GalleryAdapterViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(holder is GalleryAdapterViewHolder) holder.bind()
+        if(holder is GalleryAdapterViewHolder) holder.bind(audioCounter[position])
     }
 
     override fun getItemCount(): Int {
@@ -48,8 +51,14 @@ class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class GalleryAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(){
+        var box = itemView.findViewById<RelativeLayout>(R.id.audio_box)
+        var aid = itemView.findViewById<TextView>(R.id.aid)
 
+        fun bind(inf:AudioAdapterModule){
+            aid.text = inf.file_title
+            box.setOnClickListener {
+                Log.e("RRR","start ${inf.file_path}")
+            }
         }
     }
 }
