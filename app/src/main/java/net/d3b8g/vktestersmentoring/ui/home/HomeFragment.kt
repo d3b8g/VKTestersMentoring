@@ -3,8 +3,10 @@ package net.d3b8g.vktestersmentoring.ui.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -47,6 +49,7 @@ class HomeFragment : Fragment(),LonggridCall {
         progress_text = root.findViewById(R.id.lg_progress_text)
 
         displayWidth = requireActivity().windowManager.defaultDisplay.width
+
         return root
     }
 
@@ -59,16 +62,18 @@ class HomeFragment : Fragment(),LonggridCall {
         }
         title.text = item.title
         cbRead.isChecked = item.hadRead
+        progress_text.text = "${item.quality}/10"
+        qProgress.progress =  item.quality
         cbRead.setOnClickListener {
             setReadParam(requireActivity(), paramCt("check_box_$pos",cbRead.isChecked))
             adapter.update(requireContext())
-            if(getCountReads(requireActivity())==12) Toast.makeText(requireContext(),"Поздравляю, ты прочитал все статьи и стал отважным джедаеМ!",Toast.LENGTH_SHORT).show()
+            if(getCountReads(requireActivity())==12) Toast.makeText(requireContext(),"Поздравляю, ты прочитал все статьи и стал отважным джедаеm!",Toast.LENGTH_SHORT).show()
         }
         qProgress.setOnTouchListener { _, event ->
             if(event.action == MotionEvent.ACTION_DOWN){
-                qProgress.progress = event.x.toInt()*10/qProgress.width
-                progress_text.text = "${event.x.toInt()*10/qProgress.width}/10"
-                setQualityParam(requireActivity(), paramCtQ("quality_grid_$pos",event.x.toInt()*10/qProgress.width))
+                qProgress.progress = event.x.toInt()*10/(qProgress.width-20)
+                progress_text.text = "${event.x.toInt()*10/(qProgress.width-20)}/10"
+                setQualityParam(requireActivity(), paramCtQ("quality_grid_$pos",event.x.toInt()*10/(qProgress.width-20)))
                 adapter.update(requireContext())
             }
             true

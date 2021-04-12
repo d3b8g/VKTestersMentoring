@@ -3,21 +3,18 @@ package net.d3b8g.vktestersmentoring.ui.home
 import android.content.Intent
 import android.media.MediaRecorder
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
-import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.back.DictoCors
 import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicroActive
-import net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath
-import java.io.File
-import java.util.*
 
 class MediaCenter:Fragment() {
 
@@ -27,7 +24,7 @@ class MediaCenter:Fragment() {
     lateinit var status_t: TextView
 
     companion object{
-        var recording_anim = false
+        var recording_anim = mMicroActive
         var mDicto: MediaRecorder? = null
         var isDicto:Boolean = true
     }
@@ -54,6 +51,7 @@ class MediaCenter:Fragment() {
                 if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
                 else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
                 status_t.text = "Запись остановлена"
+                mMicroActive = false
             }
         }
 

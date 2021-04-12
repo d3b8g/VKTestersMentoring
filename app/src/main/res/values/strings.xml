@@ -11,13 +11,18 @@
     <string name="menu_gallery">Галерея</string>
     <string name="menu_slideshow">Мусор</string>
     <string name="open">Открыть</string>
-    <string name="menu_bugs">"Отчетность "</string>
+    <string name="menu_bugs">Отчетность</string>
     <string name="send_ur_count_rep">Запиши в это поле общее количество отчетов за неделю.</string>
     <string name="send_ur_wanna_count_rep">Количество отчетов в неделю, которое ты хочешь выполнить.</string>
     <string name="bad_scope">Вам нужно трудиться еще больше, чтобы достичь поставленной планки. Ваш коэффициент:</string>
     <string name="register">Регистрация</string>
-    <string name="register_btn">"Зарегистрироваться "</string>
+    <string name="register_btn">"Зарегистрироваться"</string>
     <string name="dicto">Диктофон</string>
     <string name="upload">Загрузка</string>
     <string name="string_url_photo_upload">Введите URL фотографии</string>
+    <string name="well_scope">Норма перевыполнена. Переоцените желаемое кол-во отчетов.</string>
+    <string name="save">Сохранить</string>
+    <string name="set_password">Установите пароль</string>
+    <string name="set_indent">Введите идентификатор</string>
+    <string name="suffix_vktm">\@vktm</string>
 </resources>

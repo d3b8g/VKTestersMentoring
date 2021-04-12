@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_margin="2dp"
+    android:background="@drawable/alert_shape"
+    android:layout_gravity="bottom"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="540dp">
+    <TextView
+        android:layout_marginTop="2dp"
+        android:padding="6dp"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="Загрузка фотографий"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <Button
+        android:textSize="18dp"
+        android:id="@+id/au_open"
+        android:layout_margin="10pt"
+        android:background="@drawable/btn_sq_shape"
+        android:textColor="@color/colorBlueStandard"
+        android:textAllCaps="false"
+        android:text="Открыть галерею"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+</LinearLayout>

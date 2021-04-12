@@ -1,30 +1,22 @@
 package net.d3b8g.vktestersmentoring
 
-import android.app.Activity
 import android.preference.PreferenceManager
 import android.view.Gravity
 import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBackUnconditionally
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
 import androidx.test.espresso.contrib.NavigationViewActions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import androidx.test.platform.app.InstrumentationRegistry
-import net.d3b8g.vktestersmentoring.ui.splashscreen.SplashScreen
+import net.d3b8g.vktestersmentoring.ui.login.LoginActivity
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -117,7 +109,7 @@ class MainActivityTest{
     @Test
     fun workWithSplash(){
 
-        val splashScenario = ActivityScenario.launch(SplashScreen::class.java)
+        val splashScenario = ActivityScenario.launch(LoginActivity::class.java)
 
         onView(withId(R.id.register_start)).check(matches(isDisplayed()))
     }

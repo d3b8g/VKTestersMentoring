@@ -3,15 +3,12 @@ package net.d3b8g.vktestersmentoring.ui.dicto
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaRecorder
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -30,7 +27,6 @@ class Dictaphone: Fragment() {
 
         btnRecord = inflate.findViewById(R.id.btn_recording)
         btnRecord.setOnClickListener {
-
             if(mMicroActive) {
                 mMicro?.stop()
                 mMicro?.release()
@@ -39,7 +35,7 @@ class Dictaphone: Fragment() {
                 mMicroActive = false
                 net.d3b8g.vktestersmentoring.ui.home.MediaCenter.recording_anim = false
             }else{
-                if(!checkAudioPerm() || Build.VERSION.SDK_INT>22){
+                if(!checkAudioPerm()){
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(
@@ -52,21 +48,21 @@ class Dictaphone: Fragment() {
                 }else{
                     requireActivity().startService(Intent(requireContext(),DictoCors::class.java))
                     btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
+                    (inflate.context as MediaCenter).startRecordingComponents()
                     mMicroActive = true
                 }
-                (inflate.context as MediaCenter).startRecordingComponents()
-                btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
-                mMicroActive = true
             }
         }
         return inflate
     }
 
     private fun checkAudioPerm(): Boolean {
-        val write_external_storage_result =
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val write_external_storage_result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val read_external_storage_result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
         val record_audio_result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
-        return write_external_storage_result == PackageManager.PERMISSION_GRANTED && record_audio_result == PackageManager.PERMISSION_GRANTED
+        return write_external_storage_result == PackageManager.PERMISSION_GRANTED &&
+                record_audio_result == PackageManager.PERMISSION_GRANTED &&
+                read_external_storage_result == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

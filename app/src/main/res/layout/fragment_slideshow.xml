@@ -61,7 +61,7 @@
     <TextView
         android:id="@+id/gallery_plug"
         android:layout_margin="28dp"
-        android:text="Нажми на кнопку, чтобы расскрыть список медиафайлов."
+        android:text="Нажми на кнопку, чтобы раскрыть список медиафайлов."
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

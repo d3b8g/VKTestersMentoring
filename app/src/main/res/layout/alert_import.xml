@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/alert_shape"
+    android:gravity="center"
+    android:layout_gravity="bottom"
+    android:weightSum="3"
+    android:layout_marginBottom="12dp"
+    android:orientation="vertical"
+    android:layout_height="150dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_margin="16dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:hint="JSON-строка для импорта">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:focusableInTouchMode="true"
+            android:singleLine="true"
+            android:background="@null"
+            android:id="@+id/import_r"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/import_note"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_sq_shape"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:backgroundTint="@color/colorBlueStandard"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="4dp"
+        android:layout_weight="1"
+        android:text="Импортировать"
+        android:layout_width="200dp"
+        android:layout_height="0dp"/>
+</LinearLayout>

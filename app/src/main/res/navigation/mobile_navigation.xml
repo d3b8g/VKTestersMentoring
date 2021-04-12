@@ -34,4 +34,17 @@
         tools:layout="@layout/fragment_dicto"
         android:label="@string/dicto"
         android:name="net.d3b8g.vktestersmentoring.ui.dicto.Dictaphone"/>
+    <fragment
+        android:id="@+id/nav_mv"
+        tools:layout="@layout/fragment_mv"
+        android:label="Модальные окна"
+        android:name="net.d3b8g.vktestersmentoring.ui.MV.ModalViewA"/>
+    <fragment android:id="@+id/nav_notes"
+        tools:layout="@layout/fragment_nots"
+        android:label="Заметки"
+        android:name="net.d3b8g.vktestersmentoring.ui.notes.NotesFragment"/>
+    <fragment android:id="@+id/nav_conf"
+        tools:layout="@layout/fragment_userdata"
+        android:label="Инициализация"
+        android:name="net.d3b8g.vktestersmentoring.ui.confdata.UserDataFragment"/>
 </navigation>

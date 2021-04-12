@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/mv_upload"
+        android:layout_margin="15pt"
+        android:background="@drawable/btn_shape"
+        android:textColor="@color/colorBlueStandard"
+        android:textAllCaps="false"
+        android:text="Загрузить фото"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+    <Button
+        android:id="@+id/mv_wv"
+        android:visibility="gone"
+        android:layout_margin="15pt"
+        android:background="@drawable/btn_shape"
+        android:textColor="@color/colorBlueStandard"
+        android:textAllCaps="false"
+        android:text="Открыть WebView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+</LinearLayout>

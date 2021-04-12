@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:paddingBottom="5dp"
+    android:layout_height="450dp">
+
+<LinearLayout
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:background="@drawable/alert_shape"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="  Название заметки">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:maxLength="50"
+                android:focusableInTouchMode="true"
+                android:background="@null"
+                android:id="@+id/title_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="  Описание">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:maxLength="60"
+                android:focusableInTouchMode="true"
+                android:background="@null"
+                android:id="@+id/descr_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/save_note"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_sq_shape"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:backgroundTint="@color/colorBlueStandard"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="Сохранить"
+            android:layout_width="200dp"
+            android:layout_height="40dp"/>
+
+</LinearLayout>
+</ScrollView>

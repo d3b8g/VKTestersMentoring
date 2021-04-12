@@ -1,17 +1,20 @@
 package net.d3b8g.vktestersmentoring.adapters
 
-import android.util.Log
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicro
+import net.d3b8g.vktestersmentoring.helper.Components.Companion.mPlayer
 import net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath
 import net.d3b8g.vktestersmentoring.modules.AudioAdapterModule
 import java.io.File
-import java.lang.Exception
 
 
 class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -23,7 +26,7 @@ class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             for ((index,file) in (File(audioPath).listFiles().withIndex())){
                 audioCounter.add(AudioAdapterModule(
                     file_path = file.path,
-                    file_title = "$index"
+                    file_title = "${index+1}"
                 ))
             }
         }catch (e:Exception){}
@@ -57,7 +60,19 @@ class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(inf:AudioAdapterModule){
             aid.text = inf.file_title
             box.setOnClickListener {
-                Log.e("RRR","start ${inf.file_path}")
+                if(mMicro == null && inf.file_path.contains("VKTMaudio") && inf.file_path.contains("-") && inf.file_path.takeLast(4)==".3gp"){
+                    mPlayer = MediaPlayer().apply{
+                        AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build()
+                        setDataSource(inf.file_path)
+                        prepare()
+                        start()
+                    }
+                }else{
+                    Toast.makeText(itemView.context,"Возможно, вы пытаетесь воспроизвести аудио поверх другого или запустить не медиа-файл",Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

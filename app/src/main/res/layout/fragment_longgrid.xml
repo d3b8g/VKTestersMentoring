@@ -18,6 +18,7 @@
         android:layout_marginTop="12dp"
         android:layout_weight="1"
         android:layout_width="match_parent"
+        android:layout_marginBottom="42dp"
         android:layout_height="0dp">
         <TextView
             android:id="@+id/lg_title"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="left|center"
             android:orientation="horizontal"
             android:weightSum="3"
             android:layout_width="match_parent"
@@ -42,9 +43,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"/>
             <CheckBox
+                android:gravity="center"
                 android:id="@+id/lg_had_read"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
@@ -67,6 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
                 <ProgressBar
+                    android:layout_marginEnd="15dp"
                     android:id="@+id/lg_progress"
                     android:clickable="true"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"

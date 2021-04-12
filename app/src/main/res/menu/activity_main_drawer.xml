@@ -5,14 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_longrid"
-            android:title="@string/menu_longrid" />
-        <item
-            android:id="@+id/nav_bugs"
-            android:icon="@drawable/ic_bugs"
-            android:title="@string/menu_bugs" />
-        <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_gallery" />
@@ -24,5 +16,23 @@
             android:id="@+id/nav_upload"
             android:icon="@drawable/ic_upload"
             android:title="@string/upload"/>
+        <item android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_notes"
+            android:title="Заметки"/>
+        <item android:id="@+id/nav_conf"
+            android:title="Инициализация"
+            android:icon="@drawable/ic_conf"/>
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_longrid"
+            android:title="@string/menu_longrid" />
+        <item
+            android:id="@+id/nav_mv"
+            android:icon="@drawable/ic_mv"
+            android:title="Модальные окна"/>
+        <item
+            android:id="@+id/nav_bugs"
+            android:icon="@drawable/ic_bugs"
+            android:title="@string/menu_bugs" />
     </group>
 </menu>

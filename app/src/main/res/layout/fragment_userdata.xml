@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/conf_uident"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="null@vktm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/conf_ident_tl"
+        app:errorEnabled="true"
+        android:layout_width="match_parent"
+        app:suffixText="@string/suffix_vktm"
+        android:layout_height="wrap_content"
+        android:hint="@string/set_indent"
+        app:startIconDrawable="@drawable/ic_portret"
+        app:startIconContentDescription="Login">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:maxLength="60"
+            android:focusableInTouchMode="true"
+            android:singleLine="true"
+            android:background="@null"
+            android:id="@+id/conf_ident"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/conf_password_tl"
+        app:errorEnabled="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/set_password"
+        app:startIconDrawable="@drawable/ic_portret"
+        app:startIconContentDescription="Login">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:maxLength="60"
+            android:focusableInTouchMode="true"
+            android:singleLine="true"
+            android:background="@null"
+            android:id="@+id/conf_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_gravity="center"
+        android:background="@drawable/btn_sq_shape"
+        android:id="@+id/conf_save"
+        android:textColor="@color/colorBlueStandard"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:text="@string/save"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

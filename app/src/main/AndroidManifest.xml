@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -24,8 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.splashscreen.SplashScreen" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.login.LoginActivity" android:theme="@style/AppTheme.NoActionBar" />
         <service android:name=".back.DictoCors"/>
+        <activity android:name=".ui.settings.Settings"/>
+        <activity android:name=".ui.login.Splash_"/>
     </application>
 
 </manifest>

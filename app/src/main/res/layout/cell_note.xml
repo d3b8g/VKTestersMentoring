@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:weightSum="5"
+    android:layout_height="100dp">
+    <ImageView
+        android:padding="12dp"
+        android:src="@drawable/ic_note_c"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:weightSum="3"
+        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:textStyle="bold"
+            android:gravity="left|center"
+            android:maxLength="50"
+            android:text="Описание описание"
+            android:id="@+id/note_titile"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+        <TextView
+            android:maxLength="150"
+            android:text="Привет, тут я описываю свою заметку, д, это очень круто"
+            android:id="@+id/note_descr"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+    </LinearLayout>
+</LinearLayout>
