@@ -1,5 +1,6 @@
 package net.d3b8g.vktestersmentoring
 
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -24,16 +25,12 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import net.d3b8g.vktestersmentoring.db.CreateUserExist
 import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_counter
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_uid
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_username
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.table_name
 import net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar
-import net.d3b8g.vktestersmentoring.prefs.pMineVisits
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
-import net.d3b8g.vktestersmentoring.ui.settings.Settings
 import net.d3b8g.vktestersmentoring.ui.login.LoginActivity
 import net.d3b8g.vktestersmentoring.ui.login.Splash_
+import net.d3b8g.vktestersmentoring.ui.settings.Settings
 
 class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateAvatar {
 
@@ -50,7 +47,6 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
         setContentView(R.layout.activity_main)
         init()
-
     }
 
     private fun init(){
@@ -85,8 +81,10 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         val mineVisits = headerLayoutInflater.findViewById<TextView>(R.id.main_user_visits)
         mineName.text = CreateUserExist(this).readUserData(uid)?.username
 
+        Log.e("RRR", "username".getUser(uid) )
+
         mineVisits.text = "Вы посетили приложение: ${getScoreVisits()} ${titleForStatus(getScoreVisits())}"
-        when(pMineVisits(this,false)){
+        when(getScoreVisits()){
             in 51..100 -> {
                 mineVisits.setTextColor(Color.parseColor( "#8b00ff"))
             }
@@ -112,15 +110,22 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     private fun getUserImage():String? = CreateUserExist(this).readUserData(uid)?.avatar
 
-    fun titleForStatus(count:Int):String{
-        return if(count in 5..20) {
-            "раз"
-        }else{
-            when (count.toString().takeLast(1).toInt()) {
-                in 0..1 -> "раз"
-                in 2..4 -> "раза"
-                in 5..9 -> "раз"
-                else -> "раз"
+    fun String.getUser(id:Int):String {
+        val db = CreateUserExist(this@MainActivity).readableDatabase
+        return db.rawQuery("Select $this from ${CreateUserExist.table_name[0]} where ${CreateUserExist.col_uid}=$id",null).getColumnIndex(this).toString()
+    }
+
+    fun titleForStatus(count:Int?):String{
+        return when {
+            count in 5..20 -> "раз"
+            count.toString().takeLast(1)=="l" -> "1 раз"
+            else -> {
+                when (count.toString().takeLast(1).toInt()) {
+                    in 0..1 -> "раз"
+                    in 2..4 -> "раза"
+                    in 5..9 -> "раз"
+                    else -> "раз"
+                }
             }
         }
     }
@@ -154,7 +159,6 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         val transaction = (this as FragmentActivity).supportFragmentManager.beginTransaction()
         transaction.replace(mCenter.id, MediaCenter()).commit()
         mCenter.visibility = View.VISIBLE
-
     }
 
     override fun updateAvatar() {

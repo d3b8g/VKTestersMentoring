@@ -1,9 +1,7 @@
 package net.d3b8g.vktestersmentoring.ui.login
 
-import android.database.Cursor
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -21,8 +19,8 @@ import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_counter
 import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_scope
 import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_uid
 import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_username
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.db_name
 import net.d3b8g.vktestersmentoring.interfaces.Login
+import net.d3b8g.vktestersmentoring.modules.UserConfData
 import net.d3b8g.vktestersmentoring.modules.UserData
 
 class LoginActivity:AppCompatActivity(),Login{
@@ -64,7 +62,13 @@ class LoginActivity:AppCompatActivity(),Login{
                                 avatar = "https://sun9-67.userapi.com/impg/I8qae64Ppm2JRUm4E_ioXR7rgSpfLY81K02nUg/XN3Fn9zsP5g.jpg?size=726x612&quality=96&proxy=1&sign=6412c55a2d2a6b5c06c31ca6de71aab1",
                                 scope = 0,
                                 counter = 0
-                            ), this@LoginActivity
+                            ),
+                            UserConfData(
+                                id = 0,
+                                login = "null@vktm",
+                                password = ""
+                            ),
+                            this@LoginActivity
                         )
                     }
                     finish()

@@ -1,6 +1,5 @@
 package net.d3b8g.vktestersmentoring.adapters
 
-import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -12,12 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
 import net.d3b8g.vktestersmentoring.modules.NoteModule
 
 

@@ -22,7 +22,7 @@
     <string name="string_url_photo_upload">Введите URL фотографии</string>
     <string name="well_scope">Норма перевыполнена. Переоцените желаемое кол-во отчетов.</string>
     <string name="save">Сохранить</string>
-    <string name="set_password">Установите пароль</string>
+    <string name="set_password">Введите пароль</string>
     <string name="set_indent">Введите идентификатор</string>
     <string name="suffix_vktm">\@vktm</string>
 </resources>

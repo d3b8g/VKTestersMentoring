@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
@@ -15,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
-import java.lang.Exception
 
 class ImportNotes(val ct: Context, var tyty: UpdateNotes) {
     fun show(){

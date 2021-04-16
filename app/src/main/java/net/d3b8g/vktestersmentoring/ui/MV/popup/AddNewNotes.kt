@@ -2,7 +2,6 @@ package net.d3b8g.vktestersmentoring.ui.MV.popup
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.preference.PreferenceManager
@@ -11,7 +10,6 @@ import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonParser
