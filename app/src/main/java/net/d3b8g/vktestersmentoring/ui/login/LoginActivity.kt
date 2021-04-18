@@ -108,11 +108,10 @@ class LoginActivity:AppCompatActivity(),Login{
             e.stackTrace
         }
 
-        if(listBack.size != 0){
+        if(listBack.size != 0) {
             rcv.visibility = View.VISIBLE
             adapter.setUser(listBack)
         }
-
     }
 
     override fun loginUser(id: Int) {

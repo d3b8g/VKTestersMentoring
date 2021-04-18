@@ -62,7 +62,7 @@ class UserDataFragment : Fragment() {
     private fun genPass():String {
         val md = MessageDigest.getInstance("MD5")
         val code =  BigInteger(1, md.digest(setIdent.text.toString().toByteArray())).toString(16).padStart(32, '0')
-        val randomDigit = (0..code.length-2).random()
+        val randomDigit = (10..code.length-2).random()
         val getCharReplaced = "${code[randomDigit]}${code[randomDigit+1]}${code[randomDigit+2]}"
         return code.replaceFirst(getCharReplaced,setPass.text.toString())+randomDigit
     }

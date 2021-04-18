@@ -1,6 +1,6 @@
 package net.d3b8g.vktestersmentoring
 
-import android.content.ContentValues
+import android.R.attr
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -24,13 +24,13 @@ import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import net.d3b8g.vktestersmentoring.db.CreateUserExist
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_counter
 import net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
 import net.d3b8g.vktestersmentoring.ui.login.LoginActivity
 import net.d3b8g.vktestersmentoring.ui.login.Splash_
 import net.d3b8g.vktestersmentoring.ui.settings.Settings
+
 
 class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateAvatar {
 
@@ -44,26 +44,27 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         super.onCreate(savedInstanceState)
 
         startActivity(Intent(this@MainActivity, Splash_::class.java))
+        PreferenceManager.getDefaultSharedPreferences(this).apply {
 
-        setContentView(R.layout.activity_main)
-        init()
+            uid = getInt("active_user_id", 0)
+
+            if(!getBoolean("make_splash", false)){
+                startActivityForResult(Intent(this@MainActivity, LoginActivity::class.java), 1313)
+            }
+            else init()
+
+            if(getBoolean("do_avatar", false) && getString("user_img", "")!!.isNotBlank() ){
+                var userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)
+                Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
+            }
+        }
     }
 
     private fun init(){
+        setContentView(R.layout.activity_main)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        PreferenceManager.getDefaultSharedPreferences(this).apply {
-
-            uid = getInt("active_user_id",0)
-            if(!getBoolean("make_splash",false)){
-                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-            }
-            if(getBoolean("do_avatar",false) && getString("user_img","")!!.isNotBlank() ){
-                var userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)
-                Picasso.get().load(getUserImage()).resize(150,150).into(userImage)
-            }
-        }
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
@@ -71,7 +72,17 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         mCenter = findViewById(R.id.media_center)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_home, R.id.nav_bugs, R.id.nav_slideshow, R.id.nav_dictophone, R.id.nav_upload, R.id.nav_mv, R.id.nav_notes, R.id.nav_conf), drawerLayout)
+            setOf(
+                R.id.nav_home,
+                R.id.nav_bugs,
+                R.id.nav_slideshow,
+                R.id.nav_dictophone,
+                R.id.nav_upload,
+                R.id.nav_mv,
+                R.id.nav_notes,
+                R.id.nav_conf
+            ), drawerLayout
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         navView.setupWithNavController(navController)
@@ -81,27 +92,27 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         val mineVisits = headerLayoutInflater.findViewById<TextView>(R.id.main_user_visits)
         mineName.text = CreateUserExist(this).readUserData(uid)?.username
 
-        Log.e("RRR", "username".getUser(uid) )
-
-        mineVisits.text = "Вы посетили приложение: ${getScoreVisits()} ${titleForStatus(getScoreVisits())}"
+        mineVisits.text = "Вы посетили приложение: ${getScoreVisits()} ${titleForStatus(
+            getScoreVisits()
+        )}"
         when(getScoreVisits()){
             in 51..100 -> {
-                mineVisits.setTextColor(Color.parseColor( "#8b00ff"))
+                mineVisits.setTextColor(Color.parseColor("#8b00ff"))
             }
             in 101..150 -> {
-                mineVisits.setTextColor(Color.parseColor( "#fff211"))
+                mineVisits.setTextColor(Color.parseColor("#fff211"))
             }
             in 151..200 -> {
-                mineVisits.setTextColor(Color.parseColor( "#18ff0f"))
+                mineVisits.setTextColor(Color.parseColor("#18ff0f"))
             }
             in 201..250 -> {
-                mineVisits.setTextColor(Color.parseColor( "#321eff"))
+                mineVisits.setTextColor(Color.parseColor("#321eff"))
             }
             in 251..300 -> {
-                mineVisits.setTextColor(Color.parseColor( "#ff77ea"))
+                mineVisits.setTextColor(Color.parseColor("#ff77ea"))
             }
             in 300..1900 -> {
-                mineVisits.setTextColor(Color.parseColor( "#e13100"))
+                mineVisits.setTextColor(Color.parseColor("#e13100"))
             }
         }
     }
@@ -110,12 +121,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     private fun getUserImage():String? = CreateUserExist(this).readUserData(uid)?.avatar
 
-    fun String.getUser(id:Int):String {
-        val db = CreateUserExist(this@MainActivity).readableDatabase
-        return db.rawQuery("Select $this from ${CreateUserExist.table_name[0]} where ${CreateUserExist.col_uid}=$id",null).getColumnIndex(this).toString()
-    }
-
-    fun titleForStatus(count:Int?):String{
+    fun titleForStatus(count: Int?):String{
         return when {
             count in 5..20 -> "раз"
             count.toString().takeLast(1)=="l" -> "1 раз"
@@ -138,7 +144,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.action_settings -> {
-                startActivity(Intent(this,Settings::class.java))
+                startActivity(Intent(this, Settings::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
@@ -146,7 +152,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     override fun onResume() {
         super.onResume()
-        mineName.text = CreateUserExist(this).readUserData(uid)?.username
+        if(uid != -1) mineName.text = CreateUserExist(this).readUserData(uid)?.username
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -163,11 +169,24 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     override fun updateAvatar() {
         val userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)
-        Picasso.get().load(getUserImage()).resize(150,150).into(userImage)
+        Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode){
+            1313 -> {
+                if (resultCode == RESULT_OK) {
+                    Log.e("RRR",
+                        data.toString()
+                    )
+                }
+            }
+        }
     }
 
     companion object{
-        var uid = 0
+        var uid = -1
     }
 
 }
