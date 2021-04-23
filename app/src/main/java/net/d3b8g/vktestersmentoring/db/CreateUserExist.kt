@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.preference.PreferenceManager
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.edit
 import net.d3b8g.vktestersmentoring.modules.UserConfData
@@ -51,17 +52,11 @@ class CreateUserExist(ct:Context): SQLiteOpenHelper(ct, db_name, null, 1) {
 
         db.insert(table_name[0],null,ucv).apply {
             if(this == (-1).toLong()) Toast.makeText(ct,"Некорректные данные",Toast.LENGTH_SHORT).show()
-            else {
-                PreferenceManager.getDefaultSharedPreferences(ct).edit {
-                    putInt("active_user_id", user.id).apply()
-                }
-            }
         }
         db.insert(table_name[1],null,ccv).apply {
-            if(this == (-1).toLong()) Toast.makeText(ct,"Некорректные данные",Toast.LENGTH_SHORT).show()
+            if(this == (-1).toLong()) Toast.makeText(ct,"Некорректные данные (2)",Toast.LENGTH_SHORT).show()
         }
     }
-
 
     fun readUserData(id:Int): UserData? {
         val db = this.readableDatabase
@@ -103,6 +98,16 @@ class CreateUserExist(ct:Context): SQLiteOpenHelper(ct, db_name, null, 1) {
         } else null
     }
 
+    fun writeConfData(user:UserConfData):Boolean{
+        val db = this.writableDatabase
+        val cv = ContentValues().apply {
+            put(col_ident,user.login)
+            put(col_password,user.password)
+        }
+        val comp = db.update(table_name[1],cv,"id = ?", arrayOf(user.id.toString()))
+        Log.e("RRR",user.id.toString())
+        return true
+    }
 
     companion object{
         const val db_name = "VKTM"
@@ -117,6 +122,4 @@ class CreateUserExist(ct:Context): SQLiteOpenHelper(ct, db_name, null, 1) {
         const val col_ident = "ident"
         const val col_password = "password"
     }
-
-
 }

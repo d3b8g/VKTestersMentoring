@@ -3,17 +3,22 @@ package net.d3b8g.vktestersmentoring.ui.confdata
 import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import net.d3b8g.vktestersmentoring.MainActivity
+import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.db.CreateUserExist
+import net.d3b8g.vktestersmentoring.modules.UserConfData
 import java.math.BigInteger
 import java.security.MessageDigest
 
@@ -40,9 +45,17 @@ class UserDataFragment : Fragment() {
 
         save = root.findViewById(R.id.conf_save)
 
-        ident.text = CreateUserExist(root.context).readConfData(MainActivity.uid)?.login
+        CreateUserExist(root.context).readConfData(uid)?.login?.apply {
+            if (this != "null@vktm"){
+                ident.text = this
+                tlIdent.visibility = View.GONE
+                tlPass.visibility = View.GONE
+                save.isClickable = false
+            }
+        }
 
         save.setOnClickListener {
+            genPass(root.context)
             if(setPass.text.toString().length in 2..4){
                 if(setIdent.text.toString().length > 5 &&
                     setIdent.text.toString().contains("@vktm") &&
@@ -59,20 +72,52 @@ class UserDataFragment : Fragment() {
         return root
     }
 
+    /*    NOT ACTUAL METHOD
     private fun genPass():String {
         val md = MessageDigest.getInstance("MD5")
-        val code =  BigInteger(1, md.digest(setIdent.text.toString().toByteArray())).toString(16).padStart(32, '0')
+        val code = BigInteger(1, md.digest(setIdent.text.toString().toByteArray())).toString(16).padStart(32, '0')
         val randomDigit = (10..code.length-2).random()
         val getCharReplaced = "${code[randomDigit]}${code[randomDigit+1]}${code[randomDigit+2]}"
-        return code.replaceFirst(getCharReplaced,setPass.text.toString())+randomDigit
+        return code.replaceFirst(getCharReplaced,setPass.text!!.length.toString()+setPass.text)+randomDigit
+    }
+*/
+
+    private fun genPass(ct:Context):String{
+        CreateUserExist(ct).readUserData(uid)!!.username.apply {
+            var username = ""
+            this.split(' ').forEachIndexed { index,un ->
+                username += when(index){
+                    0->un.replace(un.replace("\\s","").take(0),un.replace("\\s","").take(0).toUpperCase())
+                    1->setIdent.text.toString().replace("@vktm","") + un.replace(un.replace("\\s","").take(0),un.replace("\\s","").take(0).toUpperCase())
+                    else -> null
+                }
+            }
+            val str = Base64.encodeToString(username.reversed().toByteArray(),Base64.DEFAULT)
+            Log.e("RRR",str)
+        }
+        return "sdf"
     }
 
     private fun saveUserConf(ct:Context) {
-        PreferenceManager.getDefaultSharedPreferences(activity).apply {
-            try {
-            }catch (e:Exception){
-                e.stackTrace
+        try {
+            genPass(ct)
+            /*
+            val updateUserConf = CreateUserExist(ct).writeConfData(UserConfData(
+                id = uid,
+                login = setIdent.text.toString(),
+                password = genPass(ct)
+            ))
+
+            if(updateUserConf){
+                ident.text = setIdent.text.toString()
+                tlIdent.visibility = View.GONE
+                tlPass.visibility = View.GONE
+                save.isClickable = false
+                Toast.makeText(ct,"Данные обновлены",Toast.LENGTH_SHORT).show()
             }
+            */
+        }catch (e:Exception){
+            e.stackTrace
         }
     }
 }

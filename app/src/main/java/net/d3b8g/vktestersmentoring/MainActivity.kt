@@ -42,27 +42,18 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         startActivity(Intent(this@MainActivity, Splash_::class.java))
+
         PreferenceManager.getDefaultSharedPreferences(this).apply {
-
-            uid = getInt("active_user_id", 0)
-
-            if(!getBoolean("make_splash", false)){
-                startActivityForResult(Intent(this@MainActivity, LoginActivity::class.java), 1313)
-            }
-            else init()
-
-            if(getBoolean("do_avatar", false) && getString("user_img", "")!!.isNotBlank() ){
-                var userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)
-                Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
-            }
+            uid = getInt("active_user_id", 1)
         }
+
+        init()
     }
 
     private fun init(){
-        setContentView(R.layout.activity_main)
-
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -92,9 +83,10 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         val mineVisits = headerLayoutInflater.findViewById<TextView>(R.id.main_user_visits)
         mineName.text = CreateUserExist(this).readUserData(uid)?.username
 
-        mineVisits.text = "Вы посетили приложение: ${getScoreVisits()} ${titleForStatus(
-            getScoreVisits()
-        )}"
+        val userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)
+        Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
+
+        mineVisits.text = "Вы посетили приложение: ${getScoreVisits()} ${titleForStatus(getScoreVisits())}"
         when(getScoreVisits()){
             in 51..100 -> {
                 mineVisits.setTextColor(Color.parseColor("#8b00ff"))
@@ -152,7 +144,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     override fun onResume() {
         super.onResume()
-        if(uid != -1) mineName.text = CreateUserExist(this).readUserData(uid)?.username
+        mineName.text = CreateUserExist(this).readUserData(uid)?.username
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -172,21 +164,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode){
-            1313 -> {
-                if (resultCode == RESULT_OK) {
-                    Log.e("RRR",
-                        data.toString()
-                    )
-                }
-            }
-        }
-    }
-
     companion object{
-        var uid = -1
+        var uid = 1
     }
-
 }
