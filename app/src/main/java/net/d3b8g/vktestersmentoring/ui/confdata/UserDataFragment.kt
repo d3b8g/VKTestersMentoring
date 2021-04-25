@@ -2,9 +2,7 @@ package net.d3b8g.vktestersmentoring.ui.confdata
 
 import android.content.Context
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +12,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.db.CreateUserExist
 import net.d3b8g.vktestersmentoring.modules.UserConfData
-import java.math.BigInteger
-import java.security.MessageDigest
 
 class UserDataFragment : Fragment() {
 
@@ -71,8 +66,7 @@ class UserDataFragment : Fragment() {
 
         return root
     }
-
-    /*    NOT ACTUAL METHOD
+/*    NOT ACTUAL METHOD
     private fun genPass():String {
         val md = MessageDigest.getInstance("MD5")
         val code = BigInteger(1, md.digest(setIdent.text.toString().toByteArray())).toString(16).padStart(32, '0')
@@ -87,21 +81,20 @@ class UserDataFragment : Fragment() {
             var username = ""
             this.split(' ').forEachIndexed { index,un ->
                 username += when(index){
-                    0->un.replace(un.replace("\\s","").take(0),un.replace("\\s","").take(0).toUpperCase())
-                    1->setIdent.text.toString().replace("@vktm","") + un.replace(un.replace("\\s","").take(0),un.replace("\\s","").take(0).toUpperCase())
+                    0-> un
+                    1-> setIdent.text.toString().replace("@vktm","") + un
                     else -> null
                 }
             }
-            val str = Base64.encodeToString(username.reversed().toByteArray(),Base64.DEFAULT)
-            Log.e("RRR",str)
+            val str = Base64.encodeToString(username.reversed().toByteArray(),Base64.DEFAULT).replace("=","").reversed()
+            val randomKey = (str.indices-1).random()
+            val std = Base64.encodeToString((str.replace("${str[randomKey]}${str[randomKey+1]}",setPass.text.toString()) + randomKey).toByteArray(), Base64.DEFAULT).replace("=","")
+            return (std.substring(0,(std.length-1)/2).reversed() + std.substring((std.length-1)/2+1,std.length-1)).reversed()
         }
-        return "sdf"
     }
 
     private fun saveUserConf(ct:Context) {
         try {
-            genPass(ct)
-            /*
             val updateUserConf = CreateUserExist(ct).writeConfData(UserConfData(
                 id = uid,
                 login = setIdent.text.toString(),
@@ -115,7 +108,6 @@ class UserDataFragment : Fragment() {
                 save.isClickable = false
                 Toast.makeText(ct,"Данные обновлены",Toast.LENGTH_SHORT).show()
             }
-            */
         }catch (e:Exception){
             e.stackTrace
         }

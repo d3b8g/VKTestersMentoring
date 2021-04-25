@@ -1,11 +1,9 @@
 package net.d3b8g.vktestersmentoring
 
-import android.R.attr
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,7 +25,6 @@ import net.d3b8g.vktestersmentoring.db.CreateUserExist
 import net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
-import net.d3b8g.vktestersmentoring.ui.login.LoginActivity
 import net.d3b8g.vktestersmentoring.ui.login.Splash_
 import net.d3b8g.vktestersmentoring.ui.settings.Settings
 
