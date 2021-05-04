@@ -12,57 +12,99 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:gravity="center"
-                android:text="@string/register"
-                android:layout_gravity="center"
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/registration_layout"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:padding="12dp"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/login_text"
+                    android:gravity="center"
+                    android:text="@string/register"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:padding="12dp"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Введите Имя и Фамилию"
-                app:startIconDrawable="@drawable/ic_portret"
-                app:startIconContentDescription="Впишите в это поле ваши ФИ">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:maxLength="60"
-                    android:focusableInTouchMode="true"
-                    android:singleLine="true"
-                    android:background="@null"
-                    android:id="@+id/register_input"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="Введите Имя и Фамилию"
+                    app:startIconDrawable="@drawable/ic_portret"
+                    app:startIconContentDescription="Впишите в это поле ваши ФИ">
 
-            <Button
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:maxLength="60"
+                        android:focusableInTouchMode="true"
+                        android:singleLine="true"
+                        android:background="@null"
+                        android:id="@+id/register_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_sq_shape"
+                    android:id="@+id/register_start"
+                    android:textColor="@color/colorBlueStandard"
+                    android:layout_marginTop="16dp"
+                    android:textAllCaps="false"
+                    android:text="@string/register_btn"
+                    android:layout_width="185dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_gravity="center"
-                android:background="@drawable/btn_sq_shape"
-                android:id="@+id/register_start"
-                android:textColor="@color/colorBlueStandard"
-                android:layout_marginTop="16dp"
-                android:textAllCaps="false"
-                android:text="@string/register_btn"
-                android:layout_width="185dp"
-                android:layout_height="wrap_content"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="12dp"
-                android:visibility="gone"
-                android:id="@+id/user_db"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
+                android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="12dp"
+                    android:visibility="visible"
+                    android:id="@+id/user_db"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:visibility="gone"
+                    android:id="@+id/tl_input_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/input_password"
+                    app:startIconDrawable="@drawable/ic_conf"
+                    app:startIconContentDescription="Впишите в это поле ваши ФИ">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:maxLength="60"
+                        android:focusableInTouchMode="true"
+                        android:singleLine="true"
+                        android:background="@null"
+                        android:id="@+id/login_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <Button
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_sq_shape"
+                    android:id="@+id/login"
+                    android:textColor="@color/colorBlueStandard"
+                    android:layout_marginTop="16dp"
+                    android:textAllCaps="false"
+                    android:text="@string/login_l"
+                    android:layout_width="185dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

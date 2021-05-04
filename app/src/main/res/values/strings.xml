@@ -25,4 +25,9 @@
     <string name="set_password">Введите пароль</string>
     <string name="set_indent">Введите идентификатор</string>
     <string name="suffix_vktm">\@vktm</string>
+    <string name="login">Вход</string>
+    <string name="registration">Регистрация</string>
+    <string name="input_password">Введите пароль</string>
+    <string name="login_l">Войти</string>
+    <string name="wrong_password">Неверный пароль</string>
 </resources>

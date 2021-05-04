@@ -35,7 +35,7 @@ class CreateUserExist(ct:Context): SQLiteOpenHelper(ct, db_name, null, 1) {
         onCreate(db)
     }
 
-    fun insertData(user:UserData,conf:UserConfData,ct:Context){
+    fun insertData(user:UserData,conf:UserConfData,ct:Context) {
         val db = this.writableDatabase
         val ucv = ContentValues().apply {
             put(col_username,user.username)
@@ -77,7 +77,7 @@ class CreateUserExist(ct:Context): SQLiteOpenHelper(ct, db_name, null, 1) {
         } else null
     }
 
-    fun readConfData(id:Int):UserConfData?{
+    fun readConfData(id:Int):UserConfData? {
         val db = this.readableDatabase
         val query = "Select * from ${table_name[1]}"
         val result = db.rawQuery(query,null)
@@ -96,18 +96,26 @@ class CreateUserExist(ct:Context): SQLiteOpenHelper(ct, db_name, null, 1) {
         } else null
     }
 
-    fun writeConfData(user:UserConfData):Boolean{
+    fun writeConfData(user:UserConfData): Boolean {
         val db = this.writableDatabase
         val cv = ContentValues().apply {
             put(col_ident,user.login)
             put(col_password,user.password)
         }
         val comp = db.update(table_name[1],cv,"id = ?", arrayOf(user.id.toString()))
-        Log.e("RRR",user.id.toString())
-        return true
+        return comp == 1
     }
 
-    companion object{
+    fun updateCountVisits(id:String, visits:Int): Boolean {
+        val db = this.writableDatabase
+        val cv = ContentValues().apply {
+            put(col_counter, visits)
+        }
+        val comp = db.update(table_name[0],cv,"id = ?", arrayOf(id))
+        return comp == 1
+    }
+
+    companion object {
         const val db_name = "VKTM"
         val table_name = listOf("Users","ConfData")
         const val col_uid = "id"

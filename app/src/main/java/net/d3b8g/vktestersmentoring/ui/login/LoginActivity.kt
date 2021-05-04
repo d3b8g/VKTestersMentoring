@@ -6,12 +6,15 @@ import android.preference.PreferenceManager
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_login.*
 import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.adapters.UserAdapter
@@ -25,12 +28,13 @@ import net.d3b8g.vktestersmentoring.interfaces.Login
 import net.d3b8g.vktestersmentoring.modules.UserConfData
 import net.d3b8g.vktestersmentoring.modules.UserData
 
-@Suppress("DEPRECATION")
-class LoginActivity:AppCompatActivity(),Login{
+class LoginActivity : AppCompatActivity(), Login {
 
-    lateinit var input:TextInputEditText
-    lateinit var rotatedLinear:LinearLayout
-    lateinit var rcv:RecyclerView
+    lateinit var input: TextInputEditText
+    lateinit var rotatedLinear: LinearLayout
+    lateinit var rcv: RecyclerView
+    lateinit var loginText: TextView
+    lateinit var tlPass: TextInputLayout
 
     lateinit var adapter:UserAdapter
 
@@ -50,6 +54,8 @@ class LoginActivity:AppCompatActivity(),Login{
         input = findViewById(R.id.register_input)
         rotatedLinear = findViewById(R.id.rotated_layout)
         rcv = findViewById(R.id.user_db)
+        loginText = findViewById(R.id.login_text)
+        tlPass = findViewById(R.id.tl_input_password)
 
         adapter = UserAdapter(this)
         rcv.adapter = adapter
@@ -88,7 +94,7 @@ class LoginActivity:AppCompatActivity(),Login{
         }
     }
 
-    fun updateUserData(){
+    fun updateUserData() {
         val listBack:ArrayList<UserData> = ArrayList()
         val db = CreateUserExist(this).readableDatabase
         val query = "Select * from ${CreateUserExist.table_name[0]}"
@@ -112,16 +118,37 @@ class LoginActivity:AppCompatActivity(),Login{
         if(!listBack.none()){
             rcv.visibility = View.VISIBLE
             adapter.setUser(listBack)
+            loginText.text = getString(R.string.login)
         }
     }
 
     override fun loginUser(id: Int) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit {
-            putBoolean("make_splash", true).apply()
-            putInt("active_user_id",id)
+        val pass = CreateUserExist(this).readConfData(id)!!.password
+        if(pass.isNotEmpty()) {
+            tlPass.visibility = View.VISIBLE
+            login.visibility = View.VISIBLE
+            login.setOnClickListener {
+                login_password.let {
+                    if(!it.text.isNullOrEmpty() && it.text.toString() == pass) {
+                        PreferenceManager.getDefaultSharedPreferences(this).edit {
+                            putBoolean("make_splash", true).apply()
+                            putInt("active_user_id",id)
+                        }
+                        startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                        finish()
+                    }else{
+                        tlPass.error = getString(R.string.wrong_password)
+                    }
+                }
+            }
+        } else {
+            PreferenceManager.getDefaultSharedPreferences(this).edit {
+                putBoolean("make_splash", true).apply()
+                putInt("active_user_id",id)
+            }
+            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+            finish()
         }
-        startActivity(Intent(this@LoginActivity,MainActivity::class.java))
-        finish()
     }
 
 }

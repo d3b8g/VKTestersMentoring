@@ -32,10 +32,11 @@ import net.d3b8g.vktestersmentoring.ui.settings.Settings
 class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateAvatar {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var mineName:TextView
-    lateinit var mCenter:FrameLayout
+    lateinit var mineName: TextView
+    lateinit var mCenter: FrameLayout
     lateinit var navView: NavigationView
-    lateinit var headerLayoutInflater:View
+    lateinit var headerLayoutInflater: View
+    lateinit var mineVisits: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,9 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         }
 
         init()
+
+        visits = getScoreVisits() + 1
+
     }
 
     private fun init(){
@@ -77,14 +81,37 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
         headerLayoutInflater = navView.getHeaderView(0)
         mineName = headerLayoutInflater.findViewById(R.id.main_user_name)
-        val mineVisits = headerLayoutInflater.findViewById<TextView>(R.id.main_user_visits)
+        mineVisits = headerLayoutInflater.findViewById(R.id.main_user_visits)
         mineName.text = CreateUserExist(this).readUserData(uid)?.username
 
         val userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)
         Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
 
-        mineVisits.text = "Вы посетили приложение: ${getScoreVisits()} ${titleForStatus(getScoreVisits())}"
-        when(getScoreVisits()){
+        setScoreVisit(getScoreVisits())
+    }
+
+    private fun getScoreVisits(): Int = CreateUserExist(this).readUserData(uid)!!.counter
+
+    private fun getUserImage(): String? = CreateUserExist(this).readUserData(uid)?.avatar
+
+    fun titleForStatus(count: Int?):String{
+        return when {
+            count in 5..20 -> "раз"
+            count.toString().takeLast(1)=="l" -> "1 раз"
+            else -> {
+                when (count.toString().takeLast(1).toInt()) {
+                    in 0..1 -> "раз"
+                    in 2..4 -> "раза"
+                    in 5..9 -> "раз"
+                    else -> "раз"
+                }
+            }
+        }
+    }
+
+    private fun setScoreVisit(count: Int) {
+        mineVisits.text = "Вы посетили приложение: $count ${titleForStatus(count)}"
+        when(count){
             in 51..100 -> {
                 mineVisits.setTextColor(Color.parseColor("#8b00ff"))
             }
@@ -106,25 +133,6 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         }
     }
 
-    private fun getScoreVisits():Int = CreateUserExist(this).readUserData(uid)!!.counter
-
-    private fun getUserImage():String? = CreateUserExist(this).readUserData(uid)?.avatar
-
-    fun titleForStatus(count: Int?):String{
-        return when {
-            count in 5..20 -> "раз"
-            count.toString().takeLast(1)=="l" -> "1 раз"
-            else -> {
-                when (count.toString().takeLast(1).toInt()) {
-                    in 0..1 -> "раз"
-                    in 2..4 -> "раза"
-                    in 5..9 -> "раз"
-                    else -> "раз"
-                }
-            }
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
@@ -141,7 +149,13 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     override fun onResume() {
         super.onResume()
-        mineName.text = CreateUserExist(this).readUserData(uid)?.username
+        visits++
+        setScoreVisit(visits)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        CreateUserExist(this).updateCountVisits(uid.toString(), visits)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -163,5 +177,6 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     companion object{
         var uid = 1
+        var visits = 0
     }
 }
