@@ -57,7 +57,6 @@ class UserDataFragment : Fragment() {
         }
 
         save.setOnClickListener {
-            genPass(root.context)
             if (setPass.text.toString().length in 2..4) {
                 if (setIdent.text.toString().length > 5 &&
                     setIdent.text.toString().contains("@vktm") &&
@@ -71,7 +70,6 @@ class UserDataFragment : Fragment() {
                 tlPass.error = "Допустимо от 2 до 4 символов"
             }
         }
-
         return root
     }
 
@@ -130,7 +128,6 @@ class UserDataFragment : Fragment() {
                     password = passwordGen
                 )
             )
-
             if(updateUserConf) {
                 ident.text = setIdent.text.toString()
                 tlIdent.visibility = View.GONE
@@ -147,4 +144,5 @@ class UserDataFragment : Fragment() {
             e.stackTrace
         }
     }
+
 }
