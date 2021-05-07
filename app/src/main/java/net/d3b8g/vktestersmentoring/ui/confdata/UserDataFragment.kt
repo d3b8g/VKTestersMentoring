@@ -1,5 +1,7 @@
 package net.d3b8g.vktestersmentoring.ui.confdata
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.util.Base64
@@ -17,6 +19,7 @@ import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.db.CreateUserExist
 import net.d3b8g.vktestersmentoring.modules.UserConfData
 
+
 class UserDataFragment : Fragment() {
 
     lateinit var ident:TextView
@@ -28,8 +31,12 @@ class UserDataFragment : Fragment() {
 
     lateinit var save:Button
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.fragment_userdata,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val root = inflater.inflate(R.layout.fragment_userdata, container, false)
 
         ident = root.findViewById(R.id.conf_uident)
         setIdent = root.findViewById(R.id.conf_ident)
@@ -41,7 +48,7 @@ class UserDataFragment : Fragment() {
         save = root.findViewById(R.id.conf_save)
 
         CreateUserExist(root.context).readConfData(uid)?.login?.apply {
-            if (this != "null@vktm"){
+            if (this != "null@vktm") {
                 ident.text = this
                 tlIdent.visibility = View.GONE
                 tlPass.visibility = View.GONE
@@ -51,15 +58,16 @@ class UserDataFragment : Fragment() {
 
         save.setOnClickListener {
             genPass(root.context)
-            if(setPass.text.toString().length in 2..4){
-                if(setIdent.text.toString().length > 5 &&
+            if (setPass.text.toString().length in 2..4) {
+                if (setIdent.text.toString().length > 5 &&
                     setIdent.text.toString().contains("@vktm") &&
-                    setIdent.text.toString().split("@")[0].matches("^\\d+\$".toRegex())){
+                    setIdent.text.toString().split("@")[0].matches("^\\d+\$".toRegex())
+                ) {
                     saveUserConf(root.context)
-                }else{
+                } else {
                     tlIdent.error = "Формат записи: ID@vktm"
                 }
-            }else{
+            } else {
                 tlPass.error = "Допустимо от 2 до 4 символов"
             }
         }
@@ -112,22 +120,30 @@ class UserDataFragment : Fragment() {
         } else this.toString()
     }
 
-    private fun saveUserConf(ct:Context) {
+    private fun saveUserConf(ct: Context) {
         try {
-            val updateUserConf = CreateUserExist(ct).writeConfData(UserConfData(
-                id = uid,
-                login = setIdent.text.toString(),
-                password = genPass(ct)
-            ))
+            val passwordGen = genPass(ct)
+            val updateUserConf = CreateUserExist(ct).writeConfData(
+                UserConfData(
+                    id = uid,
+                    login = setIdent.text.toString(),
+                    password = passwordGen
+                )
+            )
 
-            if(updateUserConf){
+            if(updateUserConf) {
                 ident.text = setIdent.text.toString()
                 tlIdent.visibility = View.GONE
                 tlPass.visibility = View.GONE
                 save.isClickable = false
-                Toast.makeText(ct,"Данные обновлены",Toast.LENGTH_SHORT).show()
+
+                val clipboard = ct.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("Password Of VKTM", passwordGen)
+                clipboard.setPrimaryClip(clip)
+
+                Toast.makeText(ct, "Пароль скопирован в буффер", Toast.LENGTH_SHORT).show()
             }
-        }catch (e:Exception){
+        }catch (e: Exception){
             e.stackTrace
         }
     }
