@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import android.widget.Toast
 import net.d3b8g.vktestersmentoring.modules.UserConfData
 import net.d3b8g.vktestersmentoring.modules.UserData

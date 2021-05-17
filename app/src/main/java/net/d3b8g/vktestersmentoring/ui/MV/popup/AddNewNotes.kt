@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
@@ -15,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
-import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +33,7 @@ class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
         var send = frame.findViewById<Button>(R.id.save_note)
 
         send.setOnClickListener {
-            if(title.text!!.any { it.isLetter() } && descr.text!!.any { it.isLetter() }) {
+            if(title.text!!.any { text-> text.isLetter() } && descr.text!!.any { text-> text.isLetter()}) {
                 var titleR = title.text.toString().replace("\"","&#34;")
                 var descrR = descr.text.toString().replace("\"","&#34;")
                 var data = ""
@@ -48,14 +46,13 @@ class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
                         "{ \"notes\": [ { \"id\":0, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" } ], \"count\": 1 }"
                     }
                 }
-
                 PreferenceManager.getDefaultSharedPreferences(ct).edit {
                     putString("my_notes", data)
                 }
                 tyty.updateNotes()
                 frame.dismiss()
-            }else{
-                Toast.makeText(ct,"Вы не заполнили одно из полей", Toast.LENGTH_SHORT)
+            } else {
+                Toast.makeText(ct,"Вы не заполнили одно из полей", Toast.LENGTH_SHORT).show()
             }
         }
 

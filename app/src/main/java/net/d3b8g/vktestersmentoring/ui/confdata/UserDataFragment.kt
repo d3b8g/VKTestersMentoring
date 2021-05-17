@@ -58,13 +58,10 @@ class UserDataFragment : Fragment() {
 
         save.setOnClickListener {
             if (setPass.text.toString().length in 2..4) {
-                if (setIdent.text.toString().length > 5 &&
-                    setIdent.text.toString().contains("@vktm") &&
-                    setIdent.text.toString().split("@")[0].matches("^\\d+\$".toRegex())
-                ) {
+                if (setIdent.text.toString().length > 2 && setIdent.text.toString().matches("^\\d+\$".toRegex())) {
                     saveUserConf(root.context)
                 } else {
-                    tlIdent.error = "Формат записи: ID@vktm"
+                    tlIdent.error = "Формат записи: Int и больше 2 цифр"
                 }
             } else {
                 tlPass.error = "Допустимо от 2 до 4 символов"

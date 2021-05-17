@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
         <TextView
+            android:padding="6dp"
             android:maxLength="150"
             android:text="Привет, тут я описываю свою заметку, д, это очень круто"
             android:id="@+id/note_descr"

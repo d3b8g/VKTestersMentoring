@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity(), Login {
     lateinit var rcv: RecyclerView
     lateinit var loginText: TextView
     lateinit var tlPass: TextInputLayout
+    val listBack:ArrayList<UserData> = ArrayList()
 
     lateinit var adapter:UserAdapter
 
@@ -43,8 +44,8 @@ class LoginActivity : AppCompatActivity(), Login {
         super.onCreate(savedInstanceState)
 
         PreferenceManager.getDefaultSharedPreferences(this).apply {
-            if(getBoolean("make_splash", false)){
-                startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+            if(getBoolean("make_splash", false)) {
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                 finish()
             }
         }
@@ -68,31 +69,33 @@ class LoginActivity : AppCompatActivity(), Login {
                 if(!it.text.isNullOrEmpty() &&
                     it.text!!.length>3 &&
                     it.text!!.contains(' ') &&
-                    it.text!!.any { text -> text.isLetter() }) {
-
-                    var user_id:Int
-                    PreferenceManager.getDefaultSharedPreferences(this).apply {
-                        user_id = getInt("active_user_id", 0) + 1
-                    }
-                    PreferenceManager.getDefaultSharedPreferences(this).edit {
-                        putBoolean("make_splash", true).apply()
-                        putInt("active_user_id",user_id)
-                    }
-                    CreateUserExist(this@LoginActivity).insertData(
-                        UserData(
-                            id = 0,
-                            username = it.text!!.toString(),
-                            avatar = "https://sun9-67.userapi.com/impg/I8qae64Ppm2JRUm4E_ioXR7rgSpfLY81K02nUg/XN3Fn9zsP5g.jpg?size=726x612&quality=96&proxy=1&sign=6412c55a2d2a6b5c06c31ca6de71aab1",
-                            scope = 0,
-                            counter = 0
-                        ),
-                        UserConfData(
-                            id = 0,
-                            login = "null@vktm",
-                            password = ""
-                        ), this@LoginActivity)
-                    startActivity(Intent(this,MainActivity::class.java))
-                }else{
+                    it.text!!.any { text -> text.isLetter() } &&
+                    !listBack.any { user -> user.username == it.text!!.toString() }) {
+                        var user_id:Int
+                        PreferenceManager.getDefaultSharedPreferences(this).apply {
+                            user_id = getInt("active_user_id", 0) + 1
+                        }
+                        PreferenceManager.getDefaultSharedPreferences(this).edit {
+                            putBoolean("make_splash", true).apply()
+                            putInt("active_user_id",user_id)
+                        }
+                        CreateUserExist(this@LoginActivity).insertData(
+                            UserData(
+                                id = 0,
+                                username = it.text!!.toString(),
+                                avatar = "https://sun9-67.userapi.com/impg/I8qae64Ppm2JRUm4E_ioXR7rgSpfLY81K02nUg/XN3Fn9zsP5g.jpg?size=726x612&quality=96&proxy=1&sign=6412c55a2d2a6b5c06c31ca6de71aab1",
+                                scope = 0,
+                                counter = 0
+                            ),
+                            UserConfData(
+                                id = 0,
+                                login = "null@vktm",
+                                password = ""
+                            ), this@LoginActivity)
+                        startActivity(Intent(this,MainActivity::class.java))
+                } else if(listBack.any { user -> user.username == it.text!!.toString() }) {
+                    Toast.makeText(this, "Такой юзер уже есть", Toast.LENGTH_SHORT).show()
+                } else {
                     Toast.makeText(this, "Поле должно содержать Имя и Фамилию.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -100,7 +103,6 @@ class LoginActivity : AppCompatActivity(), Login {
     }
 
     fun updateUserData() {
-        val listBack:ArrayList<UserData> = ArrayList()
         val db = CreateUserExist(this).readableDatabase
         val query = "Select * from ${CreateUserExist.table_name[0]}"
         try {

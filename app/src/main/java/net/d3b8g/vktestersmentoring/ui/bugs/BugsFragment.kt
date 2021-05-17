@@ -91,7 +91,7 @@ class BugsFragment : Fragment() {
     private fun setupTextValue() {
         tN.text = "Сейчас у меня: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_now",0)} отчетов"
         tW.text = "Желаю зарепортить: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_wanna",1)}"
-        mT.text = if(getPercent().dropLast(1).toInt() < 100) {
+        mT.text = if(getPercent().dropLast(1).toInt() < 101) {
             getText(R.string.bad_scope)
         }else{
             getText(R.string.well_scope)

@@ -7,7 +7,6 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.google.android.material.switchmaterial.SwitchMaterial
-import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.ui.login.LoginActivity
 

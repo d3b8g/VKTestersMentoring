@@ -4,11 +4,11 @@ import android.app.Service
 import android.content.Intent
 import android.media.MediaRecorder
 import android.os.IBinder
-import android.text.format.DateFormat
 import android.util.Log
 import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicro
 import net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DictoCors:Service() {
@@ -17,23 +17,21 @@ class DictoCors:Service() {
         mMicro = MediaRecorder()
 
         val path_mic = File(audioPath)
-        path_mic.mkdirs()
 
-        if(!path_mic.exists()) { path_mic.mkdirs() }
+        if (!path_mic.exists() || !path_mic.isDirectory) path_mic.mkdirs()
 
         mMicro?.apply {
-            var file_out: File = File.createTempFile("${DateFormat.format("MM-dd_kk-mm", Date().time)}_VKTMaudio",".3gp",path_mic)
             setAudioSource(MediaRecorder.AudioSource.MIC)
             try{
                 setAudioSamplingRate(44100)
                 setAudioEncodingBitRate(96000)
                 setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-                setOutputFile(file_out.absolutePath)
+                setOutputFile(audioPath + SimpleDateFormat("yyyy_mm_dd_hh:mm:ss").format(Date()))
                 prepare()
                 start()
             }catch (e:Exception){
-                Log.e("VKTM_SYS","Access_error")
+                Log.e("VKTM_SYS", "Access_error $e")
             }
         }
 //        NotificationCompagain(this).createNotificationChannel(

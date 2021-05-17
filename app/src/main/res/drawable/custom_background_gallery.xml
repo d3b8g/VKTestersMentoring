@@ -11,7 +11,7 @@
 
         </shape>
     </item>
-    <item android:top="280dp">
+    <item android:top="245dp">
         <shape android:shape="rectangle">
             <solid android:color="@android:color/white"></solid>
         </shape>
