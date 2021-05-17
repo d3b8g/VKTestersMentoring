@@ -40,7 +40,7 @@ class BugsFragment : Fragment() {
                     putInt("report_count_now",rep.text.toString().filter { it.isDigit() }.toInt())
                 }
                 rep.clearFocus()
-                result.text = "${getPercent()}%"
+                result.text = getPercent()
                 setupTextValue()
             }else if(!rep.text.toString().isNullOrBlank() && !rep.text!!.matches("\\d+".toRegex())){
                 var er = root.findViewById<TextInputLayout>(R.id.l_count_rep)
@@ -51,26 +51,26 @@ class BugsFragment : Fragment() {
         rep_wanna.onFocusChangeListener = View.OnFocusChangeListener { view, hadFocus ->
             if (!hadFocus && !rep_wanna.text.toString().isNullOrBlank() && rep_wanna.text.toString().filter { it.isDigit() } != "" && rep_wanna.text.toString()!= "0" ) {
                 PreferenceManager.getDefaultSharedPreferences(root.context).edit {
-                    putInt("report_count_wanna",rep_wanna.text.toString().filter { it.isDigit() }.toInt())
+                    putInt("report_count_wanna", rep_wanna.text.toString().filter { it.isDigit() }.toInt())
                 }
                 rep_wanna.clearFocus()
-                result.text = "${getPercent()}%"
+                result.text = getPercent()
                 setupTextValue()
-            }else if(!rep_wanna.text.toString().isNullOrBlank() && !rep_wanna.text!!.matches("\\d+".toRegex()) ){
+            }else if(!rep_wanna.text.toString().isNullOrBlank() && !rep_wanna.text!!.matches("\\d+".toRegex())) {
                 var er = root.findViewById<TextInputLayout>(R.id.l_wanna_rep)
                 er.error = "Поле должно содержать цифры. Текст будет автоматически удален."
             }
         }
 
         rep_wanna.setOnEditorActionListener { it, i, keyEvent ->
-            if(i ==  EditorInfo.IME_ACTION_DONE && rep_wanna.text.toString()!= "0"){
+            if(i ==  EditorInfo.IME_ACTION_DONE && rep_wanna.text.toString() != "0") {
                 it.clearFocus()
                 val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(it.windowToken, 0)
                 PreferenceManager.getDefaultSharedPreferences(root.context).edit {
                     putInt("report_count_wanna",it.text.toString().filter { it.isDigit() }.toInt())
                 }
-                result.text = "${getPercent()}%"
+                result.text = getPercent()
                 setupTextValue()
                 true
             }else{
@@ -81,14 +81,17 @@ class BugsFragment : Fragment() {
             false
         }
 
-        result.text = "${getPercent()}%"
+        result.text = getPercent()
         return root
     }
-    fun getPercent() = (100*PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_now",0))/PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_wanna",1)
-    fun setupTextValue() {
+
+    private fun getPercent() = ((100 * PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_now", 0)) /
+            PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_wanna", 1)).toString() + "%"
+
+    private fun setupTextValue() {
         tN.text = "Сейчас у меня: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_now",0)} отчетов"
         tW.text = "Желаю зарепортить: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_wanna",1)}"
-        mT.text = if(getPercent()<100){
+        mT.text = if(getPercent().dropLast(1).toInt() < 100) {
             getText(R.string.bad_scope)
         }else{
             getText(R.string.well_scope)

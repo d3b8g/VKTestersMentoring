@@ -32,9 +32,6 @@ class GalleryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        var titleType = root.findViewById<TextView>(R.id.fragment_gallery_title)
-        (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
-        titleType.setOnClickListener { (requireActivity() as AppCompatActivity).onSupportNavigateUp() }
         userImg = root.findViewById(R.id.user_img_gallery)
         userData = root.findViewById(R.id.gallery_count)
         plug = root.findViewById(R.id.gallery_plug)
@@ -79,11 +76,6 @@ class GalleryFragment : Fragment() {
         }
 
         return root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
     }
 
     private fun setupDataCount(): String {

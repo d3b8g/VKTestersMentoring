@@ -16,7 +16,7 @@ import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
 
 class ImportNotes(val ct: Context, var tyty: UpdateNotes) {
-    fun show(){
+    fun show() {
         val frame = Dialog(ct)
         frame.setContentView(R.layout.alert_import)
         frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.FILL_PARENT)
@@ -29,7 +29,7 @@ class ImportNotes(val ct: Context, var tyty: UpdateNotes) {
         var send = frame.findViewById<Button>(R.id.import_note)
 
         send.setOnClickListener {
-            if(titleInput.text!!.isNotEmpty()){
+            if(titleInput.text!!.isNotEmpty()) {
                 var data = ""
                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
                     try {
@@ -37,22 +37,22 @@ class ImportNotes(val ct: Context, var tyty: UpdateNotes) {
                         var title = yu.asJsonObject.get("title").asString
                         var descr = yu.asJsonObject.get("description").asString
                         var dateTime = yu.asJsonObject.get("date_of_create").asString
-                        if(title.length<50){
-                            data = if(getString("my_notes","")!=""){
+                        if(title.length < 51) {
+                            data = if(getString("my_notes","") != ""){
                                 var count = JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt
                                 getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
                                     "{ \"id\":${count}, \"title\":\"${title}\", \"description\":\"${descr}\", \"date_of_create\":\"${dateTime}\" }], \"count\": ${count+1}}")
-                            }else{
+                            }else {
                                 "{ \"notes\": [ { \"id\":0, \"title\":\"${title}\", \"description\":\"${descr}\", \"date_of_create\":\"${dateTime}\" } ], \"count\": 1 }"
                             }
-                        }else{
+                        } else {
                             Toast.makeText(ct,"Заголовок содержит больше 50 символов.", Toast.LENGTH_SHORT).show()
                         }
-                    }catch (e: Exception){
+                    }catch (e: Exception) {
                         Toast.makeText(ct,"Неопознанная JSON-схема", Toast.LENGTH_SHORT).show()
                     }
                 }
-                if(data!=""){
+                if(data!="") {
                     PreferenceManager.getDefaultSharedPreferences(ct).edit {
                         putString("my_notes",data)
                     }

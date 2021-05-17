@@ -15,8 +15,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
+
     fun show(){
         val frame = Dialog(ct)
         frame.setContentView(R.layout.alert_add_notes)
@@ -31,27 +35,27 @@ class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
         var send = frame.findViewById<Button>(R.id.save_note)
 
         send.setOnClickListener {
-            if(title.text!!.isNotEmpty() && descr.text!!.isNotEmpty()){
+            if(title.text!!.any { it.isLetter() } && descr.text!!.any { it.isLetter() }) {
                 var titleR = title.text.toString().replace("\"","&#34;")
                 var descrR = descr.text.toString().replace("\"","&#34;")
                 var data = ""
                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
-                    data = if(getString("my_notes","")!=""){
+                    data = if(getString("my_notes", "") != "" ) {
                         var count = JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt
                         getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
-                            "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\"2020-12-12\" }], \"count\": ${count+1}}")
-                    }else{
-                        "{ \"notes\": [ { \"id\":0, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\"2020-12-12\" } ], \"count\": 1 }"
+                            "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\\"+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" }], \"count\": ${count+1}}")
+                    } else {
+                        "{ \"notes\": [ { \"id\":0, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" } ], \"count\": 1 }"
                     }
                 }
-                Log.e("RRR",data)
+
                 PreferenceManager.getDefaultSharedPreferences(ct).edit {
                     putString("my_notes", data)
                 }
                 tyty.updateNotes()
                 frame.dismiss()
             }else{
-                Toast.makeText(ct,"Вы не заполнили одно из полей",Toast.LENGTH_SHORT)
+                Toast.makeText(ct,"Вы не заполнили одно из полей", Toast.LENGTH_SHORT)
             }
         }
 

@@ -14,7 +14,7 @@ import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
 import net.d3b8g.vktestersmentoring.ui.MV.popup.AddNewNotes
 import net.d3b8g.vktestersmentoring.ui.MV.popup.ImportNotes
 
-class NotesFragment:Fragment(), UpdateNotes {
+class NotesFragment : Fragment(), UpdateNotes {
 
     lateinit var adapter: NotesAdapter
 

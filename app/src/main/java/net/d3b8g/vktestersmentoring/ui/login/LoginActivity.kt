@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_login.*
 import net.d3b8g.vktestersmentoring.MainActivity
+import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.adapters.UserAdapter
 import net.d3b8g.vktestersmentoring.db.CreateUserExist
@@ -64,7 +65,11 @@ class LoginActivity : AppCompatActivity(), Login {
         updateUserData()
         btn.setOnClickListener {
             input.let {
-                if(!it.text.isNullOrEmpty() && it.text!!.length>3 && it.text!!.contains(' ') && !it.text!!.matches("\\d+".toRegex())){
+                if(!it.text.isNullOrEmpty() &&
+                    it.text!!.length>3 &&
+                    it.text!!.contains(' ') &&
+                    it.text!!.any { text -> text.isLetter() }) {
+
                     var user_id:Int
                     PreferenceManager.getDefaultSharedPreferences(this).apply {
                         user_id = getInt("active_user_id", 0) + 1
@@ -149,6 +154,11 @@ class LoginActivity : AppCompatActivity(), Login {
             startActivity(Intent(this@LoginActivity,MainActivity::class.java))
             finish()
         }
+    }
+
+    override fun onBackPressed() {
+        if(uid == 1) super.onBackPressed()
+        else Toast.makeText(this, "Необходимо авторизоваться", Toast.LENGTH_SHORT).show()
     }
 
 }

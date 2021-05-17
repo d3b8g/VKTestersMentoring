@@ -8,16 +8,8 @@
     tools:context=".ui.gallery.GalleryFragment"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/fragment_gallery_title"
-        android:layout_margin="16dp"
-        android:textStyle="bold"
-        android:textSize="28sp"
-        android:textColor="#FFFFFF"
-        android:text="@string/menu_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
     <LinearLayout
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:gravity="right"
         android:layout_width="match_parent"
