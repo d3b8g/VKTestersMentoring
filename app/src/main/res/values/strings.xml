@@ -30,4 +30,5 @@
     <string name="input_password">Введите пароль</string>
     <string name="login_l">Войти</string>
     <string name="wrong_password">Неверный пароль</string>
+    <string name="default_fragment">Начальное окно</string>
 </resources>

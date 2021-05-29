@@ -1,6 +1,6 @@
 package net.d3b8g.vktestersmentoring
 
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.view.Gravity
 import android.widget.TextView
 import androidx.lifecycle.Lifecycle

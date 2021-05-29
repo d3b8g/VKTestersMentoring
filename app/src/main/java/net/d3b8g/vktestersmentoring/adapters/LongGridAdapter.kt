@@ -44,7 +44,7 @@ class LongGridAdapter(val terf:LonggridCall): RecyclerView.Adapter<RecyclerView.
         fun bind(item:LongGridModule) {
             title.text = item.title
             itemView.setOnClickListener {
-                terf.changeParam(item,position)
+                terf.changeParam(item, adapterPosition)
             }
         }
     }

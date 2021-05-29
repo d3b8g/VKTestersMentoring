@@ -2,7 +2,6 @@ package net.d3b8g.vktestersmentoring.ui.bugs
 
 import android.app.Activity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import net.d3b8g.vktestersmentoring.R

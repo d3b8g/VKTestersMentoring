@@ -23,7 +23,7 @@ class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun update():Boolean{
         try {
-            for ((index,file) in (File(audioPath).listFiles().withIndex())){
+            File(audioPath).listFiles()?.forEachIndexed { index, file ->
                 audioCounter.add(AudioAdapterModule(
                     file_path = file.path,
                     file_title = "${index+1}"

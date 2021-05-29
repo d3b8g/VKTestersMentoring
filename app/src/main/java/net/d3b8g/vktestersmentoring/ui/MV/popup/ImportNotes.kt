@@ -4,12 +4,12 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.preference.PreferenceManager
 import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
@@ -33,13 +33,13 @@ class ImportNotes(val ct: Context, var tyty: UpdateNotes) {
                 var data = ""
                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
                     try {
-                        var yu = JsonParser().parse(titleInput.text.toString()).asJsonObject
+                        var yu = JsonParser.parseString(titleInput.text.toString()).asJsonObject
                         var title = yu.asJsonObject.get("title").asString
                         var descr = yu.asJsonObject.get("description").asString
                         var dateTime = yu.asJsonObject.get("date_of_create").asString
                         if(title.length < 51) {
                             data = if(getString("my_notes","") != ""){
-                                var count = JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt
+                                var count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt
                                 getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
                                     "{ \"id\":${count}, \"title\":\"${title}\", \"description\":\"${descr}\", \"date_of_create\":\"${dateTime}\" }], \"count\": ${count+1}}")
                             }else {

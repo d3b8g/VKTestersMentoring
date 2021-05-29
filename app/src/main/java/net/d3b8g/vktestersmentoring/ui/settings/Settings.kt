@@ -2,10 +2,10 @@ package net.d3b8g.vktestersmentoring.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.google.android.material.switchmaterial.SwitchMaterial
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.ui.login.LoginActivity

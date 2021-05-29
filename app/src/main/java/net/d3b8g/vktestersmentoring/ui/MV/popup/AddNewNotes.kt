@@ -4,12 +4,12 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.preference.PreferenceManager
 import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
@@ -39,7 +39,7 @@ class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
                 var data = ""
                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
                     data = if(getString("my_notes", "") != "" ) {
-                        var count = JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt
+                        var count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt
                         getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
                             "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\\"+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" }], \"count\": ${count+1}}")
                     } else {

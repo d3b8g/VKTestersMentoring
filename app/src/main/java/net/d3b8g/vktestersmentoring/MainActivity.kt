@@ -3,7 +3,6 @@ package net.d3b8g.vktestersmentoring
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -138,8 +138,8 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
             R.id.action_settings -> {
                 startActivity(Intent(this, Settings::class.java))
             }

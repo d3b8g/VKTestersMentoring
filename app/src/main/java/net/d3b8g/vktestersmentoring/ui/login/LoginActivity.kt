@@ -2,23 +2,18 @@ package net.d3b8g.vktestersmentoring.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.activity_login.*
 import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.adapters.UserAdapter
+import net.d3b8g.vktestersmentoring.databinding.ActivityLoginBinding
 import net.d3b8g.vktestersmentoring.db.CreateUserExist
 import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_avatar
 import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_counter
@@ -31,14 +26,9 @@ import net.d3b8g.vktestersmentoring.modules.UserData
 
 class LoginActivity : AppCompatActivity(), Login {
 
-    lateinit var input: TextInputEditText
-    lateinit var rotatedLinear: LinearLayout
-    lateinit var rcv: RecyclerView
-    lateinit var loginText: TextView
-    lateinit var tlPass: TextInputLayout
-    val listBack:ArrayList<UserData> = ArrayList()
-
+    private val listBack:ArrayList<UserData> = ArrayList()
     lateinit var adapter:UserAdapter
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,22 +40,16 @@ class LoginActivity : AppCompatActivity(), Login {
             }
         }
 
-        setContentView(R.layout.activity_login)
-
-        val btn = findViewById<Button>(R.id.register_start)
-        input = findViewById(R.id.register_input)
-        rotatedLinear = findViewById(R.id.rotated_layout)
-        rcv = findViewById(R.id.user_db)
-        loginText = findViewById(R.id.login_text)
-        tlPass = findViewById(R.id.tl_input_password)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         adapter = UserAdapter(this)
-        rcv.adapter = adapter
-        rcv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        rcv.setHasFixedSize(true)
+        binding.userDb.adapter = adapter
+        binding.userDb.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        binding.userDb.setHasFixedSize(true)
         updateUserData()
-        btn.setOnClickListener {
-            input.let {
+        binding.registerStart.setOnClickListener {
+            binding.registerInput.let {
                 if(!it.text.isNullOrEmpty() &&
                     it.text!!.length>3 &&
                     it.text!!.contains(' ') &&
@@ -123,19 +107,19 @@ class LoginActivity : AppCompatActivity(), Login {
         }
 
         if(!listBack.none()){
-            rcv.visibility = View.VISIBLE
+            binding.userDb.visibility = View.VISIBLE
             adapter.setUser(listBack)
-            loginText.text = getString(R.string.login)
+            binding.loginText.text = getString(R.string.login)
         }
     }
 
     override fun loginUser(id: Int) {
         val pass = CreateUserExist(this).readConfData(id)!!.password
         if(pass.isNotEmpty()) {
-            tlPass.visibility = View.VISIBLE
-            login.visibility = View.VISIBLE
-            login.setOnClickListener {
-                login_password.let {
+            binding.tlInputPassword.visibility = View.VISIBLE
+            binding.login.visibility = View.VISIBLE
+            binding.login.setOnClickListener {
+                binding.loginPassword.let {
                     if(!it.text.isNullOrEmpty() && it.text.toString() == pass) {
                         PreferenceManager.getDefaultSharedPreferences(this).edit {
                             putBoolean("make_splash", true).apply()
@@ -144,7 +128,7 @@ class LoginActivity : AppCompatActivity(), Login {
                         startActivity(Intent(this@LoginActivity,MainActivity::class.java))
                         finish()
                     }else{
-                        tlPass.error = getString(R.string.wrong_password)
+                        binding.tlInputPassword.error = getString(R.string.wrong_password)
                     }
                 }
             }
