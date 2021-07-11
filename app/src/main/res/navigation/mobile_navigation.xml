@@ -3,13 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_login">
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="net.d3b8g.vktestersmentoring.ui.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_nav_login_to_nav_home2"
+            app:destination="@id/nav_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_home"
         android:name="net.d3b8g.vktestersmentoring.ui.home.HomeFragment"
         android:label="@string/menu_longrid"
-        tools:layout="@layout/fragment_longgrid"/>
+        tools:layout="@layout/fragment_longgrid">
+    </fragment>
 
     <fragment
         android:id="@+id/nav_bugs"
@@ -21,7 +32,11 @@
         android:id="@+id/nav_slideshow"
         android:name="net.d3b8g.vktestersmentoring.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_nav_slideshow_to_nav_dictophone"
+            app:destination="@id/nav_dictophone" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_upload"

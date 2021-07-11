@@ -1,92 +1,85 @@
 package net.d3b8g.vktestersmentoring.ui.gallery
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.adapters.GalleryAdapter
-import net.d3b8g.vktestersmentoring.helper.Components.Companion.mediaTypeGallery
+import net.d3b8g.vktestersmentoring.databinding.FragmentSlideshowBinding
 import net.d3b8g.vktestersmentoring.helper.PathHelper
 import java.io.File
 
-class GalleryFragment : Fragment() {
+class GalleryFragment : Fragment(R.layout.fragment_slideshow) {
 
-    lateinit var userImg:CircleImageView
-    lateinit var userData:TextView
-    lateinit var plug:TextView
-    lateinit var rcv:RecyclerView
-    lateinit var rcv_plug:LinearLayout
-    lateinit var mediaType: AutoCompleteTextView
-    lateinit var dictoOpen: Button
+    private lateinit var adapter: GalleryAdapter
+    private lateinit var binding: FragmentSlideshowBinding
 
-    lateinit var adapter: GalleryAdapter
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        userImg = root.findViewById(R.id.user_img_gallery)
-        userData = root.findViewById(R.id.gallery_count)
-        plug = root.findViewById(R.id.gallery_plug)
-        rcv = root.findViewById(R.id.rcv_gallery)
-        rcv_plug = root.findViewById(R.id.rcv_plug)
-        dictoOpen = root.findViewById(R.id.go_to_dictophone)
+    override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
+        binding = FragmentSlideshowBinding.bind(root)
 
         PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
-            Picasso.get().load(getString("user_img","https://sun9-31.userapi.com/impf/c845017/v845017958/16cb40/BcXfWFsRUCw.jpg?size=1920x1280&quality=96&proxy=1&sign=7592ba24714b362951ee433338fee195")).into(userImg)
+            Picasso.get().load(getString("user_img","https://sun9-31.userapi.com/impf/c845017/v845017958/16cb40/BcXfWFsRUCw.jpg?size=1920x1280&quality=96&proxy=1&sign=7592ba24714b362951ee433338fee195")).into(binding.userImgGallery)
         }
 
-        val rpt = root.findViewById<TextView>(R.id.rcv_plug_text)
+        binding.galleryCount.text = setupDataCount()
 
-        userData.text = setupDataCount()
+        val listPopupWindow = ListPopupWindow(context!!, null, R.attr.listPopupWindowStyle)
 
-        mediaType = root.findViewById(R.id.media_type)
-        mediaType.setDropDownBackgroundDrawable(resources.getDrawable(R.drawable.btn_shape))
-        var adapterIssue = ArrayAdapter(requireActivity(),R.layout.list_item,mediaTypeGallery)
-        mediaType.setAdapter(adapterIssue)
-        mediaType.onItemClickListener = AdapterView.OnItemClickListener { _, _, index, id ->
-            plug.visibility = View.GONE
+        listPopupWindow.anchorView = binding.mediaType
+
+        val items = listOf("Аудиозаписи", "Test 1", "Test 2")
+        val adapterPopup = ArrayAdapter(requireContext(), R.layout.list_popup_window_item, items)
+        listPopupWindow.setAdapter(adapterPopup)
+
+        listPopupWindow.setOnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+            binding.galleryPlug.visibility = View.GONE
             if(!adapter.update()) {
-                rpt.text = when(id){
-                    0.toLong() -> "Вы еще не записали ни одного аудио, хотите исправить это?"
-                    1.toLong() -> "test text. Next release will replace this fragment on correct. Dont report this feature."
+                binding.rcvPlugText.text = when(position) {
+                    0 -> "Вы еще не записали ни одного аудио, хотите исправить это?"
+                    in 1..2 -> "Тестовая кнопка"
                     else -> "smth go wrong,Report"
                 }
-                rcv_plug.visibility = View.VISIBLE
+                binding.rcvPlug.visibility = View.VISIBLE
             }
-            else rcv.visibility = View.VISIBLE
+            else binding.galleryPlug.visibility = View.VISIBLE
+
+            binding.mediaType.text = items[0]
+            listPopupWindow.dismiss()
         }
-        mediaType.setOnClickListener { mediaType.showDropDown() }
-        mediaType.showSoftInputOnFocus = false
+
+        binding.mediaType.setOnClickListener {
+            listPopupWindow.show()
+        }
+        binding.mediaType.text = items[0]
 
         adapter = GalleryAdapter()
-        rcv.adapter = adapter
-        rcv.layoutManager = LinearLayoutManager(inflater.context, RecyclerView.HORIZONTAL,false)
-        rcv.setHasFixedSize(true)
+        binding.rcvGallery.adapter = adapter
+        binding.rcvGallery.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false)
+        binding.rcvGallery.setHasFixedSize(true)
 
-        dictoOpen.setOnClickListener {
-
+        binding.goToDictophone.setOnClickListener {
+            val action = GalleryFragmentDirections.actionNavSlideshowToNavDictophone()
+            findNavController().navigate(action)
         }
 
-        return root
     }
 
     private fun setupDataCount(): String {
-        //bla-bla with WHEN param
         var count = File(PathHelper.audioPath).listFiles()?.size
-        return if(count == null){
+        return if(count == null) {
             "У меня 0 медиафайлов"
-        }else{
+        } else {
             if(count in 5..20) {
                 "У меня $count медиафайлов"
-            }else{
+            } else {
                 when (count.toString().takeLast(1).toInt()) {
                     0 -> "У меня $count медиафайлов"
                     1 -> "У меня $count медиафайл"
@@ -96,11 +89,5 @@ class GalleryFragment : Fragment() {
                 }
             }
         }
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        (requireActivity() as AppCompatActivity).supportActionBar!!.show()
     }
 }

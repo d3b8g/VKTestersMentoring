@@ -25,9 +25,8 @@ import net.d3b8g.vktestersmentoring.db.CreateUserExist
 import net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
-import net.d3b8g.vktestersmentoring.ui.login.Splash_
+import net.d3b8g.vktestersmentoring.ui.login.SplashScreen
 import net.d3b8g.vktestersmentoring.ui.settings.Settings
-
 
 class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateAvatar {
 
@@ -42,19 +41,15 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivity(Intent(this@MainActivity, Splash_::class.java))
+        startActivity(Intent(this@MainActivity, SplashScreen::class.java))
 
         PreferenceManager.getDefaultSharedPreferences(this).apply {
             uid = getInt("active_user_id", 1)
+            if(getBoolean("make_splash", false)) {
+
+            }
         }
 
-        init()
-
-        visits = getScoreVisits() + 1
-
-    }
-
-    private fun init(){
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -88,29 +83,29 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
 
         setScoreVisit(getScoreVisits())
+
+        visits = getScoreVisits() + 1
     }
 
     private fun getScoreVisits(): Int = CreateUserExist(this).readUserData(uid)!!.counter
 
     private fun getUserImage(): String? = CreateUserExist(this).readUserData(uid)?.avatar
 
-    fun titleForStatus(count: Int?):String{
-        return when {
-            count in 5..20 -> "раз"
-            count.toString().takeLast(1)=="l" -> "1 раз"
-            else -> {
-                when (count.toString().takeLast(1).toInt()) {
-                    in 0..1 -> "раз"
-                    in 2..4 -> "раза"
-                    in 5..9 -> "раз"
-                    else -> "раз"
-                }
+    private fun titleStatus(count: Int?): String = when {
+        count in 5..20 -> "раз"
+        count.toString().takeLast(1) == "l" -> "1 раз"
+        else -> {
+            when (count.toString().takeLast(1).toInt()) {
+                in 0..1 -> "раз"
+                in 2..4 -> "раза"
+                in 5..9 -> "раз"
+                else -> "раз"
             }
         }
     }
 
     private fun setScoreVisit(count: Int) {
-        mineVisits.text = "Вы посетили приложение: $count ${titleForStatus(count)}"
+        mineVisits.text = "Вы посетили приложение: $count ${titleStatus(count)}"
         when(count){
             in 51..100 -> {
                 mineVisits.setTextColor(Color.parseColor("#8b00ff"))
@@ -174,7 +169,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
     }
 
-    companion object{
+    companion object {
         var uid = 1
         var visits = 0
     }

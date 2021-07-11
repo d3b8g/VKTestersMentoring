@@ -8,7 +8,7 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.android.material.switchmaterial.SwitchMaterial
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.ui.login.LoginActivity
+import net.d3b8g.vktestersmentoring.ui.login.LoginFragment
 
 class Settings : AppCompatActivity() {
 
@@ -38,7 +38,7 @@ class Settings : AppCompatActivity() {
             PreferenceManager.getDefaultSharedPreferences(this).edit {
                 putBoolean("make_splash", false)
             }
-            startActivity(Intent(this, LoginActivity::class.java)
+            startActivity(Intent(this, LoginFragment::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))

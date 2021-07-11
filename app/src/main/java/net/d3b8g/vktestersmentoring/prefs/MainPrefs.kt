@@ -6,51 +6,29 @@ import android.content.Context.MODE_PRIVATE
 val minePath = "UserSetup"
 val lgPath = "LonggridSetup"
 
-fun pMineName(ct:Context,func:Boolean,item:String?):String? {
-    val prefs = ct.getSharedPreferences(minePath, MODE_PRIVATE)
+data class paramCt(var id: String, var value: Boolean)
 
-    return if(func){
-        var bt = prefs.edit()
-        bt.putString("mine_name",item!!).apply()
-        null
-    }else{
-        prefs.getString("mine_name","undefind null")
-    }
+fun setReadParam(ct: Context, param: paramCt) {
+    val pref = ct.getSharedPreferences("Settings", MODE_PRIVATE).edit()
+    pref.putBoolean(param.id, param.value).apply()
 }
-fun pMineVisits(ct:Context,func:Boolean):Int? {
-    val prefs = ct.getSharedPreferences(minePath, MODE_PRIVATE)
-    return if(func){
-        var bt = prefs.edit()
-        bt.putInt("mine_visits", (pMineVisits(ct,false)!!+1)).apply()
-        null
-    }else{
-        prefs.getInt("mine_visits",0)
-    }
-}
-
-data class paramCt(var id:String,var value:Boolean)
-
-fun setReadParam(ct:Context,param:paramCt){
-    val pref = ct.getSharedPreferences("Settings",MODE_PRIVATE).edit()
-    pref.putBoolean(param.id,param.value).apply()
-}
-fun getReadParam(ct:Context,param:String) : Boolean{
+fun getReadParam(ct:Context, param:String): Boolean {
     val pref = ct.getSharedPreferences("Settings", MODE_PRIVATE)
     return pref.getBoolean(param,false)
 }
 fun getCountReads(ct:Context) : Int {
     var returnBack = 0
-    for(i in 0..11) if(getReadParam(ct,"check_box_$i")) returnBack++
+    for (i in 0..11) if(getReadParam(ct,"check_box_$i")) returnBack++
     return returnBack
 }
 
-data class paramCtQ(var id:String,var value:Int)
+data class paramCtQ(var id: String, var value: Int)
 
-fun setQualityParam(ct:Context,param:paramCtQ){
-    val pref = ct.getSharedPreferences("Settings",MODE_PRIVATE).edit()
+fun setQualityParam(ct: Context, param: paramCtQ) {
+    val pref = ct.getSharedPreferences("Settings", MODE_PRIVATE).edit()
     pref.putInt(param.id,param.value).apply()
 }
-fun getQualityParam(ct:Context,param:String) : Int{
+fun getQualityParam(ct: Context, param: String): Int {
     val pref = ct.getSharedPreferences("Settings", MODE_PRIVATE)
     return pref.getInt(param,0)
 }

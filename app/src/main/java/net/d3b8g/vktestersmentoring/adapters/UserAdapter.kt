@@ -44,7 +44,7 @@ class UserAdapter(val login:Login): RecyclerView.Adapter<RecyclerView.ViewHolder
                 .into(avatar)
             percent.text = user.scope.toString()
             itemView.setOnClickListener {
-                login.loginUser(position)
+                login.loginUser(adapterPosition)
             }
         }
     }

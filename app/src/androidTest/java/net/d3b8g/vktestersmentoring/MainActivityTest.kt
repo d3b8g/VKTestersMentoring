@@ -13,7 +13,7 @@ import androidx.test.espresso.contrib.DrawerMatchers.isClosed
 import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import net.d3b8g.vktestersmentoring.ui.login.LoginActivity
+import net.d3b8g.vktestersmentoring.ui.login.LoginFragment
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertFalse
@@ -109,7 +109,7 @@ class MainActivityTest{
     @Test
     fun workWithSplash(){
 
-        val splashScenario = ActivityScenario.launch(LoginActivity::class.java)
+        val splashScenario = ActivityScenario.launch(LoginFragment::class.java)
 
         onView(withId(R.id.register_start)).check(matches(isDisplayed()))
     }

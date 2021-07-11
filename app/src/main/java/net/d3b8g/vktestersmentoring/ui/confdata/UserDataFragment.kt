@@ -5,70 +5,42 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.util.Base64
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.databinding.FragmentUserdataBinding
 import net.d3b8g.vktestersmentoring.db.CreateUserExist
 import net.d3b8g.vktestersmentoring.modules.UserConfData
 
 
-class UserDataFragment : Fragment() {
+class UserDataFragment : Fragment(R.layout.fragment_userdata) {
+    private lateinit var binding: FragmentUserdataBinding
 
-    lateinit var ident:TextView
-    lateinit var setIdent:TextInputEditText
-    lateinit var tlIdent:TextInputLayout
-
-    lateinit var setPass:TextInputEditText
-    lateinit var tlPass:TextInputLayout
-
-    lateinit var save:Button
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_userdata, container, false)
-
-        ident = root.findViewById(R.id.conf_uident)
-        setIdent = root.findViewById(R.id.conf_ident)
-        tlIdent = root.findViewById(R.id.conf_ident_tl)
-
-        setPass = root.findViewById(R.id.conf_password)
-        tlPass = root.findViewById(R.id.conf_password_tl)
-
-        save = root.findViewById(R.id.conf_save)
+    override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
+        binding = FragmentUserdataBinding.bind(root)
 
         CreateUserExist(root.context).readConfData(uid)?.login?.apply {
             if (this != "null@vktm") {
-                ident.text = this
-                tlIdent.visibility = View.GONE
-                tlPass.visibility = View.GONE
-                save.isClickable = false
+                binding.confUident.text = this
+                binding.confIdentTl.visibility = View.GONE
+                binding.confPasswordTl.visibility = View.GONE
+                binding.confSave.isClickable = false
             }
         }
 
-        save.setOnClickListener {
-            if (setPass.text.toString().length in 2..4) {
-                if (setIdent.text.toString().length > 2 && setIdent.text.toString().matches("^\\d+\$".toRegex())) {
+        binding.confSave.setOnClickListener {
+            if (binding.confPassword.text.toString().length in 2..4) {
+                if (binding.confIdent.text.toString().length > 2 && binding.confIdent.text.toString().matches("^\\d+\$".toRegex())) {
                     saveUserConf(root.context)
-                } else {
-                    tlIdent.error = "Формат записи: Int и больше 2 цифр"
                 }
-            } else {
-                tlPass.error = "Допустимо от 2 до 4 символов"
+                else binding.confIdentTl.error = "Формат записи: Int и больше 2 цифр"
             }
+            else binding.confPasswordTl.error = "Допустимо от 2 до 4 символов"
         }
-        return root
     }
+
 
     private fun genPass(ct: Context): String {
         CreateUserExist(ct).readUserData(uid)!!.username.apply {
@@ -76,7 +48,7 @@ class UserDataFragment : Fragment() {
             this.split(' ').forEachIndexed { index, un ->
                 username += when(index){
                     0 -> un
-                    1 -> setIdent.text.toString().replace("@vktm", "") + un
+                    1 -> binding.confIdent.text.toString().replace("@vktm", "") + un
                     else -> null
                 }
             }
@@ -88,7 +60,7 @@ class UserDataFragment : Fragment() {
             val std = Base64.encodeToString(
                 (str.replace(
                     str.substring(randomKey,randomKey+1),
-                    setPass.text.toString()
+                    binding.confPassword.text.toString()
                 ) + randomKey).toByteArray(), Base64.DEFAULT
             ).replace("=", "")
             val stb = (std.substring(0, (std.length - 1) / 2).reversed()
@@ -121,15 +93,15 @@ class UserDataFragment : Fragment() {
             val updateUserConf = CreateUserExist(ct).writeConfData(
                 UserConfData(
                     id = uid,
-                    login = setIdent.text.toString(),
+                    login = binding.confIdent.text.toString(),
                     password = passwordGen
                 )
             )
             if(updateUserConf) {
-                ident.text = setIdent.text.toString()
-                tlIdent.visibility = View.GONE
-                tlPass.visibility = View.GONE
-                save.isClickable = false
+                binding.confUident.text = binding.confIdent.text.toString()
+                binding.confIdentTl.visibility = View.GONE
+                binding.confPasswordTl.visibility = View.GONE
+                binding.confSave.isClickable = false
 
                 val clipboard = ct.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText("Password Of VKTM", passwordGen)
