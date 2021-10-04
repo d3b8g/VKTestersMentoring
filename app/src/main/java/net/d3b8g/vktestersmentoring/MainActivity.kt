@@ -1,5 +1,6 @@
 package net.d3b8g.vktestersmentoring
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -21,14 +22,16 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import net.d3b8g.vktestersmentoring.db.CreateUserExist
-import net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar
+import kotlinx.coroutines.*
+import net.d3b8g.vktestersmentoring.db.UserData.UserData
+import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
+import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
+import net.d3b8g.vktestersmentoring.modules.UITypes
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
-import net.d3b8g.vktestersmentoring.ui.login.SplashScreen
 import net.d3b8g.vktestersmentoring.ui.settings.Settings
 
-class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateAvatar {
+class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateMainUI {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var mineName: TextView
@@ -36,19 +39,16 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
     lateinit var navView: NavigationView
     lateinit var headerLayoutInflater: View
     lateinit var mineVisits: TextView
+    lateinit var userImage: CircleImageView
+
+    private var job = Job()
+    private var scope = CoroutineScope(Dispatchers.Main + job)
+
+    private val userDatabase by lazy { UserDatabase.getInstance(this).userDatabaseDao }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        startActivity(Intent(this@MainActivity, SplashScreen::class.java))
-
-        PreferenceManager.getDefaultSharedPreferences(this).apply {
-            uid = getInt("active_user_id", 1)
-            if(getBoolean("make_splash", false)) {
-
-            }
-        }
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -77,19 +77,44 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         headerLayoutInflater = navView.getHeaderView(0)
         mineName = headerLayoutInflater.findViewById(R.id.main_user_name)
         mineVisits = headerLayoutInflater.findViewById(R.id.main_user_visits)
-        mineName.text = CreateUserExist(this).readUserData(uid)?.username
+        userImage = headerLayoutInflater.findViewById(R.id.main_user_avatar)
 
-        val userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)
-        Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
-
-        setScoreVisit(getScoreVisits())
-
-        visits = getScoreVisits() + 1
+        PreferenceManager.getDefaultSharedPreferences(this).apply {
+            getInt("active_user_id", -1).let {
+                uid = if (it > 0) {
+                    updateUI(UITypes.ALL_DATA)
+                    it
+                } else {
+                    1
+                }
+            }
+        }
     }
 
-    private fun getScoreVisits(): Int = CreateUserExist(this).readUserData(uid)!!.counter
+    override fun updateUI(type: String) {
+        scope.launch {
+            val user = getUser()
 
-    private fun getUserImage(): String? = CreateUserExist(this).readUserData(uid)?.avatar
+            when (true) {
+                (type == UITypes.ALL_DATA || type == UITypes.AVATAR) && user.avatar.isNotEmpty()-> {
+                    Picasso.get().load(user.avatar).resize(150, 150).into(userImage)
+                }
+                type == UITypes.ALL_DATA || type == UITypes.USERNAME -> {
+                    mineName.text = user.username
+                }
+                type == UITypes.ALL_DATA || type == UITypes.VISITS -> {
+                    user.counter.let {
+                        setScoreVisit(it)
+                        visits = it + 1
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
+        return@withContext userDatabase.getUserById(1)
+    }
 
     private fun titleStatus(count: Int?): String = when {
         count in 5..20 -> "раз"
@@ -104,6 +129,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setScoreVisit(count: Int) {
         mineVisits.text = "Вы посетили приложение: $count ${titleStatus(count)}"
         when(count){
@@ -147,11 +173,6 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         setScoreVisit(visits)
     }
 
-    override fun onPause() {
-        super.onPause()
-        CreateUserExist(this).updateCountVisits(uid.toString(), visits)
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
@@ -162,11 +183,6 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         val transaction = (this as FragmentActivity).supportFragmentManager.beginTransaction()
         transaction.replace(mCenter.id, MediaCenter()).commit()
         mCenter.visibility = View.VISIBLE
-    }
-
-    override fun updateAvatar() {
-        val userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)
-        Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
     }
 
     companion object {

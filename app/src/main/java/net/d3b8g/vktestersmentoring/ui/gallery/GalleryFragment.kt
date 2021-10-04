@@ -31,7 +31,7 @@ class GalleryFragment : Fragment(R.layout.fragment_slideshow) {
 
         binding.galleryCount.text = setupDataCount()
 
-        val listPopupWindow = ListPopupWindow(context!!, null, R.attr.listPopupWindowStyle)
+        val listPopupWindow = ListPopupWindow(requireContext(), null, R.attr.listPopupWindowStyle)
 
         listPopupWindow.anchorView = binding.mediaType
 

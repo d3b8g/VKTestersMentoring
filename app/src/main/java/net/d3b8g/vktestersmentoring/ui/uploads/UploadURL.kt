@@ -17,7 +17,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar
+import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
+import net.d3b8g.vktestersmentoring.modules.UITypes
 
 
 class UploadURL:Fragment() {
@@ -37,7 +38,7 @@ class UploadURL:Fragment() {
 
         url.setOnClickListener { keyboardOpen = true }
 
-        url.setOnEditorActionListener { it, i, keyEvent ->
+        url.setOnEditorActionListener { it, i, _ ->
             if(i ==  EditorInfo.IME_ACTION_DONE){
                 url.clearFocus()
                 val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -52,7 +53,7 @@ class UploadURL:Fragment() {
                     }
                     PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
                         if(getBoolean("do_avatar",false)){
-                            (requireActivity() as UpdateAvatar).updateAvatar()
+                            (requireActivity() as UpdateMainUI).updateUI(UITypes.AVATAR)
                         }
                     }
                 }

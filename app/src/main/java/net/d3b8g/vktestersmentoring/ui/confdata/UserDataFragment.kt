@@ -8,25 +8,37 @@ import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.databinding.FragmentUserdataBinding
-import net.d3b8g.vktestersmentoring.db.CreateUserExist
-import net.d3b8g.vktestersmentoring.modules.UserConfData
+import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
+import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
+import net.d3b8g.vktestersmentoring.db.UserData.UserData
+import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 
 
 class UserDataFragment : Fragment(R.layout.fragment_userdata) {
+
     private lateinit var binding: FragmentUserdataBinding
+
+    private val confBase by lazy { ConfDatabase.getInstance(requireContext()).confDatabaseDao }
+    private val userDatabase by lazy { UserDatabase.getInstance(requireContext()).userDatabaseDao }
 
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
         binding = FragmentUserdataBinding.bind(root)
 
-        CreateUserExist(root.context).readConfData(uid)?.login?.apply {
-            if (this != "null@vktm") {
-                binding.confUident.text = this
-                binding.confIdentTl.visibility = View.GONE
-                binding.confPasswordTl.visibility = View.GONE
-                binding.confSave.isClickable = false
+        lifecycleScope.launch {
+            getConfData(uid).apply {
+                if (this.ident != "null@vktm") {
+                    binding.confUident.text = this.ident
+                    binding.confIdentTl.visibility = View.GONE
+                    binding.confPasswordTl.visibility = View.GONE
+                    binding.confSave.isClickable = false
+                }
             }
         }
 
@@ -41,9 +53,16 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
         }
     }
 
+    private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
+        return@withContext userDatabase.getUserById(1)
+    }
 
-    private fun genPass(ct: Context): String {
-        CreateUserExist(ct).readUserData(uid)!!.username.apply {
+    private suspend fun getConfData(id: Int): ConfData = withContext(Dispatchers.IO) {
+        return@withContext confBase.getUserById(id)
+    }
+
+    private fun genPass(user: UserData): String {
+        user.username.apply {
             var username = ""
             this.split(' ').forEachIndexed { index, un ->
                 username += when(index){
@@ -88,16 +107,15 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
     }
 
     private fun saveUserConf(ct: Context) {
-        try {
-            val passwordGen = genPass(ct)
-            val updateUserConf = CreateUserExist(ct).writeConfData(
-                UserConfData(
-                    id = uid,
-                    login = binding.confIdent.text.toString(),
-                    password = passwordGen
-                )
-            )
-            if(updateUserConf) {
+        lifecycleScope.launch {
+            val passwordGen = genPass(getUser())
+            val updateUserConf = confBase.update(ConfData(
+                id = uid,
+                ident = binding.confIdent.text.toString(),
+                password = passwordGen
+            ))
+
+            if (updateUserConf > 0) {
                 binding.confUident.text = binding.confIdent.text.toString()
                 binding.confIdentTl.visibility = View.GONE
                 binding.confPasswordTl.visibility = View.GONE
@@ -109,8 +127,6 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
 
                 Toast.makeText(ct, "Пароль скопирован в буффер", Toast.LENGTH_SHORT).show()
             }
-        }catch (e: Exception){
-            e.stackTrace
         }
     }
 

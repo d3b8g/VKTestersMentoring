@@ -5,28 +5,33 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.adapters.UserAdapter
 import net.d3b8g.vktestersmentoring.databinding.FragmentLoginBinding
-import net.d3b8g.vktestersmentoring.db.CreateUserExist
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_avatar
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_counter
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_scope
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_uid
-import net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_username
+import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
+import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
+import net.d3b8g.vktestersmentoring.db.UserData.UserData
+import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 import net.d3b8g.vktestersmentoring.interfaces.Login
-import net.d3b8g.vktestersmentoring.modules.UserConfData
-import net.d3b8g.vktestersmentoring.modules.UserData
+import net.d3b8g.vktestersmentoring.modules.UITypes
 
 class LoginFragment : Fragment(R.layout.fragment_login), Login {
 
     private val listBack: ArrayList<UserData> = ArrayList()
-    lateinit var adapter: UserAdapter
+    private lateinit var adapter: UserAdapter
     private lateinit var binding: FragmentLoginBinding
+
+    private val userDatabase by lazy { UserDatabase.getInstance(requireContext()).userDatabaseDao}
+    private val confDatabase by lazy { ConfDatabase.getInstance(requireContext()).confDatabaseDao }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentLoginBinding.bind(view)
@@ -39,7 +44,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
 
         binding.registerStart.setOnClickListener {
             binding.registerInput.let {
-                if(!it.text.isNullOrEmpty() &&
+                if (!it.text.isNullOrEmpty() &&
                     it.text!!.length > 3 &&
                     it.text!!.contains(' ') &&
                     it.text!!.any { text -> text.isLetter() } &&
@@ -52,11 +57,18 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
                         putBoolean("make_splash", true)
                         putInt("active_user_id", userId)
                     }
-                    CreateUserExist(requireContext()).insertData(
-                        UserData(0, it.text!!.toString(), "", 0, 0),
-                        UserConfData(0, "null@vktm",""), requireContext())
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.IO) {
+                            userDatabase.insert(UserData(
+                                0, it.text!!.toString(), "", 0, 0
+                            ))
+                            confDatabase.insert(ConfData(
+                                0, "null@vktm",""
+                            ))
+                        }
+                    }
                     openUserUI()
-                } else if(listBack.any { user -> user.username == it.text!!.toString() }) {
+                } else if (listBack.any { user -> user.username == it.text!!.toString() }) {
                     Toast.makeText(requireContext(), "Такой юзер уже есть", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(requireContext(), "Поле должно содержать Имя и Фамилию.", Toast.LENGTH_SHORT).show()
@@ -65,27 +77,14 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
         }
     }
 
-    fun updateUserData() {
-        val db = CreateUserExist(requireContext()).readableDatabase
-        val query = "Select * from ${CreateUserExist.table_name[0]}"
-        try {
-            val result = db.rawQuery(query, null)
-            if (result.moveToFirst()) {
-                do {
-                    listBack.add(UserData(
-                        id = result.getString(result.getColumnIndex(col_uid)).toInt(),
-                        username = result.getString(result.getColumnIndex(col_username)),
-                        avatar = result.getString(result.getColumnIndex(col_avatar)),
-                        scope = result.getString(result.getColumnIndex(col_scope)).toInt(),
-                        counter = result.getString(result.getColumnIndex(col_counter)).toInt()
-                    ))
-                } while (result.moveToNext())
+    private fun updateUserData() {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                listBack.addAll(userDatabase.getAllData())
             }
-        } catch (e: Exception) {
-            e.stackTrace
         }
 
-        if(!listBack.none()){
+        if (!listBack.none()){
             binding.userDb.visibility = View.VISIBLE
             adapter.setUser(listBack)
             binding.loginText.text = getString(R.string.login)
@@ -93,34 +92,41 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
     }
 
     override fun loginUser(id: Int) {
-        val pass = CreateUserExist(requireContext()).readConfData(id)!!.password
-        if(pass.isNotEmpty()) {
-            binding.tlInputPassword.visibility = View.VISIBLE
-            binding.login.visibility = View.VISIBLE
-            binding.login.setOnClickListener {
-                binding.loginPassword.let {
-                    if(!it.text.isNullOrEmpty() && it.text.toString() == pass) {
-                        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                            putBoolean("make_splash", true)
-                            putInt("active_user_id", id)
+        lifecycleScope.launch {
+            val pass = getConfData(id).password
+            if(pass.isNotEmpty()) {
+                binding.tlInputPassword.visibility = View.VISIBLE
+                binding.login.visibility = View.VISIBLE
+                binding.login.setOnClickListener {
+                    binding.loginPassword.let {
+                        if(!it.text.isNullOrEmpty() && it.text.toString() == pass) {
+                            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
+                                putBoolean("make_splash", true)
+                                putInt("active_user_id", id)
+                            }
+                            openUserUI()
+                        } else {
+                            binding.tlInputPassword.error = getString(R.string.wrong_password)
                         }
-                        openUserUI()
-                    } else {
-                        binding.tlInputPassword.error = getString(R.string.wrong_password)
                     }
                 }
+            } else {
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
+                    putBoolean("make_splash", true)
+                    putInt("active_user_id", id)
+                }
+                openUserUI()
             }
-        } else {
-            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                putBoolean("make_splash", true)
-                putInt("active_user_id", id)
-            }
-            openUserUI()
         }
+    }
+
+    private suspend fun getConfData(id: Int): ConfData = withContext(Dispatchers.IO) {
+        return@withContext confDatabase.getUserById(id)
     }
 
     private fun openUserUI() {
         val action = LoginFragmentDirections.actionNavLoginToNavHome2()
         findNavController().navigate(action)
+        (requireActivity() as MainActivity).updateUI(UITypes.ALL_DATA)
     }
 }

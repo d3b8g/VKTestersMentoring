@@ -1,5 +1,6 @@
 package net.d3b8g.vktestersmentoring.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.interfaces.Login
-import net.d3b8g.vktestersmentoring.modules.UserData
 
-class UserAdapter(val login:Login): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UserAdapter(val login:Login) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var dataUser:ArrayList<UserData> = ArrayList()
+    var dataUser: ArrayList<UserData> = ArrayList()
 
-    fun setUser(arrayList:ArrayList<UserData>){
+    @SuppressLint("NotifyDataSetChanged")
+    fun setUser(arrayList: ArrayList<UserData>){
         dataUser.clear()
         dataUser.addAll(arrayList)
         notifyDataSetChanged()
@@ -28,7 +30,7 @@ class UserAdapter(val login:Login): RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(holder is UserViewHolder) holder.bind(dataUser[position])
+        if (holder is UserViewHolder) holder.bind(dataUser[position])
     }
 
     override fun getItemCount(): Int = dataUser.size
