@@ -1,5 +1,15 @@
 package net.d3b8g.vktestersmentoring
 
+/*
+Copyright (c) 2021 github.com/d3b8g
+All Rights Reserved
+
+This product is protected by copyright and distributed under
+licenses restricting copying, distribution and decompilation.
+
+Use this code only for non commercial purpose.
+*/
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
@@ -14,6 +24,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -25,13 +36,17 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.*
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
+import net.d3b8g.vktestersmentoring.interfaces.ActionBar
 import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
 import net.d3b8g.vktestersmentoring.modules.UITypes
+import net.d3b8g.vktestersmentoring.ui.home.HomeFragment
+import net.d3b8g.vktestersmentoring.ui.home.HomeFragmentDirections
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
-import net.d3b8g.vktestersmentoring.ui.settings.Settings
+import net.d3b8g.vktestersmentoring.ui.login.LoginFragmentDirections
+import net.d3b8g.vktestersmentoring.ui.settings.SettingsFragment
 
-class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateMainUI {
+class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateMainUI, ActionBar {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var mineName: TextView
@@ -71,8 +86,9 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-
         navView.setupWithNavController(navController)
+
+        actionBarChange(true)
 
         headerLayoutInflater = navView.getHeaderView(0)
         mineName = headerLayoutInflater.findViewById(R.id.main_user_name)
@@ -162,7 +178,9 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_settings -> {
-                startActivity(Intent(this, Settings::class.java))
+                val action = HomeFragmentDirections.actionNavHomeToNavSettings()
+                this.findNavController(R.id.nav_host_fragment).navigate(action)
+                actionBarChange(true)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -183,6 +201,11 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         val transaction = (this as FragmentActivity).supportFragmentManager.beginTransaction()
         transaction.replace(mCenter.id, MediaCenter()).commit()
         mCenter.visibility = View.VISIBLE
+    }
+
+    override fun actionBarChange(hide: Boolean) {
+        if (hide) supportActionBar?.hide()
+        else supportActionBar?.show()
     }
 
     companion object {

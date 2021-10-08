@@ -128,5 +128,6 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
         val action = LoginFragmentDirections.actionNavLoginToNavHome2()
         findNavController().navigate(action)
         (requireActivity() as MainActivity).updateUI(UITypes.ALL_DATA)
+        (requireActivity() as net.d3b8g.vktestersmentoring.interfaces.ActionBar).actionBarChange(false)
     }
 }

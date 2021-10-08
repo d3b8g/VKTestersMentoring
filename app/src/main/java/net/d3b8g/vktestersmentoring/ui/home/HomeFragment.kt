@@ -1,5 +1,15 @@
 package net.d3b8g.vktestersmentoring.ui.home
 
+/*
+Copyright (c) 2021 github.com/d3b8g
+All Rights Reserved
+
+This product is protected by copyright and distributed under
+licenses restricting copying, distribution and decompilation.
+
+Use this code only for non commercial purpose.
+*/
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -18,7 +28,8 @@ import net.d3b8g.vktestersmentoring.interfaces.LonggridCall
 import net.d3b8g.vktestersmentoring.modules.LongGridModule
 import net.d3b8g.vktestersmentoring.prefs.*
 
-class HomeFragment: Fragment(R.layout.fragment_longgrid), LonggridCall {
+class HomeFragment : Fragment(R.layout.fragment_longgrid), LonggridCall {
+
     private lateinit var binding: FragmentLonggridBinding
     private lateinit var adapter: LongGridAdapter
     var displayWidth = 0
@@ -26,6 +37,7 @@ class HomeFragment: Fragment(R.layout.fragment_longgrid), LonggridCall {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentLonggridBinding.bind(view)
 
+        (requireActivity() as net.d3b8g.vktestersmentoring.interfaces.ActionBar).actionBarChange(false)
         adapter = LongGridAdapter(this)
         binding.rcvLongrid.adapter = adapter
         binding.rcvLongrid.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false)

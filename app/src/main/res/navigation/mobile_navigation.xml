@@ -20,7 +20,6 @@
         android:name="net.d3b8g.vktestersmentoring.ui.login.SplashScreen"
         android:label="@string/splash_screen"
         tools:layout="@layout/splash_screen">
-
         <action
             android:id="@+id/action_nav_splash_to_nav_login"
             app:destination="@id/nav_login" />
@@ -52,6 +51,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_notes"
             app:destination="@id/nav_notes" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_settings"
+            app:destination="@id/nav_settings" />
     </fragment>
 
     <fragment
@@ -94,4 +96,15 @@
         tools:layout="@layout/fragment_userdata"
         android:label="Инициализация"
         android:name="net.d3b8g.vktestersmentoring.ui.confdata.UserDataFragment"/>
+    <fragment android:id="@+id/nav_settings"
+        tools:layout="@layout/fragment_settings"
+        android:label="Настройки"
+        android:name="net.d3b8g.vktestersmentoring.ui.settings.SettingsFragment">
+        <action
+            android:id="@+id/action_nav_settings_to_nav_login"
+            app:destination="@id/nav_login" />
+        <action
+            android:id="@+id/action_nav_settings_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>

@@ -28,8 +28,7 @@
             </intent-filter>
         </activity>
         <service android:name=".back.DictoCors"/>
-        <activity android:name=".ui.settings.Settings"/>
-        <activity android:name=".ui.login.SplashScreen"/>
+        <activity android:name=".ui.settings.SettingsFragment"/>
     </application>
 
 </manifest>

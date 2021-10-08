@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import net.d3b8g.vktestersmentoring.db.UserData.UserData
 
 @Dao
 interface ConfDatabaseDao {
