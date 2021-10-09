@@ -14,6 +14,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
@@ -37,10 +38,13 @@ class HomeFragment : Fragment(R.layout.fragment_longgrid), LonggridCall {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentLonggridBinding.bind(view)
 
-        (requireActivity() as net.d3b8g.vktestersmentoring.interfaces.ActionBar).actionBarChange(false)
+        (requireActivity() as net.d3b8g.vktestersmentoring.interfaces.ActionBar).actionBarChange(
+            false
+        )
         adapter = LongGridAdapter(this)
         binding.rcvLongrid.adapter = adapter
-        binding.rcvLongrid.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false)
+        binding.rcvLongrid.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         binding.rcvLongrid.setHasFixedSize(true)
         adapter.update(view.context)
 
@@ -52,20 +56,26 @@ class HomeFragment : Fragment(R.layout.fragment_longgrid), LonggridCall {
         binding.plugText.visibility = View.GONE
         binding.lgComponentsBlock.visibility = View.VISIBLE
         binding.lgOpen.setOnClickListener {
+            Log.e("RRR", item.link)
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.link))
             ContextCompat.startActivity(requireActivity(), browserIntent, null)
         }
         binding.lgTitle.text = item.title
         binding.lgHadRead.isChecked = item.hadRead
         binding.lgProgressText.text = "${item.quality}/10"
-        binding.lgProgress.progress =  item.quality
+        binding.lgProgress.progress = item.quality
         binding.lgHadRead.setOnClickListener {
             setReadParam(requireActivity(), paramCt("check_box_$pos", binding.lgHadRead.isChecked))
             adapter.update(requireContext())
-            if(getCountReads(requireActivity()) == 12) Toast.makeText(requireContext(),"Поздравляю, ты прочитал все статьи и стал отважным джедаеm!", Toast.LENGTH_SHORT).show()
+            if (getCountReads(requireActivity()) == 12)
+                Toast.makeText(
+                    requireContext(),
+                    "Поздравляю, ты прочитал все статьи и стал отважным джедаеm!",
+                    Toast.LENGTH_SHORT
+                ).show()
         }
 
-        binding.lgProgress.setOnTouchListener { _, event ->
+        binding.lgProgress.setOnTouchListener { _, event->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val progressValue = event.x.toInt() * 10 / (binding.lgProgress.width - 20)
                 binding.lgProgress.progress = progressValue

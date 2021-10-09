@@ -1,5 +1,15 @@
 package net.d3b8g.vktestersmentoring.ui.home
 
+/*
+Copyright (c) 2021 github.com/d3b8g
+All Rights Reserved
+
+This product is protected by copyright and distributed under
+licenses restricting copying, distribution and decompilation.
+
+Use this code only for non commercial purpose.
+*/
+
 import android.content.Intent
 import android.media.MediaRecorder
 import android.os.Bundle
@@ -9,7 +19,7 @@ import androidx.fragment.app.Fragment
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.back.DictoCors
 import net.d3b8g.vktestersmentoring.databinding.FragmentMcenterBinding
-import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicroActive
+import net.d3b8g.vktestersmentoring.helper.Components.mMicroActive
 
 class MediaCenter: Fragment(R.layout.fragment_mcenter) {
     private lateinit var binding: FragmentMcenterBinding
@@ -20,7 +30,7 @@ class MediaCenter: Fragment(R.layout.fragment_mcenter) {
         binding.btnActionPlayer.setOnClickListener {
             recording_anim = !recording_anim
             if(recording_anim) {
-                requireActivity().startService(Intent(requireContext(), DictoCors::class.java))
+                requireContext().startService(Intent(requireActivity(), DictoCors::class.java))
                 mediaCenterAnimateRecording()
                 binding.btnActionPlayer.setImageDrawable(resources.getDrawable(R.drawable.ic_stop))
                 binding.statusRecording.text = "Записываем аудио"
@@ -49,7 +59,7 @@ class MediaCenter: Fragment(R.layout.fragment_mcenter) {
         }
     }
 
-    fun mediaCenterAnimateRecording() {
+    private fun mediaCenterAnimateRecording() {
         Thread {
             activity?.runOnUiThread {
                 if(recording_anim) {

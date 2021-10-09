@@ -19,9 +19,8 @@ class BugsFragment : Fragment(R.layout.fragment_bugs) {
         binding = FragmentBugsBinding.bind(root)
 
         setupTextValue()
-        binding.countRep.onFocusChangeListener = View.OnFocusChangeListener { view, hadFocus ->
-            if (!hadFocus && binding.countRep.text.toString().isNotBlank() &&
-                binding.countRep.text.toString().filter { it.isDigit() } != "" ) {
+        binding.countRep.onFocusChangeListener = View.OnFocusChangeListener { _, hadFocus ->
+            if (!hadFocus && binding.countRep.text.toString().fieldChecker() ) {
                 PreferenceManager.getDefaultSharedPreferences(root.context).edit {
                     putInt("report_count_now", binding.countRep.text.toString().filter { it.isDigit() }.toInt())
                 }
@@ -34,27 +33,27 @@ class BugsFragment : Fragment(R.layout.fragment_bugs) {
 
         }
         binding.countRepWanna.onFocusChangeListener = View.OnFocusChangeListener { view, hadFocus ->
-            if (!hadFocus && binding.countRepWanna.text.toString().isNotBlank() &&
-                binding.countRepWanna.text.toString().filter { it.isDigit() } != "" &&
-                binding.countRepWanna.text.toString() != "0") {
-                PreferenceManager.getDefaultSharedPreferences(root.context).edit {
-                    putInt("report_count_wanna", binding.countRepWanna.text.toString().filter { it.isDigit() }.toInt())
-                }
-                binding.countRepWanna.clearFocus()
-                binding.percentResult.text = getPercent()
-                setupTextValue()
+            if (!hadFocus && binding.countRepWanna.text.toString().fieldChecker()) {
+                    PreferenceManager.getDefaultSharedPreferences(root.context).edit {
+                        putInt("report_count_wanna", binding.countRepWanna.text.toString().filter { it.isDigit() }.toInt())
+                    }
+                    binding.countRepWanna.clearFocus()
+                    binding.percentResult.text = getPercent()
+                    setupTextValue()
             } else if(binding.countRepWanna.text.toString().isNotBlank() && !binding.countRepWanna.text!!.matches("\\d+".toRegex())) {
                 binding.lWannaRep.error = "Поле должно содержать цифры. Текст будет автоматически удален."
             }
         }
 
         binding.countRepWanna.setOnEditorActionListener { it, i, _ ->
-            if(i == EditorInfo.IME_ACTION_DONE && binding.countRepWanna.text.toString() != "0") {
+            if(i == EditorInfo.IME_ACTION_DONE && binding.countRepWanna.text.toString().take(0) != "0") {
                 it.clearFocus()
                 val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(it.windowToken, 0)
                 PreferenceManager.getDefaultSharedPreferences(root.context).edit {
-                    putInt("report_count_wanna", it.text.toString().filter { it.isDigit() }.toInt())
+                    if (it.text.toString().fieldChecker()) {
+                        putInt("report_count_wanna", it.text.toString().filter { it.isDigit() }.toInt())
+                    }
                 }
                 binding.percentResult.text = getPercent()
                 setupTextValue()
@@ -67,6 +66,9 @@ class BugsFragment : Fragment(R.layout.fragment_bugs) {
         binding.percentResult.text = getPercent()
     }
 
+    private fun String.fieldChecker(): Boolean {
+        return this.filter { it.isDigit() } != "" && this.take(1) != "0"
+    }
 
     private fun getPercent() = ((100 * PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_now", 0)) /
             PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_wanna", 1)).toString() + "%"

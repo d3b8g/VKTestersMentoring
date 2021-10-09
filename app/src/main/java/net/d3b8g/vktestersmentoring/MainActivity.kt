@@ -11,11 +11,8 @@ Use this code only for non commercial purpose.
 */
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -24,7 +21,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -39,12 +35,8 @@ import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 import net.d3b8g.vktestersmentoring.interfaces.ActionBar
 import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
 import net.d3b8g.vktestersmentoring.modules.UITypes
-import net.d3b8g.vktestersmentoring.ui.home.HomeFragment
-import net.d3b8g.vktestersmentoring.ui.home.HomeFragmentDirections
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
 import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
-import net.d3b8g.vktestersmentoring.ui.login.LoginFragmentDirections
-import net.d3b8g.vktestersmentoring.ui.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateMainUI, ActionBar {
 
@@ -82,7 +74,8 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
                 R.id.nav_upload,
                 R.id.nav_mv,
                 R.id.nav_notes,
-                R.id.nav_conf
+                R.id.nav_conf,
+                R.id.nav_settings
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -111,18 +104,17 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         scope.launch {
             val user = getUser()
 
-            when (true) {
-                (type == UITypes.ALL_DATA || type == UITypes.AVATAR) && user.avatar.isNotEmpty()-> {
-                    Picasso.get().load(user.avatar).resize(150, 150).into(userImage)
-                }
-                type == UITypes.ALL_DATA || type == UITypes.USERNAME -> {
-                    mineName.text = user.username
-                }
-                type == UITypes.ALL_DATA || type == UITypes.VISITS -> {
-                    user.counter.let {
-                        setScoreVisit(it)
-                        visits = it + 1
-                    }
+            if ((type == UITypes.ALL_DATA || type == UITypes.AVATAR) && user.avatar.isNotEmpty()) {
+                Picasso.get().load(user.avatar).resize(150,150).into(userImage)
+            }
+            if (type == UITypes.ALL_DATA || type == UITypes.USERNAME) {
+                mineName.text = user.username
+            }
+            if (type == UITypes.ALL_DATA || type == UITypes.VISITS) {
+                user.counter.let {
+                    visits = it + 1
+                    setScoreVisit(visits)
+                    updateVisitsCounter(visits)
                 }
             }
         }
@@ -130,6 +122,10 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
 
     private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
         return@withContext userDatabase.getUserById(1)
+    }
+
+    private suspend fun updateVisitsCounter(visits: Int) = withContext(Dispatchers.IO) {
+        userDatabase.updateVisitsCounter(visits)
     }
 
     private fun titleStatus(count: Int?): String = when {
@@ -148,7 +144,7 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
     @SuppressLint("SetTextI18n")
     private fun setScoreVisit(count: Int) {
         mineVisits.text = "Вы посетили приложение: $count ${titleStatus(count)}"
-        when(count){
+        when(count) {
             in 51..100 -> {
                 mineVisits.setTextColor(Color.parseColor("#8b00ff"))
             }
@@ -168,22 +164,6 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
                 mineVisits.setTextColor(Color.parseColor("#e13100"))
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_settings -> {
-                val action = HomeFragmentDirections.actionNavHomeToNavSettings()
-                this.findNavController(R.id.nav_host_fragment).navigate(action)
-                actionBarChange(true)
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
@@ -207,6 +187,8 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         if (hide) supportActionBar?.hide()
         else supportActionBar?.show()
     }
+
+    override fun onBackPressed() {}
 
     companion object {
         var uid = 1

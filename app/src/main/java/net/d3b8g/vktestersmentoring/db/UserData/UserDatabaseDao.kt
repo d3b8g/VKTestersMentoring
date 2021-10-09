@@ -17,6 +17,9 @@ interface UserDatabaseDao {
     @Update
     fun update(data: UserData)
 
+    @Query("UPDATE userbase SET counter = :visits")
+    fun updateVisitsCounter(visits: Int)
+
     @Query("SELECT * FROM userbase WHERE id == :id")
     fun getUserById(id: Int): UserData
 

@@ -1,8 +1,19 @@
 package net.d3b8g.vktestersmentoring.ui.login
 
+/*
+Copyright (c) 2021 github.com/d3b8g
+All Rights Reserved
+
+This product is protected by copyright and distributed under
+licenses restricting copying, distribution and decompilation.
+
+Use this code only for non commercial purpose.
+*/
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -54,13 +65,12 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
                         userId = getInt("active_user_id", 0) + 1
                     }
                     PreferenceManager.getDefaultSharedPreferences(context).edit {
-                        putBoolean("make_splash", true)
                         putInt("active_user_id", userId)
                     }
                     lifecycleScope.launch {
                         withContext(Dispatchers.IO) {
                             userDatabase.insert(UserData(
-                                0, it.text!!.toString(), "", 0, 0
+                                0, it.text!!.toString(), "https://sun9-4.userapi.com/impf/ory_hkWodVNvq5zVfv2D0gRUIPUT0KGCUGO9yQ/FOvsQmbn2e4.jpg?size=1499x1411&quality=95&sign=b2dbcc1151a49b3e01711f0cb36408bb&type=album", 0, 0
                             ))
                             confDatabase.insert(ConfData(
                                 0, "null@vktm",""
@@ -75,33 +85,39 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
                 }
             }
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {}
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun updateUserData() {
         lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                listBack.addAll(userDatabase.getAllData())
+            val listData = withContext(Dispatchers.IO) {
+                return@withContext userDatabase.getAllData()
             }
-        }
 
-        if (!listBack.none()){
-            binding.userDb.visibility = View.VISIBLE
-            adapter.setUser(listBack)
-            binding.loginText.text = getString(R.string.login)
+            listBack.addAll(listData)
+
+            if (!listBack.none()) {
+                binding.userDb.visibility = View.VISIBLE
+                adapter.setUser(listBack)
+                binding.loginText.text = getString(R.string.login)
+            }
         }
     }
 
     override fun loginUser(id: Int) {
         lifecycleScope.launch {
             val pass = getConfData(id).password
-            if(pass.isNotEmpty()) {
+            if (pass.isNotEmpty()) {
                 binding.tlInputPassword.visibility = View.VISIBLE
                 binding.login.visibility = View.VISIBLE
                 binding.login.setOnClickListener {
                     binding.loginPassword.let {
-                        if(!it.text.isNullOrEmpty() && it.text.toString() == pass) {
+                        if (!it.text.isNullOrEmpty() && it.text.toString() == pass) {
                             PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                                putBoolean("make_splash", true)
                                 putInt("active_user_id", id)
                             }
                             openUserUI()
@@ -112,7 +128,6 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
                 }
             } else {
                 PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                    putBoolean("make_splash", true)
                     putInt("active_user_id", id)
                 }
                 openUserUI()

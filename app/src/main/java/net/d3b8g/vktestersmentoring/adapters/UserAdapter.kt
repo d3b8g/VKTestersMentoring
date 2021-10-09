@@ -1,5 +1,15 @@
 package net.d3b8g.vktestersmentoring.adapters
 
+/*
+Copyright (c) 2021 github.com/d3b8g
+All Rights Reserved
+
+This product is protected by copyright and distributed under
+licenses restricting copying, distribution and decompilation.
+
+Use this code only for non commercial purpose.
+*/
+
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +27,7 @@ class UserAdapter(val login:Login) : RecyclerView.Adapter<RecyclerView.ViewHolde
     var dataUser: ArrayList<UserData> = ArrayList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setUser(arrayList: ArrayList<UserData>){
+    fun setUser(arrayList: ArrayList<UserData>) {
         dataUser.clear()
         dataUser.addAll(arrayList)
         notifyDataSetChanged()
@@ -36,17 +46,16 @@ class UserAdapter(val login:Login) : RecyclerView.Adapter<RecyclerView.ViewHolde
     override fun getItemCount(): Int = dataUser.size
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(user:UserData){
+        fun bind(user: UserData) {
             val name = itemView.findViewById<TextView>(R.id.user_name)
             val avatar = itemView.findViewById<CircleImageView>(R.id.user_image)
             val percent = itemView.findViewById<TextView>(R.id.user_percent)
             name.text = user.username
-            Picasso.get()
-                .load(user.avatar)
-                .into(avatar)
+            if (user.avatar.isNotEmpty()) Picasso.get().load(user.avatar).into(avatar)
+
             percent.text = user.scope.toString()
             itemView.setOnClickListener {
-                login.loginUser(adapterPosition)
+                login.loginUser(adapterPosition + 1)
             }
         }
     }

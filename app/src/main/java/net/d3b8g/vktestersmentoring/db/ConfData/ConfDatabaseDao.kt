@@ -12,10 +12,10 @@ interface ConfDatabaseDao {
     fun deleteAll()
 
     @Insert
-    fun insert(data: ConfData): Long
+    fun insert(data: ConfData)
 
     @Update
-    fun update(data: ConfData): Int
+    fun update(data: ConfData)
 
     @Query("SELECT * FROM confbase WHERE id == :id")
     fun getUserById(id: Int): ConfData

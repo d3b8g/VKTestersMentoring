@@ -1,5 +1,15 @@
 package net.d3b8g.vktestersmentoring.adapters
 
+/*
+Copyright (c) 2021 github.com/d3b8g
+All Rights Reserved
+
+This product is protected by copyright and distributed under
+licenses restricting copying, distribution and decompilation.
+
+Use this code only for non commercial purpose.
+*/
+
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.view.LayoutInflater
@@ -10,9 +20,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicro
-import net.d3b8g.vktestersmentoring.helper.Components.Companion.mPlayer
-import net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath
+import net.d3b8g.vktestersmentoring.helper.Components.mMicro
+import net.d3b8g.vktestersmentoring.helper.Components.mPlayer
+import net.d3b8g.vktestersmentoring.helper.PathHelper.audioPath
 import net.d3b8g.vktestersmentoring.modules.AudioAdapterModule
 import java.io.File
 

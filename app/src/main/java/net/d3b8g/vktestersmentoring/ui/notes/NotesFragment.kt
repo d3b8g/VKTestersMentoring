@@ -25,9 +25,9 @@ class NotesFragment : Fragment(), UpdateNotes {
     ): View? {
         val inflate = inflater.inflate(R.layout.fragment_nots,container,false)
 
-        var add = inflate.findViewById<Button>(R.id.add_notes)
-        var import = inflate.findViewById<Button>(R.id.import_notes)
-        var rcv = inflate.findViewById<RecyclerView>(R.id.rcv_notes)
+        val add = inflate.findViewById<Button>(R.id.add_notes)
+        val import = inflate.findViewById<Button>(R.id.import_notes)
+        val rcv = inflate.findViewById<RecyclerView>(R.id.rcv_notes)
 
         adapter = NotesAdapter()
         rcv.adapter = adapter
