@@ -1,0 +1,1711 @@
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\nbuildscript {\n    ext.kotlin_version = \"1.3.72\"\n    repositories {\n        google()\n        jcenter()\n    }\n    dependencies {\n        classpath 'com.android.tools.build:gradle:4.1.2'\n        classpath \"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version\"\n\n        // NOTE: Do not place your application dependencies here; they belong\n        // in the individual module build.gradle file\n    }\n}\n\nallprojects {\n    repositories {\n        google()\n        jcenter()\n    }\n}\n\ntask clean(type: Delete) {\n    delete rootProject.buildDir\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ build.gradle	(date 1622237959429)
+@@ -1,12 +1,12 @@
+ // Top-level build file where you can add configuration options common to all sub-projects/modules.
+ buildscript {
+-    ext.kotlin_version = "1.3.72"
++    ext.kotlin_version = "1.5.0"
+     repositories {
+         google()
+-        jcenter()
++        mavenCentral()
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:4.1.2'
++        classpath 'com.android.tools.build:gradle:4.2.1'
+         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+ 
+         // NOTE: Do not place your application dependencies here; they belong
+@@ -17,7 +17,6 @@
+ allprojects {
+     repositories {
+         google()
+-        jcenter()
+     }
+ }
+ 
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\napply plugin: 'kotlin-android'\napply plugin: 'kotlin-android-extensions'\n\nandroid {\n    compileSdkVersion 29\n\n    defaultConfig {\n        applicationId \"net.d3b8g.vktestersmentoring\"\n        minSdkVersion 22\n        targetSdkVersion 29\n        versionCode 2\n        versionName \"1.1\"\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\n    }\n\n    buildTypes {\n        release {\n            minifyEnabled false\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\n        }\n        debug {\n            debuggable true\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\n        }\n    }\n    compileOptions {\n        sourceCompatibility JavaVersion.VERSION_1_8\n        targetCompatibility JavaVersion.VERSION_1_8\n    }\n    kotlinOptions {\n        jvmTarget = '1.8'\n    }\n}\n\ndependencies {\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\n\n    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.3.0', {\n        exclude group: 'com.android.support', module: 'support-annotations'\n    })\n\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version\"\n    implementation 'androidx.core:core-ktx:1.3.2'\n    implementation 'androidx.appcompat:appcompat:1.2.0'\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\n    implementation 'com.google.android.material:material:1.3.0'\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'\n    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'\n    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'\n    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'\n    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'\n    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'\n    implementation 'com.google.code.gson:gson:2.8.6'\n\n    androidTestImplementation \"androidx.test.espresso:espresso-core:3.3.0\"\n    androidTestImplementation \"androidx.test.espresso:espresso-contrib:3.3.0\"\n\n    androidTestImplementation \"androidx.test:runner:1.3.0\"\n    androidTestImplementation \"androidx.test:core:1.3.0\"\n    androidTestImplementation \"androidx.test.ext:junit-ktx:1.1.2\"\n\n\n    implementation 'de.hdodenhof:circleimageview:3.1.0'\n    implementation 'com.squareup.picasso:picasso:2.71828'\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/build.gradle	(date 1622237865870)
+@@ -3,12 +3,12 @@
+ apply plugin: 'kotlin-android-extensions'
+ 
+ android {
+-    compileSdkVersion 29
++    compileSdkVersion 30
+ 
+     defaultConfig {
+         applicationId "net.d3b8g.vktestersmentoring"
+         minSdkVersion 22
+-        targetSdkVersion 29
++        targetSdkVersion 30
+         versionCode 2
+         versionName "1.1"
+         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+@@ -41,17 +41,16 @@
+     })
+ 
+     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+-    implementation 'androidx.core:core-ktx:1.3.2'
+-    implementation 'androidx.appcompat:appcompat:1.2.0'
++    implementation 'androidx.core:core-ktx:1.5.0'
++    implementation 'androidx.appcompat:appcompat:1.3.0'
+     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+     implementation 'com.google.android.material:material:1.3.0'
+     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+     implementation 'com.google.code.gson:gson:2.8.6'
++    implementation "androidx.preference:preference-ktx:1.1.1"
+ 
+     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
+     androidTestImplementation "androidx.test.espresso:espresso-contrib:3.3.0"
+Index: app/src/main/res/layout/fragment_slideshow.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:background=\"@drawable/custom_background_gallery\"\n    android:layout_height=\"match_parent\"\n    tools:context=\".ui.gallery.GalleryFragment\"\n    android:orientation=\"vertical\">\n\n    <LinearLayout\n        android:layout_marginTop=\"12dp\"\n        android:layout_marginEnd=\"16dp\"\n        android:gravity=\"right\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\">\n        <TextView\n            android:id=\"@+id/gallery_count\"\n            android:textSize=\"18sp\"\n            android:textColor=\"@android:color/white\"\n            android:layout_marginEnd=\"16dp\"\n            android:text=\"У меня 0 медиафайлов.\"\n            android:gravity=\"center\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"match_parent\"/>\n        <de.hdodenhof.circleimageview.CircleImageView\n            android:src=\"@android:color/white\"\n            android:id=\"@+id/user_img_gallery\"\n            android:layout_width=\"65dp\"\n            android:layout_height=\"65dp\"/>\n    </LinearLayout>\n    <AutoCompleteTextView\n        android:focusableInTouchMode=\"true\"\n        android:cursorVisible=\"false\"\n        android:focusable=\"false\"\n        android:layout_marginStart=\"100dp\"\n        android:text=\"Аудиозаписи\"\n        android:layout_marginTop=\"92dp\"\n        android:gravity=\"center\"\n        android:id=\"@+id/media_type\"\n        android:layout_width=\"match_parent\"\n        android:layout_marginEnd=\"8dp\"\n        android:singleLine=\"true\"\n        android:background=\"@drawable/btn_shape\"\n        android:layout_height=\"60dp\"\n        android:inputType=\"none|textNoSuggestions\" />\n    <androidx.recyclerview.widget.RecyclerView\n        android:layout_marginTop=\"28dp\"\n        android:visibility=\"gone\"\n        android:id=\"@+id/rcv_gallery\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"/>\n    <TextView\n        android:id=\"@+id/gallery_plug\"\n        android:layout_margin=\"28dp\"\n        android:text=\"Нажми на кнопку, чтобы раскрыть список медиафайлов.\"\n        android:layout_gravity=\"center\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"/>\n    <LinearLayout\n        android:id=\"@+id/rcv_plug\"\n        android:layout_marginTop=\"8dp\"\n        android:weightSum=\"5\"\n        android:orientation=\"horizontal\"\n        android:visibility=\"gone\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\">\n        <ImageView\n            android:layout_weight=\"1\"\n            android:src=\"@drawable/ic_info\"\n            android:layout_width=\"0dp\"\n            android:layout_height=\"match_parent\"/>\n        <TextView\n            android:id=\"@+id/rcv_plug_text\"\n            android:padding=\"4dp\"\n            android:layout_weight=\"3\"\n            android:text=\"Вы еще не записали ни одного аудио, хотите исправить это? \"\n            android:layout_width=\"0dp\"\n            android:layout_height=\"match_parent\"/>\n        <Button\n            android:textColor=\"@color/colorBlueStandard\"\n            android:textSize=\"13sp\"\n            android:textAllCaps=\"false\"\n            android:background=\"@android:color/transparent\"\n            android:layout_weight=\"1\"\n            android:id=\"@+id/go_to_dictophone\"\n            android:text=\"Записать\"\n            android:layout_width=\"0dp\"\n            android:layout_height=\"match_parent\"/>\n    </LinearLayout>\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_slideshow.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/res/layout/fragment_slideshow.xml	(date 1621810776582)
+@@ -52,14 +52,14 @@
+         android:layout_height="wrap_content"/>
+     <TextView
+         android:id="@+id/gallery_plug"
+-        android:layout_margin="28dp"
++        android:layout_margin="26dp"
+         android:text="Нажми на кнопку, чтобы раскрыть список медиафайлов."
+         android:layout_gravity="center"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"/>
+     <LinearLayout
+         android:id="@+id/rcv_plug"
+-        android:layout_marginTop="8dp"
++        android:layout_marginTop="18dp"
+         android:weightSum="5"
+         android:orientation="horizontal"
+         android:visibility="gone"
+Index: app/src/main/res/layout/layout_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<LinearLayout\n    android:orientation=\"vertical\"\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\">\n    <LinearLayout\n        android:orientation=\"horizontal\"\n        android:weightSum=\"3\"\n        android:padding=\"8dp\"\n        android:gravity=\"center\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\">\n        <TextView\n            android:textSize=\"20dp\"\n            android:text=\"Включить трекинг отчетов \"\n            android:layout_width=\"0dp\"\n            android:layout_weight=\"2\"\n            android:layout_height=\"wrap_content\"/>\n        <com.google.android.material.switchmaterial.SwitchMaterial\n            android:layout_weight=\"1\"\n            android:id=\"@+id/s_tracking\"\n            android:layout_width=\"0dp\"\n            android:layout_height=\"wrap_content\"/>\n    </LinearLayout>\n    <LinearLayout\n        android:orientation=\"horizontal\"\n        android:weightSum=\"3\"\n        android:padding=\"8dp\"\n        android:gravity=\"center\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\">\n        <TextView\n            android:textSize=\"20dp\"\n            android:text=\"Использовать загруженную аватарку в навбаре \"\n            android:layout_width=\"0dp\"\n            android:layout_weight=\"2\"\n            android:layout_height=\"wrap_content\"/>\n        <com.google.android.material.switchmaterial.SwitchMaterial\n            android:layout_weight=\"1\"\n            android:id=\"@+id/s_avatar\"\n            android:layout_width=\"0dp\"\n            android:layout_height=\"wrap_content\"/>\n    </LinearLayout>\n    <Button\n        android:background=\"@android:color/transparent\"\n        android:textAllCaps=\"false\"\n        android:textColor=\"@color/colorRed\"\n        android:textStyle=\"bold\"\n        android:gravity=\"center\"\n        android:id=\"@+id/logout\"\n        android:text=\"Выйти\"\n        android:textSize=\"24sp\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"/>\n    <LinearLayout\n        android:layout_gravity=\"bottom\"\n        android:gravity=\"center|bottom\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\">\n        <TextView\n            android:textStyle=\"bold\"\n            android:textSize=\"22dp\"\n            android:text=\"Номер сборки: 3\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"/>\n    </LinearLayout>\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/layout_settings.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/res/layout/layout_settings.xml	(date 1622236928455)
+@@ -1,68 +1,122 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout
++    android:padding="6dp"
+     android:orientation="vertical"
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+     <LinearLayout
+-        android:orientation="horizontal"
+-        android:weightSum="3"
+-        android:padding="8dp"
+-        android:gravity="center"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content">
+-        <TextView
+-            android:textSize="20dp"
+-            android:text="Включить трекинг отчетов "
+-            android:layout_width="0dp"
+-            android:layout_weight="2"
+-            android:layout_height="wrap_content"/>
+-        <com.google.android.material.switchmaterial.SwitchMaterial
+-            android:layout_weight="1"
+-            android:id="@+id/s_tracking"
+-            android:layout_width="0dp"
+-            android:layout_height="wrap_content"/>
+-    </LinearLayout>
+-    <LinearLayout
+-        android:orientation="horizontal"
+-        android:weightSum="3"
+-        android:padding="8dp"
+-        android:gravity="center"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content">
+-        <TextView
+-            android:textSize="20dp"
+-            android:text="Использовать загруженную аватарку в навбаре "
+-            android:layout_width="0dp"
+-            android:layout_weight="2"
+-            android:layout_height="wrap_content"/>
+-        <com.google.android.material.switchmaterial.SwitchMaterial
+-            android:layout_weight="1"
+-            android:id="@+id/s_avatar"
+-            android:layout_width="0dp"
+-            android:layout_height="wrap_content"/>
++        android:layout_width="match_parent"
++        android:layout_height="60dp">
++        <ImageButton
++            android:layout_marginStart="12dp"
++            android:id="@+id/close"
++            android:background="@drawable/ic_close"
++            android:layout_gravity="center"
++            android:layout_width="30dp"
++            android:layout_height="30dp"/>
++        <TextView
++            android:layout_marginStart="-12dp"
++            android:gravity="center"
++            android:textSize="20sp"
++            android:textColor="@android:color/black"
++            android:textStyle="bold"
++            android:text="@string/action_settings"
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"/>
++    </LinearLayout>
++
++    <LinearLayout
++        android:background="@color/colorGray"
++        android:layout_marginStart="12dp"
++        android:layout_marginEnd="12dp"
++        android:layout_width="match_parent"
++        android:layout_height="1dp"/>
++
++    <LinearLayout
++        android:orientation="vertical"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content">
++        <LinearLayout
++            android:orientation="horizontal"
++            android:weightSum="3"
++            android:padding="8dp"
++            android:gravity="center"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content">
++            <TextView
++                android:textColor="@android:color/black"
++                android:textSize="16sp"
++                android:text="Включить трекинг отчетов "
++                android:layout_width="0dp"
++                android:layout_weight="2"
++                android:layout_height="wrap_content"/>
++            <com.google.android.material.switchmaterial.SwitchMaterial
++                android:layout_weight="1"
++                android:id="@+id/s_tracking"
++                android:layout_width="0dp"
++                android:layout_height="wrap_content"/>
++        </LinearLayout>
++        <LinearLayout
++            android:orientation="horizontal"
++            android:weightSum="3"
++            android:padding="8dp"
++            android:gravity="center"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content">
++            <TextView
++                android:textColor="@android:color/black"
++                android:textSize="16sp"
++                android:text="Использовать загруженную аватарку в навбаре "
++                android:layout_width="0dp"
++                android:layout_weight="2"
++                android:layout_height="wrap_content"/>
++            <com.google.android.material.switchmaterial.SwitchMaterial
++                android:layout_weight="1"
++                android:id="@+id/s_avatar"
++                android:layout_width="0dp"
++                android:layout_height="wrap_content"/>
++        </LinearLayout>
++        <LinearLayout
++            android:orientation="horizontal"
++            android:weightSum="2"
++            android:padding="8dp"
++            android:gravity="center"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content">
++            <TextView
++                android:textColor="@android:color/black"
++                android:textSize="16sp"
++                android:text="@string/default_fragment"
++                android:layout_width="0dp"
++                android:layout_weight="1"
++                android:layout_height="wrap_content"/>
++            <Button
++                android:textAllCaps="false"
++                android:textSize="16sp"
++                android:layout_weight="1"
++                android:id="@+id/default_fragment"
++                android:layout_width="0dp"
++                android:layout_height="wrap_content"/>
++        </LinearLayout>
+     </LinearLayout>
++
++    <LinearLayout
++        android:background="@color/colorGray"
++        android:layout_marginStart="12dp"
++        android:layout_marginEnd="12dp"
++        android:layout_width="match_parent"
++        android:layout_height="1dp"/>
++
+     <Button
+         android:background="@android:color/transparent"
+         android:textAllCaps="false"
++        android:layout_marginStart="6dp"
+         android:textColor="@color/colorRed"
+-        android:textStyle="bold"
+-        android:gravity="center"
++        android:gravity="center|left"
+         android:id="@+id/logout"
+         android:text="Выйти"
+-        android:textSize="24sp"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"/>
+-    <LinearLayout
+-        android:layout_gravity="bottom"
+-        android:gravity="center|bottom"
++        android:textSize="16sp"
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content">
+-        <TextView
+-            android:textStyle="bold"
+-            android:textSize="22dp"
+-            android:text="Номер сборки: 3"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"/>
+-    </LinearLayout>
+-</LinearLayout>
+\ No newline at end of file
++        android:layout_height="wrap_content"/>
++</LinearLayout>
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/dicto/Dictaphone.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.dicto\n\nimport android.Manifest\nimport android.content.Intent\nimport android.content.pm.PackageManager\nimport android.os.Bundle\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.ImageButton\nimport android.widget.Toast\nimport androidx.core.app.ActivityCompat\nimport androidx.core.content.ContextCompat\nimport androidx.fragment.app.Fragment\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.back.DictoCors\nimport net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicro\nimport net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicroActive\nimport net.d3b8g.vktestersmentoring.interfaces.MediaCenter\n\nclass Dictaphone: Fragment() {\n\n    lateinit var btnRecord:ImageButton\n\n    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {\n        val inflate = inflater.inflate(R.layout.fragment_dicto,container,false)\n\n        btnRecord = inflate.findViewById(R.id.btn_recording)\n        btnRecord.setOnClickListener {\n            if(mMicroActive) {\n                mMicro?.stop()\n                mMicro?.release()\n                mMicro = null\n                btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_mic))\n                mMicroActive = false\n                net.d3b8g.vktestersmentoring.ui.home.MediaCenter.recording_anim = false\n            }else{\n                if(!checkAudioPerm()){\n                    ActivityCompat.requestPermissions(\n                        requireActivity(),\n                        arrayOf(\n                            Manifest.permission.WRITE_EXTERNAL_STORAGE,\n                            Manifest.permission.READ_EXTERNAL_STORAGE,\n                            Manifest.permission.RECORD_AUDIO\n                        ),\n                        502\n                    )\n                }else{\n                    requireActivity().startService(Intent(requireContext(),DictoCors::class.java))\n                    btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))\n                    (inflate.context as MediaCenter).startRecordingComponents()\n                    mMicroActive = true\n                }\n            }\n        }\n        return inflate\n    }\n\n    private fun checkAudioPerm(): Boolean {\n        val write_external_storage_result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)\n        val read_external_storage_result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)\n        val record_audio_result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)\n        return write_external_storage_result == PackageManager.PERMISSION_GRANTED &&\n                record_audio_result == PackageManager.PERMISSION_GRANTED &&\n                read_external_storage_result == PackageManager.PERMISSION_GRANTED\n    }\n\n    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {\n        super.onRequestPermissionsResult(requestCode, permissions, grantResults)\n        when(requestCode){\n            502->{\n                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){\n                    requireActivity().startService(Intent(requireContext(),DictoCors::class.java))\n                    btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))\n                    (requireActivity() as MediaCenter).startRecordingComponents()\n                }else{\n                    Toast.makeText(requireContext(),\"Прокинь права приложению для микрофона\",Toast.LENGTH_SHORT).show()\n                }\n            }\n        }\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/dicto/Dictaphone.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/dicto/Dictaphone.kt	(date 1621811413723)
+@@ -4,9 +4,7 @@
+ import android.content.Intent
+ import android.content.pm.PackageManager
+ import android.os.Bundle
+-import android.view.LayoutInflater
+ import android.view.View
+-import android.view.ViewGroup
+ import android.widget.ImageButton
+ import android.widget.Toast
+ import androidx.core.app.ActivityCompat
+@@ -18,14 +16,14 @@
+ import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicroActive
+ import net.d3b8g.vktestersmentoring.interfaces.MediaCenter
+ 
+-class Dictaphone: Fragment() {
++class Dictaphone : Fragment(R.layout.fragment_dicto) {
+ 
+-    lateinit var btnRecord:ImageButton
++    lateinit var btnRecord: ImageButton
+ 
+-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+-        val inflate = inflater.inflate(R.layout.fragment_dicto,container,false)
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
+ 
+-        btnRecord = inflate.findViewById(R.id.btn_recording)
++        btnRecord = view.findViewById(R.id.btn_recording)
+         btnRecord.setOnClickListener {
+             if(mMicroActive) {
+                 mMicro?.stop()
+@@ -34,26 +32,23 @@
+                 btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_mic))
+                 mMicroActive = false
+                 net.d3b8g.vktestersmentoring.ui.home.MediaCenter.recording_anim = false
+-            }else{
+-                if(!checkAudioPerm()){
++            } else {
++                if(!checkAudioPerm()) {
+                     ActivityCompat.requestPermissions(
+                         requireActivity(),
+                         arrayOf(
+                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                             Manifest.permission.READ_EXTERNAL_STORAGE,
+                             Manifest.permission.RECORD_AUDIO
+-                        ),
+-                        502
+-                    )
+-                }else{
+-                    requireActivity().startService(Intent(requireContext(),DictoCors::class.java))
++                        ), 502)
++                } else {
++                    requireActivity().startService(Intent(requireContext(), DictoCors::class.java))
+                     btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
+-                    (inflate.context as MediaCenter).startRecordingComponents()
++                    (context as MediaCenter).startRecordingComponents()
+                     mMicroActive = true
+                 }
+             }
+         }
+-        return inflate
+     }
+ 
+     private fun checkAudioPerm(): Boolean {
+@@ -67,17 +62,16 @@
+ 
+     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+-        when(requestCode){
+-            502->{
+-                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+-                    requireActivity().startService(Intent(requireContext(),DictoCors::class.java))
++        when(requestCode) {
++            502 -> {
++                if(grantResults[0]==PackageManager.PERMISSION_GRANTED) {
++                    requireActivity().startService(Intent(requireContext(), DictoCors::class.java))
+                     btnRecord.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
+                     (requireActivity() as MediaCenter).startRecordingComponents()
+-                }else{
+-                    Toast.makeText(requireContext(),"Прокинь права приложению для микрофона",Toast.LENGTH_SHORT).show()
++                } else {
++                    Toast.makeText(requireContext(),"Прокинь права приложению для микрофона", Toast.LENGTH_SHORT).show()
+                 }
+             }
+         }
+     }
+-
+ }
+\ No newline at end of file
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/helper/PathHelper.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.helper\n\nimport android.os.Environment\nimport java.io.File\n\nclass PathHelper {\n    companion object{\n        var audioPath = \"${Environment.getExternalStorageDirectory().absolutePath}${File.separator}VKTMentoring${File.separator}audio${File.separator}\"\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/helper/PathHelper.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/helper/PathHelper.kt	(date 1621811413714)
+@@ -4,7 +4,16 @@
+ import java.io.File
+ 
+ class PathHelper {
+-    companion object{
+-        var audioPath = "${Environment.getExternalStorageDirectory().absolutePath}${File.separator}VKTMentoring${File.separator}audio${File.separator}"
++
++    fun checkFolders() = FolderCheck().start()
++
++    inner class FolderCheck : Thread() {
++        override fun run() {
++            File(audioPath).mkdirs()
++        }
++    }
++
++    companion object {
++        vaк audioPath = "${Environment.getExternalStorageDirectory().absolutePath}/VKTMentoring/audio/"
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring\n\nimport android.content.Intent\nimport android.graphics.Color\nimport android.os.Bundle\nimport android.preference.PreferenceManager\nimport android.util.Log\nimport android.view.Menu\nimport android.view.MenuItem\nimport android.view.View\nimport android.widget.FrameLayout\nimport android.widget.TextView\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.appcompat.widget.Toolbar\nimport androidx.drawerlayout.widget.DrawerLayout\nimport androidx.fragment.app.FragmentActivity\nimport androidx.navigation.findNavController\nimport androidx.navigation.ui.AppBarConfiguration\nimport androidx.navigation.ui.navigateUp\nimport androidx.navigation.ui.setupActionBarWithNavController\nimport androidx.navigation.ui.setupWithNavController\nimport com.google.android.material.navigation.NavigationView\nimport com.squareup.picasso.Picasso\nimport de.hdodenhof.circleimageview.CircleImageView\nimport net.d3b8g.vktestersmentoring.db.CreateUserExist\nimport net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar\nimport net.d3b8g.vktestersmentoring.ui.home.MediaCenter\nimport net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim\nimport net.d3b8g.vktestersmentoring.ui.login.Splash_\nimport net.d3b8g.vktestersmentoring.ui.settings.Settings\n\n\nclass MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateAvatar {\n\n    private lateinit var appBarConfiguration: AppBarConfiguration\n    lateinit var mineName: TextView\n    lateinit var mCenter: FrameLayout\n    lateinit var navView: NavigationView\n    lateinit var headerLayoutInflater: View\n    lateinit var mineVisits: TextView\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContentView(R.layout.activity_main)\n\n        startActivity(Intent(this@MainActivity, Splash_::class.java))\n\n        PreferenceManager.getDefaultSharedPreferences(this).apply {\n            uid = getInt(\"active_user_id\", 1)\n        }\n\n        init()\n\n        visits = getScoreVisits() + 1\n\n    }\n\n    private fun init(){\n        val toolbar: Toolbar = findViewById(R.id.toolbar)\n        setSupportActionBar(toolbar)\n\n        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)\n        navView = findViewById(R.id.nav_view)\n        val navController = findNavController(R.id.nav_host_fragment)\n        mCenter = findViewById(R.id.media_center)\n\n        appBarConfiguration = AppBarConfiguration(\n            setOf(\n                R.id.nav_home,\n                R.id.nav_bugs,\n                R.id.nav_slideshow,\n                R.id.nav_dictophone,\n                R.id.nav_upload,\n                R.id.nav_mv,\n                R.id.nav_notes,\n                R.id.nav_conf\n            ), drawerLayout\n        )\n        setupActionBarWithNavController(navController, appBarConfiguration)\n\n        navView.setupWithNavController(navController)\n\n        headerLayoutInflater = navView.getHeaderView(0)\n        mineName = headerLayoutInflater.findViewById(R.id.main_user_name)\n        mineVisits = headerLayoutInflater.findViewById(R.id.main_user_visits)\n        mineName.text = CreateUserExist(this).readUserData(uid)?.username\n\n        val userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)\n        Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)\n\n        setScoreVisit(getScoreVisits())\n    }\n\n    private fun getScoreVisits(): Int = CreateUserExist(this).readUserData(uid)!!.counter\n\n    private fun getUserImage(): String? = CreateUserExist(this).readUserData(uid)?.avatar\n\n    fun titleForStatus(count: Int?):String{\n        return when {\n            count in 5..20 -> \"раз\"\n            count.toString().takeLast(1)==\"l\" -> \"1 раз\"\n            else -> {\n                when (count.toString().takeLast(1).toInt()) {\n                    in 0..1 -> \"раз\"\n                    in 2..4 -> \"раза\"\n                    in 5..9 -> \"раз\"\n                    else -> \"раз\"\n                }\n            }\n        }\n    }\n\n    private fun setScoreVisit(count: Int) {\n        mineVisits.text = \"Вы посетили приложение: $count ${titleForStatus(count)}\"\n        when(count){\n            in 51..100 -> {\n                mineVisits.setTextColor(Color.parseColor(\"#8b00ff\"))\n            }\n            in 101..150 -> {\n                mineVisits.setTextColor(Color.parseColor(\"#fff211\"))\n            }\n            in 151..200 -> {\n                mineVisits.setTextColor(Color.parseColor(\"#18ff0f\"))\n            }\n            in 201..250 -> {\n                mineVisits.setTextColor(Color.parseColor(\"#321eff\"))\n            }\n            in 251..300 -> {\n                mineVisits.setTextColor(Color.parseColor(\"#ff77ea\"))\n            }\n            in 300..1900 -> {\n                mineVisits.setTextColor(Color.parseColor(\"#e13100\"))\n            }\n        }\n    }\n\n    override fun onCreateOptionsMenu(menu: Menu): Boolean {\n        menuInflater.inflate(R.menu.main, menu)\n        return true\n    }\n\n    override fun onOptionsItemSelected(item: MenuItem?): Boolean {\n        when(item?.itemId){\n            R.id.action_settings -> {\n                startActivity(Intent(this, Settings::class.java))\n            }\n        }\n        return super.onOptionsItemSelected(item)\n    }\n\n    override fun onResume() {\n        super.onResume()\n        setScoreVisit(visits)\n    }\n\n    override fun onPause() {\n        super.onPause()\n        CreateUserExist(this).updateCountVisits(uid.toString(), visits)\n    }\n\n    override fun onSupportNavigateUp(): Boolean {\n        val navController = findNavController(R.id.nav_host_fragment)\n        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()\n    }\n\n    override fun startRecordingComponents() {\n        recording_anim = true\n        val transaction = (this as FragmentActivity).supportFragmentManager.beginTransaction()\n        transaction.replace(mCenter.id, MediaCenter()).commit()\n        mCenter.visibility = View.VISIBLE\n    }\n\n    override fun updateAvatar() {\n        val userImage = headerLayoutInflater.findViewById<CircleImageView>(R.id.main_user_avatar)\n        Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)\n    }\n\n    companion object{\n        var uid = 1\n        var visits = 0\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/MainActivity.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/MainActivity.kt	(date 1621811413703)
+@@ -3,8 +3,7 @@
+ import android.content.Intent
+ import android.graphics.Color
+ import android.os.Bundle
+-import android.preference.PreferenceManager
+-import android.util.Log
++import androidx.preference.PreferenceManager
+ import android.view.Menu
+ import android.view.MenuItem
+ import android.view.View
+@@ -26,7 +25,7 @@
+ import net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar
+ import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
+ import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
+-import net.d3b8g.vktestersmentoring.ui.login.Splash_
++import net.d3b8g.vktestersmentoring.ui.login.SplashScreen
+ import net.d3b8g.vktestersmentoring.ui.settings.Settings
+ 
+ 
+@@ -43,16 +42,14 @@
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_main)
+ 
+-        startActivity(Intent(this@MainActivity, Splash_::class.java))
++        startActivity(Intent(this@MainActivity, SplashScreen::class.java))
+ 
+         PreferenceManager.getDefaultSharedPreferences(this).apply {
+             uid = getInt("active_user_id", 1)
+         }
+ 
+         init()
+-
+         visits = getScoreVisits() + 1
+-
+     }
+ 
+     private fun init(){
+@@ -95,10 +92,10 @@
+ 
+     private fun getUserImage(): String? = CreateUserExist(this).readUserData(uid)?.avatar
+ 
+-    fun titleForStatus(count: Int?):String{
++    private fun titleForStatus(count: Int?): String {
+         return when {
+             count in 5..20 -> "раз"
+-            count.toString().takeLast(1)=="l" -> "1 раз"
++            count.toString().takeLast(1) == "l" -> "1 раз"
+             else -> {
+                 when (count.toString().takeLast(1).toInt()) {
+                     in 0..1 -> "раз"
+@@ -112,7 +109,7 @@
+ 
+     private fun setScoreVisit(count: Int) {
+         mineVisits.text = "Вы посетили приложение: $count ${titleForStatus(count)}"
+-        when(count){
++        when(count) {
+             in 51..100 -> {
+                 mineVisits.setTextColor(Color.parseColor("#8b00ff"))
+             }
+@@ -139,8 +136,8 @@
+         return true
+     }
+ 
+-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+-        when(item?.itemId){
++    override fun onOptionsItemSelected(item: MenuItem): Boolean {
++        when(item.itemId){
+             R.id.action_settings -> {
+                 startActivity(Intent(this, Settings::class.java))
+             }
+@@ -175,7 +172,7 @@
+         Picasso.get().load(getUserImage()).resize(150, 150).into(userImage)
+     }
+ 
+-    companion object{
++    companion object {
+         var uid = 1
+         var visits = 0
+     }
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/home/MediaCenter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.home\n\nimport android.content.Intent\nimport android.media.MediaRecorder\nimport android.os.Bundle\nimport android.os.Handler\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.ImageButton\nimport android.widget.ImageView\nimport android.widget.RelativeLayout\nimport android.widget.TextView\nimport androidx.fragment.app.Fragment\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.back.DictoCors\nimport net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicroActive\n\nclass MediaCenter:Fragment() {\n\n    lateinit var b1: RelativeLayout\n    lateinit var b2: ImageView\n    lateinit var btn_rec: ImageButton\n    lateinit var status_t: TextView\n\n    companion object{\n        var recording_anim = mMicroActive\n        var mDicto: MediaRecorder? = null\n        var isDicto:Boolean = true\n    }\n\n    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {\n        val inflate = inflater.inflate(R.layout.fragment_mcenter,container,false)\n\n        btn_rec = inflate.findViewById(R.id.btn_action_player)\n        b1 = inflate.findViewById(R.id.recording_backg)\n        b2 = inflate.findViewById(R.id.recording_stat)\n        status_t = inflate.findViewById(R.id.status_recording)\n\n        btn_rec.setOnClickListener {\n            recording_anim = !recording_anim\n            if(recording_anim){\n                requireActivity().startService(Intent(requireContext(),DictoCors::class.java))\n                mediaCenterAnimateRecording()\n                btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_stop))\n                status_t.text = \"Записываем аудио\"\n            }\n            else {\n                mDicto?.stop()\n                mDicto?.release()\n                if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))\n                else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))\n                status_t.text = \"Запись остановлена\"\n                mMicroActive = false\n            }\n        }\n\n        mediaCenterAnimateRecording()\n\n        if(recording_anim){\n            btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_stop))\n            mediaCenterAnimateRecording()\n            status_t.text = \"Записываем аудио\"\n        }\n        else {\n            mDicto?.stop()\n            mDicto?.release()\n            if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))\n            else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))\n            status_t.text = \"Запись остановлена\"\n        }\n\n        return inflate\n    }\n\n\n    fun mediaCenterAnimateRecording(){\n        Thread{\n            activity?.runOnUiThread {\n                if(recording_anim){\n                    b1.visibility = View.VISIBLE\n                    b2.animate().alpha(1.0f).duration = 600\n                    Handler().postDelayed({\n                        b2.animate().alpha(0.0f).duration = 400\n                    },900)\n                    Handler().postDelayed({\n                        mediaCenterAnimateRecording()\n                    },1300)\n                }else {\n                    b1.visibility = View.GONE\n                    mDicto?.stop()\n                    mDicto?.release()\n                    if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))\n                    else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))\n                    status_t.text = \"Запись остановлена\"\n                }\n            }\n        }.start()\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/home/MediaCenter.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/home/MediaCenter.kt	(date 1621811413726)
+@@ -4,9 +4,8 @@
+ import android.media.MediaRecorder
+ import android.os.Bundle
+ import android.os.Handler
+-import android.view.LayoutInflater
++import android.os.Looper
+ import android.view.View
+-import android.view.ViewGroup
+ import android.widget.ImageButton
+ import android.widget.ImageView
+ import android.widget.RelativeLayout
+@@ -16,12 +15,12 @@
+ import net.d3b8g.vktestersmentoring.back.DictoCors
+ import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicroActive
+ 
+-class MediaCenter:Fragment() {
++class MediaCenter : Fragment(R.layout.fragment_mcenter) {
+ 
+     lateinit var b1: RelativeLayout
+     lateinit var b2: ImageView
+-    lateinit var btn_rec: ImageButton
+-    lateinit var status_t: TextView
++    lateinit var btnRec: ImageButton
++    lateinit var statusText: TextView
+ 
+     companion object{
+         var recording_anim = mMicroActive
+@@ -29,70 +28,65 @@
+         var isDicto:Boolean = true
+     }
+ 
+-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+-        val inflate = inflater.inflate(R.layout.fragment_mcenter,container,false)
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
+ 
+-        btn_rec = inflate.findViewById(R.id.btn_action_player)
+-        b1 = inflate.findViewById(R.id.recording_backg)
+-        b2 = inflate.findViewById(R.id.recording_stat)
+-        status_t = inflate.findViewById(R.id.status_recording)
++        btnRec = view.findViewById(R.id.btn_action_player)
++        b1 = view.findViewById(R.id.recording_backg)
++        b2 = view.findViewById(R.id.recording_stat)
++        statusText = view.findViewById(R.id.status_recording)
+ 
+-        btn_rec.setOnClickListener {
++        btnRec.setOnClickListener {
+             recording_anim = !recording_anim
+-            if(recording_anim){
+-                requireActivity().startService(Intent(requireContext(),DictoCors::class.java))
++            if(recording_anim) {
++                requireActivity().startService(Intent(requireContext(), DictoCors::class.java))
+                 mediaCenterAnimateRecording()
+-                btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_stop))
+-                status_t.text = "Записываем аудио"
+-            }
+-            else {
++                btnRec.setImageDrawable(resources.getDrawable(R.drawable.ic_stop))
++                statusText.text = "Записываем аудио"
++            } else {
+                 mDicto?.stop()
+                 mDicto?.release()
+-                if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
+-                else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
+-                status_t.text = "Запись остановлена"
++                if(isDicto) btnRec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
++                else btnRec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
++                statusText.text = "Запись остановлена"
+                 mMicroActive = false
+             }
+         }
+ 
+         mediaCenterAnimateRecording()
+ 
+-        if(recording_anim){
+-            btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_stop))
++        if(recording_anim) {
++            btnRec.setImageDrawable(resources.getDrawable(R.drawable.ic_stop))
+             mediaCenterAnimateRecording()
+-            status_t.text = "Записываем аудио"
+-        }
+-        else {
++            statusText.text = "Записываем аудио"
++        } else {
+             mDicto?.stop()
+             mDicto?.release()
+-            if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
+-            else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
+-            status_t.text = "Запись остановлена"
++            if(isDicto) btnRec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
++            else btnRec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
++            statusText.text = "Запись остановлена"
+         }
+-
+-        return inflate
+     }
+ 
+-
+-    fun mediaCenterAnimateRecording(){
++    private fun mediaCenterAnimateRecording(){
+         Thread{
+             activity?.runOnUiThread {
+                 if(recording_anim){
+                     b1.visibility = View.VISIBLE
+                     b2.animate().alpha(1.0f).duration = 600
+-                    Handler().postDelayed({
++                    Handler(Looper.getMainLooper()).postDelayed({
+                         b2.animate().alpha(0.0f).duration = 400
+                     },900)
+-                    Handler().postDelayed({
++                    Handler(Looper.getMainLooper()).postDelayed({
+                         mediaCenterAnimateRecording()
+                     },1300)
+-                }else {
++                } else {
+                     b1.visibility = View.GONE
+                     mDicto?.stop()
+                     mDicto?.release()
+-                    if(isDicto) btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
+-                    else btn_rec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
+-                    status_t.text = "Запись остановлена"
++                    if(isDicto) btnRec.setImageDrawable(resources.getDrawable(R.drawable.ic_mic))
++                    else btnRec.setImageDrawable(resources.getDrawable(R.drawable.ic_start))
++                    statusText.text = "Запись остановлена"
+                 }
+             }
+         }.start()
+Index: app/src/main/res/drawable/custom_background_gallery.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layer-list xmlns:android=\"http://schemas.android.com/apk/res/android\">\n    <item android:bottom=\"280dp\">\n        <shape android:shape=\"rectangle\">\n            <gradient\n                android:angle=\"135\"\n                android:centerColor=\"@color/colorAccent\"\n                android:endColor=\"@color/colorPrimaryDark\"\n                android:startColor=\"#4DB6AC\"\n                android:type=\"linear\" />\n\n        </shape>\n    </item>\n    <item android:top=\"280dp\">\n        <shape android:shape=\"rectangle\">\n            <solid android:color=\"@android:color/white\"></solid>\n        </shape>\n    </item>\n</layer-list>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/custom_background_gallery.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/res/drawable/custom_background_gallery.xml	(date 1621810857031)
+@@ -11,7 +11,7 @@
+ 
+         </shape>
+     </item>
+-    <item android:top="280dp">
++    <item android:top="245dp">
+         <shape android:shape="rectangle">
+             <solid android:color="@android:color/white"></solid>
+         </shape>
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/gallery/GalleryFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.gallery\n\nimport android.os.Bundle\nimport android.preference.PreferenceManager\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.*\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.fragment.app.Fragment\nimport androidx.recyclerview.widget.LinearLayoutManager\nimport androidx.recyclerview.widget.RecyclerView\nimport com.squareup.picasso.Picasso\nimport de.hdodenhof.circleimageview.CircleImageView\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.adapters.GalleryAdapter\nimport net.d3b8g.vktestersmentoring.helper.Components.Companion.mediaTypeGallery\nimport net.d3b8g.vktestersmentoring.helper.PathHelper\nimport java.io.File\n\nclass GalleryFragment : Fragment() {\n\n    lateinit var userImg:CircleImageView\n    lateinit var userData:TextView\n    lateinit var plug:TextView\n    lateinit var rcv:RecyclerView\n    lateinit var rcv_plug:LinearLayout\n    lateinit var mediaType: AutoCompleteTextView\n    lateinit var dictoOpen: Button\n\n    lateinit var adapter: GalleryAdapter\n\n    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {\n        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)\n        userImg = root.findViewById(R.id.user_img_gallery)\n        userData = root.findViewById(R.id.gallery_count)\n        plug = root.findViewById(R.id.gallery_plug)\n        rcv = root.findViewById(R.id.rcv_gallery)\n        rcv_plug = root.findViewById(R.id.rcv_plug)\n        dictoOpen = root.findViewById(R.id.go_to_dictophone)\n\n        PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {\n            Picasso.get().load(getString(\"user_img\",\"https://sun9-31.userapi.com/impf/c845017/v845017958/16cb40/BcXfWFsRUCw.jpg?size=1920x1280&quality=96&proxy=1&sign=7592ba24714b362951ee433338fee195\")).into(userImg)\n        }\n\n        val rpt = root.findViewById<TextView>(R.id.rcv_plug_text)\n\n        userData.text = setupDataCount()\n\n        mediaType = root.findViewById(R.id.media_type)\n        mediaType.setDropDownBackgroundDrawable(resources.getDrawable(R.drawable.btn_shape))\n        var adapterIssue = ArrayAdapter(requireActivity(),R.layout.list_item,mediaTypeGallery)\n        mediaType.setAdapter(adapterIssue)\n        mediaType.onItemClickListener = AdapterView.OnItemClickListener { _, _, index, id ->\n            plug.visibility = View.GONE\n            if(!adapter.update()) {\n                rpt.text = when(id){\n                    0.toLong() -> \"Вы еще не записали ни одного аудио, хотите исправить это?\"\n                    1.toLong() -> \"test text. Next release will replace this fragment on correct. Dont report this feature.\"\n                    else -> \"smth go wrong,Report\"\n                }\n                rcv_plug.visibility = View.VISIBLE\n            }\n            else rcv.visibility = View.VISIBLE\n        }\n        mediaType.setOnClickListener { mediaType.showDropDown() }\n        mediaType.showSoftInputOnFocus = false\n\n        adapter = GalleryAdapter()\n        rcv.adapter = adapter\n        rcv.layoutManager = LinearLayoutManager(inflater.context, RecyclerView.HORIZONTAL,false)\n        rcv.setHasFixedSize(true)\n\n        dictoOpen.setOnClickListener {\n\n        }\n\n        return root\n    }\n\n    private fun setupDataCount(): String {\n        //bla-bla with WHEN param\n        var count = File(PathHelper.audioPath).listFiles()?.size\n        return if(count == null){\n            \"У меня 0 медиафайлов\"\n        }else{\n            if(count in 5..20) {\n                \"У меня $count медиафайлов\"\n            }else{\n                when (count.toString().takeLast(1).toInt()) {\n                    0 -> \"У меня $count медиафайлов\"\n                    1 -> \"У меня $count медиафайл\"\n                    in 2..4 -> \"У меня $count медиафайла\"\n                    in 5..9 -> \"У меня $count медиафайлов\"\n                    else -> \"ERROR\"\n                }\n            }\n        }\n\n    }\n\n    override fun onPause() {\n        super.onPause()\n        (requireActivity() as AppCompatActivity).supportActionBar!!.show()\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/gallery/GalleryFragment.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/gallery/GalleryFragment.kt	(date 1621811413719)
+@@ -1,12 +1,9 @@
+ package net.d3b8g.vktestersmentoring.ui.gallery
+ 
+ import android.os.Bundle
+-import android.preference.PreferenceManager
+-import android.view.LayoutInflater
++import androidx.preference.PreferenceManager
+ import android.view.View
+-import android.view.ViewGroup
+ import android.widget.*
+-import androidx.appcompat.app.AppCompatActivity
+ import androidx.fragment.app.Fragment
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
+@@ -18,29 +15,31 @@
+ import net.d3b8g.vktestersmentoring.helper.PathHelper
+ import java.io.File
+ 
+-class GalleryFragment : Fragment() {
++class GalleryFragment : Fragment(R.layout.fragment_slideshow) {
+ 
+     lateinit var userImg:CircleImageView
+     lateinit var userData:TextView
+     lateinit var plug:TextView
+     lateinit var rcv:RecyclerView
+-    lateinit var rcv_plug:LinearLayout
++    lateinit var rcvPlug:LinearLayout
+     lateinit var mediaType: AutoCompleteTextView
+     lateinit var dictoOpen: Button
+-
+     lateinit var adapter: GalleryAdapter
++    lateinit var deleteAudio: Button
+ 
+-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
++    override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(root, savedInstanceState)
++
+         userImg = root.findViewById(R.id.user_img_gallery)
+         userData = root.findViewById(R.id.gallery_count)
+         plug = root.findViewById(R.id.gallery_plug)
+         rcv = root.findViewById(R.id.rcv_gallery)
+-        rcv_plug = root.findViewById(R.id.rcv_plug)
++        rcvPlug = root.findViewById(R.id.rcv_plug)
+         dictoOpen = root.findViewById(R.id.go_to_dictophone)
++        deleteAudio = root.findViewById(R.id.delete_audio)
+ 
+         PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
+-            Picasso.get().load(getString("user_img","https://sun9-31.userapi.com/impf/c845017/v845017958/16cb40/BcXfWFsRUCw.jpg?size=1920x1280&quality=96&proxy=1&sign=7592ba24714b362951ee433338fee195")).into(userImg)
++            Picasso.get().load(getString("user_img", "https://sun9-31.userapi.com/impf/c845017/v845017958/16cb40/BcXfWFsRUCw.jpg?size=1920x1280&quality=96&proxy=1&sign=7592ba24714b362951ee433338fee195")).into(userImg)
+         }
+ 
+         val rpt = root.findViewById<TextView>(R.id.rcv_plug_text)
+@@ -49,17 +48,18 @@
+ 
+         mediaType = root.findViewById(R.id.media_type)
+         mediaType.setDropDownBackgroundDrawable(resources.getDrawable(R.drawable.btn_shape))
+-        var adapterIssue = ArrayAdapter(requireActivity(),R.layout.list_item,mediaTypeGallery)
++
++        val adapterIssue = ArrayAdapter(requireActivity(), R.layout.list_item,mediaTypeGallery)
+         mediaType.setAdapter(adapterIssue)
+-        mediaType.onItemClickListener = AdapterView.OnItemClickListener { _, _, index, id ->
++        mediaType.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, id ->
+             plug.visibility = View.GONE
+             if(!adapter.update()) {
+-                rpt.text = when(id){
++                rpt.text = when(id) {
+                     0.toLong() -> "Вы еще не записали ни одного аудио, хотите исправить это?"
+                     1.toLong() -> "test text. Next release will replace this fragment on correct. Dont report this feature."
+-                    else -> "smth go wrong,Report"
++                    else -> "smth go wrong, Report"
+                 }
+-                rcv_plug.visibility = View.VISIBLE
++                rcvPlug.visibility = View.VISIBLE
+             }
+             else rcv.visibility = View.VISIBLE
+         }
+@@ -68,25 +68,26 @@
+ 
+         adapter = GalleryAdapter()
+         rcv.adapter = adapter
+-        rcv.layoutManager = LinearLayoutManager(inflater.context, RecyclerView.HORIZONTAL,false)
++        rcv.layoutManager = LinearLayoutManager(root.context, RecyclerView.HORIZONTAL,false)
+         rcv.setHasFixedSize(true)
+ 
++        if(File(PathHelper.audioPath).listFiles()?.size != null) deleteAudio.visibility = View.VISIBLE
++
+         dictoOpen.setOnClickListener {
+ 
+         }
+ 
+-        return root
++        deleteAudio.setOnClickListener { DeleteAllAudio().start() }
+     }
+ 
+     private fun setupDataCount(): String {
+-        //bla-bla with WHEN param
+-        var count = File(PathHelper.audioPath).listFiles()?.size
+-        return if(count == null){
++        val count = File(PathHelper.audioPath).listFiles()?.size
++        return if(count == null) {
+             "У меня 0 медиафайлов"
+-        }else{
++        } else {
+             if(count in 5..20) {
+                 "У меня $count медиафайлов"
+-            }else{
++            } else {
+                 when (count.toString().takeLast(1).toInt()) {
+                     0 -> "У меня $count медиафайлов"
+                     1 -> "У меня $count медиафайл"
+@@ -96,11 +97,14 @@
+                 }
+             }
+         }
+-
+     }
+ 
+-    override fun onPause() {
+-        super.onPause()
+-        (requireActivity() as AppCompatActivity).supportActionBar!!.show()
++    inner class DeleteAllAudio : Thread() {
++        override fun run() {
++            File(PathHelper.audioPath).list { file, _ ->
++                file.deleteRecursively()
++            }
++        }
+     }
++
+ }
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\n    <string name=\"app_name\">VK Testers Mentoring</string>\n    <string name=\"navigation_drawer_open\">Open navigation drawer</string>\n    <string name=\"navigation_drawer_close\">Close navigation drawer</string>\n    <string name=\"nav_header_title\">Павел Милков</string>\n    <string name=\"nav_header_subtitle\">android.studio@android.com</string>\n    <string name=\"nav_header_desc\">Navigation header</string>\n    <string name=\"action_settings\">Настройки</string>\n\n    <string name=\"menu_longrid\">Лонгриды</string>\n    <string name=\"menu_gallery\">Галерея</string>\n    <string name=\"menu_slideshow\">Мусор</string>\n    <string name=\"open\">Открыть</string>\n    <string name=\"menu_bugs\">Отчетность</string>\n    <string name=\"send_ur_count_rep\">Запиши в это поле общее количество отчетов за неделю.</string>\n    <string name=\"send_ur_wanna_count_rep\">Количество отчетов в неделю, которое ты хочешь выполнить.</string>\n    <string name=\"bad_scope\">Вам нужно трудиться еще больше, чтобы достичь поставленной планки. Ваш коэффициент:</string>\n    <string name=\"register\">Регистрация</string>\n    <string name=\"register_btn\">\"Зарегистрироваться\"</string>\n    <string name=\"dicto\">Диктофон</string>\n    <string name=\"upload\">Загрузка</string>\n    <string name=\"string_url_photo_upload\">Введите URL фотографии</string>\n    <string name=\"well_scope\">Норма перевыполнена. Переоцените желаемое кол-во отчетов.</string>\n    <string name=\"save\">Сохранить</string>\n    <string name=\"set_password\">Введите пароль</string>\n    <string name=\"set_indent\">Введите идентификатор</string>\n    <string name=\"suffix_vktm\">\\@vktm</string>\n    <string name=\"login\">Вход</string>\n    <string name=\"registration\">Регистрация</string>\n    <string name=\"input_password\">Введите пароль</string>\n    <string name=\"login_l\">Войти</string>\n    <string name=\"wrong_password\">Неверный пароль</string>\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/res/values/strings.xml	(date 1622236828312)
+@@ -30,4 +30,5 @@
+     <string name="input_password">Введите пароль</string>
+     <string name="login_l">Войти</string>
+     <string name="wrong_password">Неверный пароль</string>
++    <string name="default_fragment">Начальное окно</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/UploadPhoto.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.MV.popup\n\nimport android.app.Dialog\nimport android.content.Context\nimport android.content.Intent\nimport android.graphics.Color\nimport android.graphics.drawable.ColorDrawable\nimport android.view.Gravity\nimport android.widget.Button\nimport android.widget.LinearLayout\nimport androidx.core.content.ContextCompat.startActivity\nimport net.d3b8g.vktestersmentoring.R\n\n\nclass UploadPhoto(val ct: Context){\n\n    fun show(){\n        val frame = Dialog(ct)\n        frame.setContentView(R.layout.alert_upload)\n        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.FILL_PARENT)\n        frame.window!!.setGravity(Gravity.BOTTOM)\n\n        frame.setCanceledOnTouchOutside(true)\n\n        val og = frame.findViewById<Button>(R.id.au_open)\n        og.setOnClickListener {\n            val intent = Intent()\n            intent.action = Intent.ACTION_VIEW\n            intent.type = \"image/*\"\n            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK\n            startActivity(ct,intent,null)\n        }\n\n        frame.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))\n        frame.show()\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/UploadPhoto.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/UploadPhoto.kt	(date 1621811413728)
+@@ -14,10 +14,10 @@
+ 
+ class UploadPhoto(val ct: Context){
+ 
+-    fun show(){
++    fun show() {
+         val frame = Dialog(ct)
+         frame.setContentView(R.layout.alert_upload)
+-        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.FILL_PARENT)
++        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
+         frame.window!!.setGravity(Gravity.BOTTOM)
+ 
+         frame.setCanceledOnTouchOutside(true)
+@@ -28,9 +28,8 @@
+             intent.action = Intent.ACTION_VIEW
+             intent.type = "image/*"
+             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+-            startActivity(ct,intent,null)
++            startActivity(ct, intent,null)
+         }
+-
+         frame.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+         frame.show()
+     }
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/login/Splash_.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.login\n\nimport android.app.Activity\nimport android.os.Bundle\nimport android.os.Handler\nimport net.d3b8g.vktestersmentoring.R\n\nclass Splash_:Activity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContentView(R.layout.splash_screen)\n        Handler().postDelayed({\n            finish()\n        },2000)\n    }\n\n    override fun onBackPressed() {}\n\n    override fun finish() {\n        super.finish()\n        overridePendingTransition(0, R.anim.slide_out_bottom)\n    }\n}
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/login/Splash_.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/login/SplashScreen.kt	(date 1621813657501)
+@@ -5,11 +5,11 @@
+ import android.os.Handler
+ import net.d3b8g.vktestersmentoring.R
+ 
+-class Splash_:Activity() {
++class SplashScreen : Activity() {
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.splash_screen)
+-        Handler().postDelayed({
++        Handler(mainLooper).postDelayed({
+             finish()
+         },2000)
+     }
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/login/LoginActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.login\n\nimport android.content.Intent\nimport android.os.Bundle\nimport android.preference.PreferenceManager\nimport android.view.View\nimport android.widget.Button\nimport android.widget.LinearLayout\nimport android.widget.TextView\nimport android.widget.Toast\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.core.content.edit\nimport androidx.recyclerview.widget.LinearLayoutManager\nimport androidx.recyclerview.widget.RecyclerView\nimport com.google.android.material.textfield.TextInputEditText\nimport com.google.android.material.textfield.TextInputLayout\nimport kotlinx.android.synthetic.main.activity_login.*\nimport net.d3b8g.vktestersmentoring.MainActivity\nimport net.d3b8g.vktestersmentoring.MainActivity.Companion.uid\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.adapters.UserAdapter\nimport net.d3b8g.vktestersmentoring.db.CreateUserExist\nimport net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_avatar\nimport net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_counter\nimport net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_scope\nimport net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_uid\nimport net.d3b8g.vktestersmentoring.db.CreateUserExist.Companion.col_username\nimport net.d3b8g.vktestersmentoring.interfaces.Login\nimport net.d3b8g.vktestersmentoring.modules.UserConfData\nimport net.d3b8g.vktestersmentoring.modules.UserData\n\nclass LoginActivity : AppCompatActivity(), Login {\n\n    lateinit var input: TextInputEditText\n    lateinit var rotatedLinear: LinearLayout\n    lateinit var rcv: RecyclerView\n    lateinit var loginText: TextView\n    lateinit var tlPass: TextInputLayout\n\n    lateinit var adapter:UserAdapter\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n\n        PreferenceManager.getDefaultSharedPreferences(this).apply {\n            if(getBoolean(\"make_splash\", false)){\n                startActivity(Intent(this@LoginActivity,MainActivity::class.java))\n                finish()\n            }\n        }\n\n        setContentView(R.layout.activity_login)\n\n        val btn = findViewById<Button>(R.id.register_start)\n        input = findViewById(R.id.register_input)\n        rotatedLinear = findViewById(R.id.rotated_layout)\n        rcv = findViewById(R.id.user_db)\n        loginText = findViewById(R.id.login_text)\n        tlPass = findViewById(R.id.tl_input_password)\n\n        adapter = UserAdapter(this)\n        rcv.adapter = adapter\n        rcv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)\n        rcv.setHasFixedSize(true)\n        updateUserData()\n        btn.setOnClickListener {\n            input.let {\n                if(!it.text.isNullOrEmpty() &&\n                    it.text!!.length>3 &&\n                    it.text!!.contains(' ') &&\n                    it.text!!.any { text -> text.isLetter() }) {\n\n                    var user_id:Int\n                    PreferenceManager.getDefaultSharedPreferences(this).apply {\n                        user_id = getInt(\"active_user_id\", 0) + 1\n                    }\n                    PreferenceManager.getDefaultSharedPreferences(this).edit {\n                        putBoolean(\"make_splash\", true).apply()\n                        putInt(\"active_user_id\",user_id)\n                    }\n                    CreateUserExist(this@LoginActivity).insertData(\n                        UserData(\n                            id = 0,\n                            username = it.text!!.toString(),\n                            avatar = \"https://sun9-67.userapi.com/impg/I8qae64Ppm2JRUm4E_ioXR7rgSpfLY81K02nUg/XN3Fn9zsP5g.jpg?size=726x612&quality=96&proxy=1&sign=6412c55a2d2a6b5c06c31ca6de71aab1\",\n                            scope = 0,\n                            counter = 0\n                        ),\n                        UserConfData(\n                            id = 0,\n                            login = \"null@vktm\",\n                            password = \"\"\n                        ), this@LoginActivity)\n                    startActivity(Intent(this,MainActivity::class.java))\n                }else{\n                    Toast.makeText(this, \"Поле должно содержать Имя и Фамилию.\", Toast.LENGTH_SHORT).show()\n                }\n            }\n        }\n    }\n\n    fun updateUserData() {\n        val listBack:ArrayList<UserData> = ArrayList()\n        val db = CreateUserExist(this).readableDatabase\n        val query = \"Select * from ${CreateUserExist.table_name[0]}\"\n        try {\n            val result = db.rawQuery(query, null)\n            if (result.moveToFirst()) {\n                do{\n                    listBack.add(UserData(\n                        id = result.getString(result.getColumnIndex(col_uid)).toInt(),\n                        username = result.getString(result.getColumnIndex(col_username)),\n                        avatar = result.getString(result.getColumnIndex(col_avatar)),\n                        scope = result.getString(result.getColumnIndex(col_scope)).toInt(),\n                        counter = result.getString(result.getColumnIndex(col_counter)).toInt()\n                    ))\n                }while (result.moveToNext())\n            }\n        }catch (e: Exception) {\n            e.stackTrace\n        }\n\n        if(!listBack.none()){\n            rcv.visibility = View.VISIBLE\n            adapter.setUser(listBack)\n            loginText.text = getString(R.string.login)\n        }\n    }\n\n    override fun loginUser(id: Int) {\n        val pass = CreateUserExist(this).readConfData(id)!!.password\n        if(pass.isNotEmpty()) {\n            tlPass.visibility = View.VISIBLE\n            login.visibility = View.VISIBLE\n            login.setOnClickListener {\n                login_password.let {\n                    if(!it.text.isNullOrEmpty() && it.text.toString() == pass) {\n                        PreferenceManager.getDefaultSharedPreferences(this).edit {\n                            putBoolean(\"make_splash\", true).apply()\n                            putInt(\"active_user_id\",id)\n                        }\n                        startActivity(Intent(this@LoginActivity,MainActivity::class.java))\n                        finish()\n                    }else{\n                        tlPass.error = getString(R.string.wrong_password)\n                    }\n                }\n            }\n        } else {\n            PreferenceManager.getDefaultSharedPreferences(this).edit {\n                putBoolean(\"make_splash\", true).apply()\n                putInt(\"active_user_id\",id)\n            }\n            startActivity(Intent(this@LoginActivity,MainActivity::class.java))\n            finish()\n        }\n    }\n\n    override fun onBackPressed() {\n        if(uid == 1) super.onBackPressed()\n        else Toast.makeText(this, \"Необходимо авторизоваться\", Toast.LENGTH_SHORT).show()\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/login/LoginActivity.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/login/LoginActivity.kt	(date 1621811413721)
+@@ -2,7 +2,7 @@
+ 
+ import android.content.Intent
+ import android.os.Bundle
+-import android.preference.PreferenceManager
++import androidx.preference.PreferenceManager
+ import android.view.View
+ import android.widget.Button
+ import android.widget.LinearLayout
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/ImportNotes.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.MV.popup\n\nimport android.app.Dialog\nimport android.content.Context\nimport android.graphics.Color\nimport android.graphics.drawable.ColorDrawable\nimport android.preference.PreferenceManager\nimport android.view.Gravity\nimport android.widget.Button\nimport android.widget.LinearLayout\nimport android.widget.Toast\nimport androidx.core.content.edit\nimport com.google.android.material.textfield.TextInputEditText\nimport com.google.gson.JsonParser\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.interfaces.UpdateNotes\n\nclass ImportNotes(val ct: Context, var tyty: UpdateNotes) {\n    fun show() {\n        val frame = Dialog(ct)\n        frame.setContentView(R.layout.alert_import)\n        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.FILL_PARENT)\n        frame.window!!.setGravity(Gravity.BOTTOM)\n\n        frame.setCanceledOnTouchOutside(true)\n\n        var titleInput = frame.findViewById<TextInputEditText>(R.id.import_r)\n\n        var send = frame.findViewById<Button>(R.id.import_note)\n\n        send.setOnClickListener {\n            if(titleInput.text!!.isNotEmpty()) {\n                var data = \"\"\n                PreferenceManager.getDefaultSharedPreferences(ct).apply {\n                    try {\n                        var yu = JsonParser().parse(titleInput.text.toString()).asJsonObject\n                        var title = yu.asJsonObject.get(\"title\").asString\n                        var descr = yu.asJsonObject.get(\"description\").asString\n                        var dateTime = yu.asJsonObject.get(\"date_of_create\").asString\n                        if(title.length < 51) {\n                            data = if(getString(\"my_notes\",\"\") != \"\"){\n                                var count = JsonParser().parse(getString(\"my_notes\",\"\")).asJsonObject.get(\"count\").asInt\n                                getString(\"my_notes\",\"\")!!.replaceAfter(\"]\",\",\").replace(\"]\",\"\") +  getString(\"my_notes\",\"\")!!.replace(getString(\"my_notes\",\"\")!!,\n                                    \"{ \\\"id\\\":${count}, \\\"title\\\":\\\"${title}\\\", \\\"description\\\":\\\"${descr}\\\", \\\"date_of_create\\\":\\\"${dateTime}\\\" }], \\\"count\\\": ${count+1}}\")\n                            }else {\n                                \"{ \\\"notes\\\": [ { \\\"id\\\":0, \\\"title\\\":\\\"${title}\\\", \\\"description\\\":\\\"${descr}\\\", \\\"date_of_create\\\":\\\"${dateTime}\\\" } ], \\\"count\\\": 1 }\"\n                            }\n                        } else {\n                            Toast.makeText(ct,\"Заголовок содержит больше 50 символов.\", Toast.LENGTH_SHORT).show()\n                        }\n                    }catch (e: Exception) {\n                        Toast.makeText(ct,\"Неопознанная JSON-схема\", Toast.LENGTH_SHORT).show()\n                    }\n                }\n                if(data!=\"\") {\n                    PreferenceManager.getDefaultSharedPreferences(ct).edit {\n                        putString(\"my_notes\",data)\n                    }\n                    tyty.updateNotes()\n                    frame.dismiss()\n                }\n            }else{\n                Toast.makeText(ct,\"Невалидный параметр\", Toast.LENGTH_SHORT).show()\n            }\n        }\n\n        frame.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))\n        frame.show()\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/ImportNotes.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/ImportNotes.kt	(date 1621811413729)
+@@ -4,59 +4,59 @@
+ import android.content.Context
+ import android.graphics.Color
+ import android.graphics.drawable.ColorDrawable
+-import android.preference.PreferenceManager
+ import android.view.Gravity
+ import android.widget.Button
+ import android.widget.LinearLayout
+ import android.widget.Toast
+ import androidx.core.content.edit
++import androidx.preference.PreferenceManager
+ import com.google.android.material.textfield.TextInputEditText
+ import com.google.gson.JsonParser
+ import net.d3b8g.vktestersmentoring.R
+ import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
+ 
+-class ImportNotes(val ct: Context, var tyty: UpdateNotes) {
++class ImportNotes(val ct: Context, var interfaceNotes: UpdateNotes) {
++
+     fun show() {
++
+         val frame = Dialog(ct)
+         frame.setContentView(R.layout.alert_import)
+-        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.FILL_PARENT)
++        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+         frame.window!!.setGravity(Gravity.BOTTOM)
+-
+         frame.setCanceledOnTouchOutside(true)
+ 
+-        var titleInput = frame.findViewById<TextInputEditText>(R.id.import_r)
+-
+-        var send = frame.findViewById<Button>(R.id.import_note)
++        val titleInput = frame.findViewById<TextInputEditText>(R.id.import_r)
++        val send = frame.findViewById<Button>(R.id.import_note)
+ 
+         send.setOnClickListener {
+             if(titleInput.text!!.isNotEmpty()) {
+                 var data = ""
+                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
+                     try {
+-                        var yu = JsonParser().parse(titleInput.text.toString()).asJsonObject
+-                        var title = yu.asJsonObject.get("title").asString
+-                        var descr = yu.asJsonObject.get("description").asString
+-                        var dateTime = yu.asJsonObject.get("date_of_create").asString
++                        val yu = JsonParser.parseString(titleInput.text.toString()).asJsonObject
++                        val title = yu.asJsonObject.get("title").asString
++                        val descr = yu.asJsonObject.get("description").asString
++                        val dateTime = yu.asJsonObject.get("date_of_create").asString
+                         if(title.length < 51) {
+                             data = if(getString("my_notes","") != ""){
+-                                var count = JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt
++                                val count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt
+                                 getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
+                                     "{ \"id\":${count}, \"title\":\"${title}\", \"description\":\"${descr}\", \"date_of_create\":\"${dateTime}\" }], \"count\": ${count+1}}")
+-                            }else {
++                            } else {
+                                 "{ \"notes\": [ { \"id\":0, \"title\":\"${title}\", \"description\":\"${descr}\", \"date_of_create\":\"${dateTime}\" } ], \"count\": 1 }"
+                             }
+                         } else {
+                             Toast.makeText(ct,"Заголовок содержит больше 50 символов.", Toast.LENGTH_SHORT).show()
+                         }
+-                    }catch (e: Exception) {
++                    } catch (e: Exception) {
+                         Toast.makeText(ct,"Неопознанная JSON-схема", Toast.LENGTH_SHORT).show()
+                     }
+                 }
+-                if(data!="") {
++                if(data != "") {
+                     PreferenceManager.getDefaultSharedPreferences(ct).edit {
+-                        putString("my_notes",data)
++                        putString("my_notes", data)
+                     }
+-                    tyty.updateNotes()
++                    interfaceNotes.updateNotes()
+                     frame.dismiss()
+                 }
+             }else{
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/AddNewNotes.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.MV.popup\n\nimport android.app.Dialog\nimport android.content.Context\nimport android.graphics.Color\nimport android.graphics.drawable.ColorDrawable\nimport android.preference.PreferenceManager\nimport android.util.Log\nimport android.view.Gravity\nimport android.widget.Button\nimport android.widget.LinearLayout\nimport android.widget.Toast\nimport androidx.core.content.edit\nimport com.google.android.material.textfield.TextInputEditText\nimport com.google.gson.JsonParser\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.interfaces.UpdateNotes\nimport org.json.JSONObject\nimport java.text.SimpleDateFormat\nimport java.util.*\n\nclass AddNewNotes(val ct: Context,var tyty:UpdateNotes) {\n\n    fun show(){\n        val frame = Dialog(ct)\n        frame.setContentView(R.layout.alert_add_notes)\n        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.FILL_PARENT)\n        frame.window!!.setGravity(Gravity.CENTER)\n\n        frame.setCanceledOnTouchOutside(true)\n\n        var title = frame.findViewById<TextInputEditText>(R.id.title_note)\n        var descr = frame.findViewById<TextInputEditText>(R.id.descr_note)\n\n        var send = frame.findViewById<Button>(R.id.save_note)\n\n        send.setOnClickListener {\n            if(title.text!!.any { it.isLetter() } && descr.text!!.any { it.isLetter() }) {\n                var titleR = title.text.toString().replace(\"\\\"\",\"&#34;\")\n                var descrR = descr.text.toString().replace(\"\\\"\",\"&#34;\")\n                var data = \"\"\n                PreferenceManager.getDefaultSharedPreferences(ct).apply {\n                    data = if(getString(\"my_notes\", \"\") != \"\" ) {\n                        var count = JsonParser().parse(getString(\"my_notes\",\"\")).asJsonObject.get(\"count\").asInt\n                        getString(\"my_notes\",\"\")!!.replaceAfter(\"]\",\",\").replace(\"]\",\"\") +  getString(\"my_notes\",\"\")!!.replace(getString(\"my_notes\",\"\")!!,\n                            \"{ \\\"id\\\":${count}, \\\"title\\\":\\\"${titleR}\\\", \\\"description\\\":\\\"${descrR}\\\", \\\"date_of_create\\\\\"+ SimpleDateFormat(\"yyyy/MM/dd\").format(Date())+\"\\\" }], \\\"count\\\": ${count+1}}\")\n                    } else {\n                        \"{ \\\"notes\\\": [ { \\\"id\\\":0, \\\"title\\\":\\\"${titleR}\\\", \\\"description\\\":\\\"${descrR}\\\", \\\"date_of_create\\\":\\\"\"+ SimpleDateFormat(\"yyyy/MM/dd\").format(Date())+\"\\\" } ], \\\"count\\\": 1 }\"\n                    }\n                }\n\n                PreferenceManager.getDefaultSharedPreferences(ct).edit {\n                    putString(\"my_notes\", data)\n                }\n                tyty.updateNotes()\n                frame.dismiss()\n            }else{\n                Toast.makeText(ct,\"Вы не заполнили одно из полей\", Toast.LENGTH_SHORT)\n            }\n        }\n\n        frame.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))\n        frame.show()\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/AddNewNotes.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/MV/popup/AddNewNotes.kt	(date 1621811413731)
+@@ -1,64 +1,62 @@
+ package net.d3b8g.vktestersmentoring.ui.MV.popup
+ 
++import android.annotation.SuppressLint
+ import android.app.Dialog
+ import android.content.Context
+ import android.graphics.Color
+ import android.graphics.drawable.ColorDrawable
+-import android.preference.PreferenceManager
+-import android.util.Log
+ import android.view.Gravity
+ import android.widget.Button
+ import android.widget.LinearLayout
+ import android.widget.Toast
+ import androidx.core.content.edit
++import androidx.preference.PreferenceManager
+ import com.google.android.material.textfield.TextInputEditText
+ import com.google.gson.JsonParser
+ import net.d3b8g.vktestersmentoring.R
+ import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
+-import org.json.JSONObject
+ import java.text.SimpleDateFormat
+ import java.util.*
+ 
+-class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
++class AddNewNotes(val ct: Context, val interfaceNotes: UpdateNotes) {
+ 
+-    fun show(){
++    @SuppressLint("SimpleDateFormat")
++    fun show() {
+         val frame = Dialog(ct)
+         frame.setContentView(R.layout.alert_add_notes)
+-        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.FILL_PARENT)
++        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+         frame.window!!.setGravity(Gravity.CENTER)
+ 
+         frame.setCanceledOnTouchOutside(true)
+ 
+-        var title = frame.findViewById<TextInputEditText>(R.id.title_note)
+-        var descr = frame.findViewById<TextInputEditText>(R.id.descr_note)
++        val title = frame.findViewById<TextInputEditText>(R.id.title_note)
++        val descr = frame.findViewById<TextInputEditText>(R.id.descr_note)
+ 
+-        var send = frame.findViewById<Button>(R.id.save_note)
++        val send = frame.findViewById<Button>(R.id.save_note)
+ 
+         send.setOnClickListener {
+             if(title.text!!.any { it.isLetter() } && descr.text!!.any { it.isLetter() }) {
+-                var titleR = title.text.toString().replace("\"","&#34;")
+-                var descrR = descr.text.toString().replace("\"","&#34;")
+-                var data = ""
++                val titleR = title.text.toString().replace("\"","&#34;")
++                val descrR = descr.text.toString().replace("\"","&#34;")
++                var data: String
+                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
+                     data = if(getString("my_notes", "") != "" ) {
+-                        var count = JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt
++                        val count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt
+                         getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
+-                            "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\\"+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" }], \"count\": ${count+1}}")
++                            "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy-MM-dd").format(Date())+"\" }], \"count\": ${count+1}}")
+                     } else {
+-                        "{ \"notes\": [ { \"id\":0, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" } ], \"count\": 1 }"
++                        "{ \"notes\": [ { \"id\":0, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy-MM-dd").format(Date())+"\" } ], \"count\": 1 }"
+                     }
+                 }
+-
+                 PreferenceManager.getDefaultSharedPreferences(ct).edit {
+                     putString("my_notes", data)
+                 }
+-                tyty.updateNotes()
++                interfaceNotes.updateNotes()
+                 frame.dismiss()
+-            }else{
+-                Toast.makeText(ct,"Вы не заполнили одно из полей", Toast.LENGTH_SHORT)
++            } else {
++                Toast.makeText(ct,"Вы не заполнили одно из полей или поля не содержат букв", Toast.LENGTH_SHORT).show()
+             }
+         }
+-
+         frame.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+         frame.show()
+     }
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/adapters/GalleryAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.adapters\n\nimport android.media.AudioAttributes\nimport android.media.MediaPlayer\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.RelativeLayout\nimport android.widget.TextView\nimport android.widget.Toast\nimport androidx.recyclerview.widget.RecyclerView\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicro\nimport net.d3b8g.vktestersmentoring.helper.Components.Companion.mPlayer\nimport net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath\nimport net.d3b8g.vktestersmentoring.modules.AudioAdapterModule\nimport java.io.File\n\n\nclass GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {\n\n    var audioCounter:ArrayList<AudioAdapterModule> = ArrayList()\n\n    fun update():Boolean{\n        try {\n            for ((index,file) in (File(audioPath).listFiles().withIndex())){\n                audioCounter.add(AudioAdapterModule(\n                    file_path = file.path,\n                    file_title = \"${index+1}\"\n                ))\n            }\n        }catch (e:Exception){}\n\n        return if(audioCounter.size!=0) {\n            notifyDataSetChanged()\n            true\n        }\n        else false\n    }\n\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {\n        val layoutInflater = LayoutInflater.from(parent.context)\n        val itemView = layoutInflater.inflate(R.layout.cell_audio, parent, false)\n        return GalleryAdapterViewHolder(itemView)\n    }\n\n    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {\n        if(holder is GalleryAdapterViewHolder) holder.bind(audioCounter[position])\n    }\n\n    override fun getItemCount(): Int {\n        return audioCounter.size\n    }\n\n    class GalleryAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\n\n        var box = itemView.findViewById<RelativeLayout>(R.id.audio_box)\n        var aid = itemView.findViewById<TextView>(R.id.aid)\n\n        fun bind(inf:AudioAdapterModule){\n            aid.text = inf.file_title\n            box.setOnClickListener {\n                if(mMicro == null && inf.file_path.contains(\"VKTMaudio\") && inf.file_path.contains(\"-\") && inf.file_path.takeLast(4)==\".3gp\"){\n                    mPlayer = MediaPlayer().apply{\n                        AudioAttributes.Builder()\n                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)\n                            .setUsage(AudioAttributes.USAGE_MEDIA)\n                            .build()\n                        setDataSource(inf.file_path)\n                        prepare()\n                        start()\n                    }\n                }else{\n                    Toast.makeText(itemView.context,\"Возможно, вы пытаетесь воспроизвести аудио поверх другого или запустить не медиа-файл\",Toast.LENGTH_SHORT).show()\n                }\n            }\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/adapters/GalleryAdapter.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/adapters/GalleryAdapter.kt	(date 1621811413710)
+@@ -19,23 +19,19 @@
+ 
+ class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+ 
+-    var audioCounter:ArrayList<AudioAdapterModule> = ArrayList()
++    var audioCounter: ArrayList<AudioAdapterModule> = ArrayList()
+ 
+-    fun update():Boolean{
+-        try {
+-            for ((index,file) in (File(audioPath).listFiles().withIndex())){
+-                audioCounter.add(AudioAdapterModule(
+-                    file_path = file.path,
+-                    file_title = "${index+1}"
++    fun update(): Boolean {
++        File(audioPath).listFiles()?.forEachIndexed { index, file ->
++            audioCounter.add(
++                AudioAdapterModule(
++                    file_path = file.path, file_title = "${index+1}"
+                 ))
+-            }
+-        }catch (e:Exception){}
+-
+-        return if(audioCounter.size!=0) {
++        }
++        return if(audioCounter.size != 0) {
+             notifyDataSetChanged()
+             true
+-        }
+-        else false
++        } else false
+     }
+ 
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+@@ -48,20 +44,21 @@
+         if(holder is GalleryAdapterViewHolder) holder.bind(audioCounter[position])
+     }
+ 
+-    override fun getItemCount(): Int {
+-        return audioCounter.size
+-    }
++    override fun getItemCount(): Int = audioCounter.size
+ 
+     class GalleryAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+ 
+         var box = itemView.findViewById<RelativeLayout>(R.id.audio_box)
+         var aid = itemView.findViewById<TextView>(R.id.aid)
+ 
+-        fun bind(inf:AudioAdapterModule){
++        fun bind(inf:AudioAdapterModule) {
+             aid.text = inf.file_title
+             box.setOnClickListener {
+-                if(mMicro == null && inf.file_path.contains("VKTMaudio") && inf.file_path.contains("-") && inf.file_path.takeLast(4)==".3gp"){
+-                    mPlayer = MediaPlayer().apply{
++                if(mMicro == null &&
++                    inf.file_path.contains("VKTMaudio") &&
++                    inf.file_path.contains("-") &&
++                    inf.file_path.takeLast(4) == ".3gp") {
++                    mPlayer = MediaPlayer().apply {
+                         AudioAttributes.Builder()
+                             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                             .setUsage(AudioAttributes.USAGE_MEDIA)
+@@ -70,8 +67,8 @@
+                         prepare()
+                         start()
+                     }
+-                }else{
+-                    Toast.makeText(itemView.context,"Возможно, вы пытаетесь воспроизвести аудио поверх другого или запустить не медиа-файл",Toast.LENGTH_SHORT).show()
++                } else {
++                    Toast.makeText(itemView.context,"Возможно, вы пытаетесь воспроизвести аудио поверх другого или запустить не медиа-файл", Toast.LENGTH_SHORT).show()
+                 }
+             }
+         }
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/home/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.home\n\nimport android.content.Intent\nimport android.net.Uri\nimport android.os.Bundle\nimport android.view.LayoutInflater\nimport android.view.MotionEvent\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.*\nimport androidx.core.content.ContextCompat\nimport androidx.fragment.app.Fragment\nimport androidx.recyclerview.widget.LinearLayoutManager\nimport androidx.recyclerview.widget.RecyclerView\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.adapters.LongGridAdapter\nimport net.d3b8g.vktestersmentoring.interfaces.LonggridCall\nimport net.d3b8g.vktestersmentoring.modules.LongGridModule\nimport net.d3b8g.vktestersmentoring.prefs.*\n\nclass HomeFragment : Fragment(),LonggridCall {\n\n    lateinit var adapter:LongGridAdapter\n\n    lateinit var title:TextView\n    lateinit var cbRead: CheckBox\n    lateinit var qProgress:ProgressBar\n    lateinit var open:Button\n    lateinit var block:LinearLayout\n    lateinit var plug:TextView\n    lateinit var progress_text:TextView\n    var displayWidth = 0\n\n    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View? {\n        val root = inflater.inflate(R.layout.fragment_longgrid, container, false)\n        val rcv = root.findViewById<RecyclerView>(R.id.rcv_longrid)\n        adapter = LongGridAdapter(this)\n        rcv.adapter = adapter\n        rcv.layoutManager = LinearLayoutManager(inflater.context, RecyclerView.HORIZONTAL,false)\n        rcv.setHasFixedSize(true)\n        adapter.update(root.context)\n\n        title = root.findViewById(R.id.lg_title)\n        cbRead = root.findViewById(R.id.lg_had_read)\n        qProgress= root.findViewById(R.id.lg_progress)\n        open = root.findViewById(R.id.lg_open)\n        block = root.findViewById(R.id.lg_components_block)\n        plug = root.findViewById(R.id.plug_text)\n        progress_text = root.findViewById(R.id.lg_progress_text)\n\n        displayWidth = requireActivity().windowManager.defaultDisplay.width\n\n        return root\n    }\n\n    override fun changeParam(item: LongGridModule,pos:Int) {\n        plug.visibility = View.GONE\n        block.visibility = View.VISIBLE\n        open.setOnClickListener {\n            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.link))\n            ContextCompat.startActivity(requireActivity(), browserIntent, null)\n        }\n        title.text = item.title\n        cbRead.isChecked = item.hadRead\n        progress_text.text = \"${item.quality}/10\"\n        qProgress.progress =  item.quality\n        cbRead.setOnClickListener {\n            setReadParam(requireActivity(), paramCt(\"check_box_$pos\",cbRead.isChecked))\n            adapter.update(requireContext())\n            if(getCountReads(requireActivity())==12) Toast.makeText(requireContext(),\"Поздравляю, ты прочитал все статьи и стал отважным джедаеm!\",Toast.LENGTH_SHORT).show()\n        }\n        qProgress.setOnTouchListener { _, event ->\n            if(event.action == MotionEvent.ACTION_DOWN){\n                qProgress.progress = event.x.toInt()*10/(qProgress.width-20)\n                progress_text.text = \"${event.x.toInt()*10/(qProgress.width-20)}/10\"\n                setQualityParam(requireActivity(), paramCtQ(\"quality_grid_$pos\",event.x.toInt()*10/(qProgress.width-20)))\n                adapter.update(requireContext())\n            }\n            true\n        }\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/home/HomeFragment.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/home/HomeFragment.kt	(date 1621811413725)
+@@ -1,12 +1,11 @@
+ package net.d3b8g.vktestersmentoring.ui.home
+ 
++import android.annotation.SuppressLint
+ import android.content.Intent
+ import android.net.Uri
+ import android.os.Bundle
+-import android.view.LayoutInflater
+ import android.view.MotionEvent
+ import android.view.View
+-import android.view.ViewGroup
+ import android.widget.*
+ import androidx.core.content.ContextCompat
+ import androidx.fragment.app.Fragment
+@@ -18,25 +17,27 @@
+ import net.d3b8g.vktestersmentoring.modules.LongGridModule
+ import net.d3b8g.vktestersmentoring.prefs.*
+ 
+-class HomeFragment : Fragment(),LonggridCall {
++class HomeFragment : Fragment(R.layout.fragment_longgrid), LonggridCall {
+ 
+-    lateinit var adapter:LongGridAdapter
+-
+-    lateinit var title:TextView
++    lateinit var adapter: LongGridAdapter
++    lateinit var title: TextView
+     lateinit var cbRead: CheckBox
+-    lateinit var qProgress:ProgressBar
+-    lateinit var open:Button
+-    lateinit var block:LinearLayout
+-    lateinit var plug:TextView
+-    lateinit var progress_text:TextView
++    lateinit var qProgress: ProgressBar
++    lateinit var open: Button
++    lateinit var block: LinearLayout
++    lateinit var plug: TextView
++    lateinit var progressText: TextView
++
+     var displayWidth = 0
+ 
+-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View? {
+-        val root = inflater.inflate(R.layout.fragment_longgrid, container, false)
++    override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(root, savedInstanceState)
++
+         val rcv = root.findViewById<RecyclerView>(R.id.rcv_longrid)
+         adapter = LongGridAdapter(this)
++
+         rcv.adapter = adapter
+-        rcv.layoutManager = LinearLayoutManager(inflater.context, RecyclerView.HORIZONTAL,false)
++        rcv.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false)
+         rcv.setHasFixedSize(true)
+         adapter.update(root.context)
+ 
+@@ -46,14 +47,13 @@
+         open = root.findViewById(R.id.lg_open)
+         block = root.findViewById(R.id.lg_components_block)
+         plug = root.findViewById(R.id.plug_text)
+-        progress_text = root.findViewById(R.id.lg_progress_text)
++        progressText = root.findViewById(R.id.lg_progress_text)
+ 
+         displayWidth = requireActivity().windowManager.defaultDisplay.width
+-
+-        return root
+     }
+ 
+-    override fun changeParam(item: LongGridModule,pos:Int) {
++    @SuppressLint("ClickableViewAccessibility")
++    override fun changeParam(item: LongGridModule, pos:Int) {
+         plug.visibility = View.GONE
+         block.visibility = View.VISIBLE
+         open.setOnClickListener {
+@@ -62,22 +62,21 @@
+         }
+         title.text = item.title
+         cbRead.isChecked = item.hadRead
+-        progress_text.text = "${item.quality}/10"
+-        qProgress.progress =  item.quality
++        progressText.text = "${item.quality}/10"
++        qProgress.progress = item.quality
+         cbRead.setOnClickListener {
+             setReadParam(requireActivity(), paramCt("check_box_$pos",cbRead.isChecked))
+             adapter.update(requireContext())
+-            if(getCountReads(requireActivity())==12) Toast.makeText(requireContext(),"Поздравляю, ты прочитал все статьи и стал отважным джедаеm!",Toast.LENGTH_SHORT).show()
++            if(getCountReads(requireActivity()) == 12) Toast.makeText(requireContext(),"Поздравляю, ты прочитал все статьи и стал отважным джедаем!", Toast.LENGTH_SHORT).show()
+         }
+         qProgress.setOnTouchListener { _, event ->
+             if(event.action == MotionEvent.ACTION_DOWN){
+                 qProgress.progress = event.x.toInt()*10/(qProgress.width-20)
+-                progress_text.text = "${event.x.toInt()*10/(qProgress.width-20)}/10"
+-                setQualityParam(requireActivity(), paramCtQ("quality_grid_$pos",event.x.toInt()*10/(qProgress.width-20)))
++                progressText.text = "${event.x.toInt()*10/(qProgress.width-20)}/10"
++                setQualityParam(requireActivity(), paramCtQ("quality_grid_$pos",event.x.toInt() * 10 / (qProgress.width - 20)))
+                 adapter.update(requireContext())
+             }
+             true
+         }
+-
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/db/CreateUserExist.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.db\n\nimport android.content.ContentValues\nimport android.content.Context\nimport android.database.sqlite.SQLiteDatabase\nimport android.database.sqlite.SQLiteOpenHelper\nimport android.util.Log\nimport android.widget.Toast\nimport net.d3b8g.vktestersmentoring.modules.UserConfData\nimport net.d3b8g.vktestersmentoring.modules.UserData\n\n\nclass CreateUserExist(ct:Context): SQLiteOpenHelper(ct, db_name, null, 1) {\n\n    override fun onCreate(db: SQLiteDatabase?) {\n        val createUserTable = \"CREATE TABLE ${table_name[0]} (\"+\n                \"$col_uid INTEGER PRIMARY KEY AUTOINCREMENT, \"+\n                \"$col_username VARCHAR(256), \"+\n                \"$col_avatar VARCHAR(256), \"+\n                \"$col_scope INTEGER, \"+\n                \"$col_counter INTEGER)\"\n\n        val createConfTable = \"CREATE TABLE ${table_name[1]} (\"+\n                \"$col_uid INTEGER PRIMARY KEY AUTOINCREMENT, \"+\n                \"$col_ident VARCHAR(256), \"+\n                \"$col_password VARCHAR(256))\"\n\n        db?.execSQL(createUserTable)\n        db?.execSQL(createConfTable)\n    }\n\n    override fun onUpgrade(db: SQLiteDatabase?, oldV: Int, newV: Int) {\n        db?.execSQL(\"DROP TABLE IF EXISTS ${table_name[0]}\")\n        db?.execSQL(\"DROP TABLE IF EXISTS ${table_name[1]}\")\n        onCreate(db)\n    }\n\n    fun insertData(user:UserData,conf:UserConfData,ct:Context) {\n        val db = this.writableDatabase\n        val ucv = ContentValues().apply {\n            put(col_username,user.username)\n            put(col_avatar,user.avatar)\n            put(col_scope,user.scope)\n            put(col_counter,user.counter)\n        }\n        val ccv = ContentValues().apply {\n            put(col_ident,conf.login)\n            put(col_password,conf.password)\n        }\n\n        db.insert(table_name[0],null,ucv).apply {\n            if(this == (-1).toLong()) Toast.makeText(ct,\"Некорректные данные\",Toast.LENGTH_SHORT).show()\n        }\n        db.insert(table_name[1],null,ccv).apply {\n            if(this == (-1).toLong()) Toast.makeText(ct,\"Некорректные данные (2)\",Toast.LENGTH_SHORT).show()\n        }\n    }\n\n    fun readUserData(id:Int): UserData? {\n        val db = this.readableDatabase\n        val query = \"Select * from ${table_name[0]}\"\n        val result = db.rawQuery(query,null)\n        return if (result.moveToFirst()) {\n            var data:UserData\n            do{\n                data = UserData(\n                    id = result.getString(result.getColumnIndex(col_uid)).toInt(),\n                    username = result.getString(result.getColumnIndex(col_username)),\n                    avatar = result.getString(result.getColumnIndex(col_avatar)),\n                    scope = result.getString(result.getColumnIndex(col_scope)).toInt(),\n                    counter = result.getString(result.getColumnIndex(col_counter)).toInt()\n                )\n            }\n            while (result.moveToNext() && result.getString(result.getColumnIndex(col_uid)).toInt()!=id)\n            db.close()\n            return data\n        } else null\n    }\n\n    fun readConfData(id:Int):UserConfData? {\n        val db = this.readableDatabase\n        val query = \"Select * from ${table_name[1]}\"\n        val result = db.rawQuery(query,null)\n        return if (result.moveToFirst()) {\n            var data:UserConfData\n            do{\n                data = UserConfData(\n                    id = result.getString(result.getColumnIndex(col_uid)).toInt(),\n                    login = result.getString(result.getColumnIndex(col_ident)),\n                    password = result.getString(result.getColumnIndex(col_password))\n                )\n            }\n            while (result.moveToNext() && result.getString(result.getColumnIndex(col_uid)).toInt()!=id)\n            db.close()\n            return data\n        } else null\n    }\n\n    fun writeConfData(user:UserConfData): Boolean {\n        val db = this.writableDatabase\n        val cv = ContentValues().apply {\n            put(col_ident,user.login)\n            put(col_password,user.password)\n        }\n        val comp = db.update(table_name[1],cv,\"id = ?\", arrayOf(user.id.toString()))\n        return comp == 1\n    }\n\n    fun updateCountVisits(id:String, visits:Int): Boolean {\n        val db = this.writableDatabase\n        val cv = ContentValues().apply {\n            put(col_counter, visits)\n        }\n        val comp = db.update(table_name[0],cv,\"id = ?\", arrayOf(id))\n        return comp == 1\n    }\n\n    companion object {\n        const val db_name = \"VKTM\"\n        val table_name = listOf(\"Users\",\"ConfData\")\n        const val col_uid = \"id\"\n        //Users\n        const val col_username = \"username\"\n        const val col_avatar = \"avatar\"\n        const val col_scope = \"scope\"\n        const val col_counter = \"counter\"\n        //ConfData\n        const val col_ident = \"ident\"\n        const val col_password = \"password\"\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/db/CreateUserExist.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/db/CreateUserExist.kt	(date 1621811413732)
+@@ -4,7 +4,6 @@
+ import android.content.Context
+ import android.database.sqlite.SQLiteDatabase
+ import android.database.sqlite.SQLiteOpenHelper
+-import android.util.Log
+ import android.widget.Toast
+ import net.d3b8g.vktestersmentoring.modules.UserConfData
+ import net.d3b8g.vktestersmentoring.modules.UserData
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <bytecodeTargetLevel target=\"1.8\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ .idea/compiler.xml	(date 1622237058757)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel target="1.8" />
++    <bytecodeTargetLevel target="11" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/runConfigurations.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"RunConfigurationProducerService\">\n    <option name=\"ignoredProducers\">\n      <set>\n        <option value=\"org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer\" />\n        <option value=\"org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer\" />\n        <option value=\"org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer\" />\n      </set>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/runConfigurations.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ .idea/runConfigurations.xml	(date 1621812735439)
+@@ -3,6 +3,7 @@
+   <component name="RunConfigurationProducerService">
+     <option name="ignoredProducers">
+       <set>
++        <option value="com.android.tools.idea.compose.preview.runconfiguration.ComposePreviewRunConfigurationProducer" />
+         <option value="org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer" />
+         <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer" />
+         <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer" />
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Sun Jan 17 20:30:11 EET 2021\ndistributionBase=GRADLE_USER_HOME\ndistributionPath=wrapper/dists\nzipStoreBase=GRADLE_USER_HOME\nzipStorePath=wrapper/dists\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-6.5-bin.zip\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1622237453446)
+@@ -3,4 +3,4 @@
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.7.1-bin.zip
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/adapters/NotesAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.adapters\n\nimport android.content.ClipData\nimport android.content.ClipboardManager\nimport android.content.Context\nimport android.content.Context.CLIPBOARD_SERVICE\nimport android.preference.PreferenceManager\nimport android.util.Log\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.TextView\nimport android.widget.Toast\nimport androidx.core.content.edit\nimport androidx.recyclerview.widget.RecyclerView\nimport com.google.gson.JsonParser\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.modules.NoteModule\n\n\nclass NotesAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {\n\n    var notes:ArrayList<NoteModule> = ArrayList()\n    fun updateArray(ct:Context){\n        notes.clear()\n        //var data_example = \"{ \\\"notes\\\": [ { \\\"id\\\":0, \\\"title\\\":\\\"ТайтлЗаметки\\\", \\\"description\\\":\\\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\\\", \\\"date_of_create\\\":\\\"2020-12-12\\\" }, { \\\"id\\\":1, \\\"title\\\":\\\"ТайтлЗаметки\\\", \\\"description\\\":\\\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\\\", \\\"date_of_create\\\":\\\"2020-12-12\\\" }, { \\\"id\\\":2, \\\"title\\\":\\\"ТайтлЗаметки\\\", \\\"description\\\":\\\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\\\", \\\"date_of_create\\\":\\\"2020-12-12\\\" }, { \\\"id\\\":3, \\\"title\\\":\\\"ТайтлЗаметки\\\", \\\"description\\\":\\\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\\\", \\\"date_of_create\\\":\\\"2020-12-12\\\" }, { \\\"id\\\":4, \\\"title\\\":\\\"ТайтлЗаметки\\\", \\\"description\\\":\\\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\\\", \\\"date_of_create\\\":\\\"2020-12-12\\\" } ], \\\"count\\\": 5}\"\n        PreferenceManager.getDefaultSharedPreferences(ct).apply {\n            if(getString(\"my_notes\",\"\")!=\"\"){\n                JsonParser().parse(getString(\"my_notes\",\"\")).asJsonObject.getAsJsonArray(\"notes\").forEach {\n                    Log.e(\"RRR\",\"construction:${it} \\n dest: ${getString(\"my_notes\",\"\")}\" )\n                    var note = NoteModule(\n                        id = it.asJsonObject.get(\"id\").asInt,\n                        title = it.asJsonObject.get(\"title\").asString,\n                        description = it.asJsonObject.get(\"description\").asString,\n                        date_of_create = it.asJsonObject.get(\"date_of_create\").asString\n                    )\n                    notes.add(note)\n                }\n            }\n            notifyDataSetChanged()\n        }\n    }\n\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {\n        val layoutInflater = LayoutInflater.from(parent.context)\n        val itemView = layoutInflater.inflate(R.layout.cell_note, parent, false)\n        return NotesAdapterViewHolder(itemView)\n    }\n\n    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {\n        if(holder is NotesAdapterViewHolder) holder.bind(notes[position])\n    }\n\n    override fun getItemCount(): Int {\n        return notes.size\n    }\n\n    inner class NotesAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\n\n        var title = itemView.findViewById<TextView>(R.id.note_titile)\n        var descr = itemView.findViewById<TextView>(R.id.note_descr)\n\n        fun bind(inf:NoteModule){\n            title.text = inf.title.replace(\"&#34;\",\"\\\"\")\n            descr.text = inf.description.replace(\"&#34;\",\"\\\"\")\n            itemView.setOnClickListener {\n                var clipBoard = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager\n                var data = \"{ \\\"id\\\":-1, \\\"title\\\":\\\"${inf.title}\\\", \\\"description\\\":\\\"${inf.description}\\\", \\\"date_of_create\\\":\\\"${inf.date_of_create}\\\" }\"\n                val clip: ClipData = ClipData.newPlainText(\"VKTM-1\", data)\n                clipBoard.setPrimaryClip(clip)\n                Toast.makeText(itemView.context,\"Заметка скопирована\",Toast.LENGTH_LONG).show()\n            }\n\n            itemView.setOnLongClickListener {\n                var urData = \"\"\n                PreferenceManager.getDefaultSharedPreferences(itemView.context).apply {\n                    urData = when (JsonParser().parse(getString(\"my_notes\",\"\")).asJsonObject.get(\"count\").asInt) {\n                        1 -> \"\"\n                        position+1 -> getString(\"my_notes\",\"\")!!.replace(\",{ \\\"id\\\":${inf.id}, \\\"title\\\":\\\"${inf.title}\\\", \\\"description\\\":\\\"${inf.description}\\\", \\\"date_of_create\\\":\\\"${inf.date_of_create}\\\" }\",\"\").replace(\"\\\"count\\\": ${JsonParser().parse(getString(\"my_notes\",\"\")).asJsonObject.get(\"count\").asInt}\",\"\\\"count\\\": ${JsonParser().parse(getString(\"my_notes\",\"\")).asJsonObject.get(\"count\").asInt-1}\")\n                        else -> getString(\"my_notes\",\"\")!!.replace(\"{ \\\"id\\\":${inf.id}, \\\"title\\\":\\\"${inf.title}\\\", \\\"description\\\":\\\"${inf.description}\\\", \\\"date_of_create\\\":\\\"${inf.date_of_create}\\\" } ,\",\"\").replace(\"\\\"count\\\": ${JsonParser().parse(getString(\"my_notes\",\"\")).asJsonObject.get(\"count\").asInt}\",\"\\\"count\\\": ${JsonParser().parse(getString(\"my_notes\",\"\")).asJsonObject.get(\"count\").asInt-1}\")\n                    }\n                }\n\n                PreferenceManager.getDefaultSharedPreferences(itemView.context).edit {\n                    putString(\"my_notes\",urData)\n                }\n\n                updateArray(itemView.context)\n\n                true\n            }\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/adapters/NotesAdapter.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/adapters/NotesAdapter.kt	(date 1621811413712)
+@@ -4,7 +4,7 @@
+ import android.content.ClipboardManager
+ import android.content.Context
+ import android.content.Context.CLIPBOARD_SERVICE
+-import android.preference.PreferenceManager
++import androidx.preference.PreferenceManager
+ import android.util.Log
+ import android.view.LayoutInflater
+ import android.view.View
+@@ -18,17 +18,18 @@
+ import net.d3b8g.vktestersmentoring.modules.NoteModule
+ 
+ 
+-class NotesAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
++class NotesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+ 
+     var notes:ArrayList<NoteModule> = ArrayList()
+-    fun updateArray(ct:Context){
++
++    fun updateArray(ct:Context) {
+         notes.clear()
+         //var data_example = "{ \"notes\": [ { \"id\":0, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" }, { \"id\":1, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" }, { \"id\":2, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" }, { \"id\":3, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" }, { \"id\":4, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" } ], \"count\": 5}"
+         PreferenceManager.getDefaultSharedPreferences(ct).apply {
+-            if(getString("my_notes","")!=""){
+-                JsonParser().parse(getString("my_notes","")).asJsonObject.getAsJsonArray("notes").forEach {
++            if(getString("my_notes", "") != "") {
++                JsonParser.parseString(getString("my_notes", "")).asJsonObject.getAsJsonArray("notes").forEach {
+                     Log.e("RRR","construction:${it} \n dest: ${getString("my_notes","")}" )
+-                    var note = NoteModule(
++                    val note = NoteModule(
+                         id = it.asJsonObject.get("id").asInt,
+                         title = it.asJsonObject.get("title").asString,
+                         description = it.asJsonObject.get("description").asString,
+@@ -51,33 +52,31 @@
+         if(holder is NotesAdapterViewHolder) holder.bind(notes[position])
+     }
+ 
+-    override fun getItemCount(): Int {
+-        return notes.size
+-    }
++    override fun getItemCount(): Int = notes.size
+ 
+     inner class NotesAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+ 
+-        var title = itemView.findViewById<TextView>(R.id.note_titile)
+-        var descr = itemView.findViewById<TextView>(R.id.note_descr)
++        val title = itemView.findViewById<TextView>(R.id.note_titile)
++        val descr = itemView.findViewById<TextView>(R.id.note_descr)
+ 
+-        fun bind(inf:NoteModule){
++        fun bind(inf:NoteModule) {
+             title.text = inf.title.replace("&#34;","\"")
+             descr.text = inf.description.replace("&#34;","\"")
+             itemView.setOnClickListener {
+-                var clipBoard = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+-                var data = "{ \"id\":-1, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" }"
++                val clipBoard = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
++                val data = "{ \"id\":-1, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" }"
+                 val clip: ClipData = ClipData.newPlainText("VKTM-1", data)
+                 clipBoard.setPrimaryClip(clip)
+                 Toast.makeText(itemView.context,"Заметка скопирована",Toast.LENGTH_LONG).show()
+             }
+ 
+             itemView.setOnLongClickListener {
+-                var urData = ""
++                var urData: String
+                 PreferenceManager.getDefaultSharedPreferences(itemView.context).apply {
+-                    urData = when (JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt) {
++                    urData = when (JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt) {
+                         1 -> ""
+-                        position+1 -> getString("my_notes","")!!.replace(",{ \"id\":${inf.id}, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" }","").replace("\"count\": ${JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt}","\"count\": ${JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt-1}")
+-                        else -> getString("my_notes","")!!.replace("{ \"id\":${inf.id}, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" } ,","").replace("\"count\": ${JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt}","\"count\": ${JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt-1}")
++                        adapterPosition+1 -> getString("my_notes","")!!.replace(",{ \"id\":${inf.id}, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" }","").replace("\"count\": ${JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt}","\"count\": ${JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt-1}")
++                        else -> getString("my_notes","")!!.replace("{ \"id\":${inf.id}, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" } ,","").replace("\"count\": ${JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt}","\"count\": ${JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt-1}")
+                     }
+                 }
+ 
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/uploads/UploadURL.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.uploads\n\nimport android.app.Activity\nimport android.net.Uri\nimport android.os.Bundle\nimport android.preference.PreferenceManager\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.view.inputmethod.EditorInfo\nimport android.view.inputmethod.InputMethodManager\nimport android.widget.ImageView\nimport android.widget.LinearLayout\nimport androidx.core.content.edit\nimport androidx.fragment.app.Fragment\nimport com.google.android.material.textfield.TextInputEditText\nimport com.google.android.material.textfield.TextInputLayout\nimport com.squareup.picasso.Picasso\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar\n\n\nclass UploadURL:Fragment() {\n\n    var keyboardOpen = false\n\n    override fun onCreateView(\n        inflater: LayoutInflater,\n        container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        val root = inflater.inflate(R.layout.fragment_upload, container, false)\n        val url = root.findViewById<TextInputEditText>(R.id.upload_url)\n        val img = root.findViewById<ImageView>(R.id.upload_image)\n        val plug = root.findViewById<LinearLayout>(R.id.plug_attach)\n        val tPlug = root.findViewById<TextInputLayout>(R.id.upload_l)\n\n        url.setOnClickListener { keyboardOpen = true }\n\n        url.setOnEditorActionListener { it, i, keyEvent ->\n            if(i ==  EditorInfo.IME_ACTION_DONE){\n                url.clearFocus()\n                val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager\n                imm.hideSoftInputFromWindow(url.windowToken, 0)\n                keyboardOpen = false\n                Picasso.get().load(Uri.parse(url?.text.toString())).into(img)\n                if(it.text.contains(\"https://\") && it.text.split('/').size>3){\n                    tPlug.error = null\n                    plug.visibility = View.GONE\n                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {\n                        putString(\"user_img\",it.text.toString())\n                    }\n                    PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {\n                        if(getBoolean(\"do_avatar\",false)){\n                            (requireActivity() as UpdateAvatar).updateAvatar()\n                        }\n                    }\n                }\n                else{\n                    tPlug.error = \"Инпут должен содержать ссылку.\"\n                }\n                true\n            }\n            false\n        }\n\n        return root\n    }\n\n    override fun onDestroy() {\n        if(keyboardOpen) {\n            val inputMethodManager =\n                requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager\n            inputMethodManager.hideSoftInputFromWindow(\n                requireActivity().currentFocus!!.windowToken,\n                0\n            )\n        }\n        super.onDestroy()\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/uploads/UploadURL.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/uploads/UploadURL.kt	(date 1621811413718)
+@@ -3,16 +3,14 @@
+ import android.app.Activity
+ import android.net.Uri
+ import android.os.Bundle
+-import android.preference.PreferenceManager
+-import android.view.LayoutInflater
+ import android.view.View
+-import android.view.ViewGroup
+ import android.view.inputmethod.EditorInfo
+ import android.view.inputmethod.InputMethodManager
+ import android.widget.ImageView
+ import android.widget.LinearLayout
+ import androidx.core.content.edit
+ import androidx.fragment.app.Fragment
++import androidx.preference.PreferenceManager
+ import com.google.android.material.textfield.TextInputEditText
+ import com.google.android.material.textfield.TextInputLayout
+ import com.squareup.picasso.Picasso
+@@ -20,16 +18,13 @@
+ import net.d3b8g.vktestersmentoring.interfaces.UpdateAvatar
+ 
+ 
+-class UploadURL:Fragment() {
++class UploadURL : Fragment(R.layout.fragment_upload) {
+ 
+     var keyboardOpen = false
+ 
+-    override fun onCreateView(
+-        inflater: LayoutInflater,
+-        container: ViewGroup?,
+-        savedInstanceState: Bundle?
+-    ): View? {
+-        val root = inflater.inflate(R.layout.fragment_upload, container, false)
++    override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(root, savedInstanceState)
++
+         val url = root.findViewById<TextInputEditText>(R.id.upload_url)
+         val img = root.findViewById<ImageView>(R.id.upload_image)
+         val plug = root.findViewById<LinearLayout>(R.id.plug_attach)
+@@ -37,14 +32,14 @@
+ 
+         url.setOnClickListener { keyboardOpen = true }
+ 
+-        url.setOnEditorActionListener { it, i, keyEvent ->
+-            if(i ==  EditorInfo.IME_ACTION_DONE){
++        url.setOnEditorActionListener { it, i, _ ->
++            if(i ==  EditorInfo.IME_ACTION_DONE) {
+                 url.clearFocus()
+                 val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                 imm.hideSoftInputFromWindow(url.windowToken, 0)
+                 keyboardOpen = false
+                 Picasso.get().load(Uri.parse(url?.text.toString())).into(img)
+-                if(it.text.contains("https://") && it.text.split('/').size>3){
++                if(it.text.contains("https://") && it.text.split('/').size > 3) {
+                     tPlug.error = null
+                     plug.visibility = View.GONE
+                     PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
+@@ -55,16 +50,12 @@
+                             (requireActivity() as UpdateAvatar).updateAvatar()
+                         }
+                     }
+-                }
+-                else{
++                } else {
+                     tPlug.error = "Инпут должен содержать ссылку."
+                 }
+-                true
+             }
+             false
+         }
+-
+-        return root
+     }
+ 
+     override fun onDestroy() {
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    package=\"net.d3b8g.vktestersmentoring\">\n\n    <uses-permission android:name=\"android.permission.INTERNET\" />\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>\n    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>\n    <uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\n\n    <application\n        android:allowBackup=\"true\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/AppTheme\">\n        <activity\n            android:name=\".ui.login.LoginActivity\"\n            android:noHistory=\"true\"\n            android:label=\"@string/app_name\"\n            android:theme=\"@style/AppTheme.NoActionBar\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n        </activity>\n        <activity android:name=\".MainActivity\" android:theme=\"@style/AppTheme.NoActionBar\" />\n        <service android:name=\".back.DictoCors\"/>\n        <activity android:name=\".ui.settings.Settings\"/>\n        <activity android:name=\".ui.login.Splash_\"/>\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/AndroidManifest.xml	(date 1621813657509)
+@@ -14,6 +14,7 @@
+         android:label="@string/app_name"
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
++        android:requestLegacyExternalStorage="true"
+         android:theme="@style/AppTheme">
+         <activity
+             android:name=".ui.login.LoginActivity"
+@@ -29,7 +30,7 @@
+         <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" />
+         <service android:name=".back.DictoCors"/>
+         <activity android:name=".ui.settings.Settings"/>
+-        <activity android:name=".ui.login.Splash_"/>
++        <activity android:name=".ui.login.SplashScreen"/>
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/confdata/UserDataFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.confdata\n\nimport android.content.ClipData\nimport android.content.ClipboardManager\nimport android.content.Context\nimport android.os.Bundle\nimport android.util.Base64\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.Button\nimport android.widget.TextView\nimport android.widget.Toast\nimport androidx.fragment.app.Fragment\nimport com.google.android.material.textfield.TextInputEditText\nimport com.google.android.material.textfield.TextInputLayout\nimport net.d3b8g.vktestersmentoring.MainActivity.Companion.uid\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.db.CreateUserExist\nimport net.d3b8g.vktestersmentoring.modules.UserConfData\n\n\nclass UserDataFragment : Fragment() {\n\n    lateinit var ident:TextView\n    lateinit var setIdent:TextInputEditText\n    lateinit var tlIdent:TextInputLayout\n\n    lateinit var setPass:TextInputEditText\n    lateinit var tlPass:TextInputLayout\n\n    lateinit var save:Button\n\n    override fun onCreateView(\n        inflater: LayoutInflater,\n        container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        val root = inflater.inflate(R.layout.fragment_userdata, container, false)\n\n        ident = root.findViewById(R.id.conf_uident)\n        setIdent = root.findViewById(R.id.conf_ident)\n        tlIdent = root.findViewById(R.id.conf_ident_tl)\n\n        setPass = root.findViewById(R.id.conf_password)\n        tlPass = root.findViewById(R.id.conf_password_tl)\n\n        save = root.findViewById(R.id.conf_save)\n\n        CreateUserExist(root.context).readConfData(uid)?.login?.apply {\n            if (this != \"null@vktm\") {\n                ident.text = this\n                tlIdent.visibility = View.GONE\n                tlPass.visibility = View.GONE\n                save.isClickable = false\n            }\n        }\n\n        save.setOnClickListener {\n            if (setPass.text.toString().length in 2..4) {\n                if (setIdent.text.toString().length > 5 &&\n                    setIdent.text.toString().contains(\"@vktm\") &&\n                    setIdent.text.toString().split(\"@\")[0].matches(\"^\\\\d+\\$\".toRegex())\n                ) {\n                    saveUserConf(root.context)\n                } else {\n                    tlIdent.error = \"Формат записи: ID@vktm\"\n                }\n            } else {\n                tlPass.error = \"Допустимо от 2 до 4 символов\"\n            }\n        }\n        return root\n    }\n\n    private fun genPass(ct: Context): String {\n        CreateUserExist(ct).readUserData(uid)!!.username.apply {\n            var username = \"\"\n            this.split(' ').forEachIndexed { index, un ->\n                username += when(index){\n                    0 -> un\n                    1 -> setIdent.text.toString().replace(\"@vktm\", \"\") + un\n                    else -> null\n                }\n            }\n            val str = Base64.encodeToString(username.reversed().toByteArray(), Base64.DEFAULT).replace(\n                \"=\",\n                \"\"\n            ).reversed()\n            val randomKey = (str.indices-1).random()\n            val std = Base64.encodeToString(\n                (str.replace(\n                    str.substring(randomKey,randomKey+1),\n                    setPass.text.toString()\n                ) + randomKey).toByteArray(), Base64.DEFAULT\n            ).replace(\"=\", \"\")\n            val stb = (std.substring(0, (std.length - 1) / 2).reversed()\n                    + std.substring((std.length - 1) / 2 + 1, std.length - 1)).reversed()\n            return stb.map { it.initNumber() }.joinToString(\"\")\n        }\n    }\n\n    private fun Char.initNumber() : String {\n        return if(this.isDigit()) {\n            when(this) {\n                '0' -> \"zt\"\n                '1' -> \"gt\"\n                '2' -> \"fr\"\n                '3' -> \"gy\"\n                '4' -> \"as\"\n                '5' -> \"ts\"\n                '6' -> \"pu\"\n                '7' -> \"nb\"\n                '8' -> \"vw\"\n                '9' -> \"as\"\n                else -> \"!WARN!\"\n            } + \"7$this\"\n        } else this.toString()\n    }\n\n    private fun saveUserConf(ct: Context) {\n        try {\n            val passwordGen = genPass(ct)\n            val updateUserConf = CreateUserExist(ct).writeConfData(\n                UserConfData(\n                    id = uid,\n                    login = setIdent.text.toString(),\n                    password = passwordGen\n                )\n            )\n            if(updateUserConf) {\n                ident.text = setIdent.text.toString()\n                tlIdent.visibility = View.GONE\n                tlPass.visibility = View.GONE\n                save.isClickable = false\n\n                val clipboard = ct.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager\n                val clip = ClipData.newPlainText(\"Password Of VKTM\", passwordGen)\n                clipboard.setPrimaryClip(clip)\n\n                Toast.makeText(ct, \"Пароль скопирован в буффер\", Toast.LENGTH_SHORT).show()\n            }\n        }catch (e: Exception){\n            e.stackTrace\n        }\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/confdata/UserDataFragment.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/confdata/UserDataFragment.kt	(date 1621811413716)
+@@ -5,9 +5,7 @@
+ import android.content.Context
+ import android.os.Bundle
+ import android.util.Base64
+-import android.view.LayoutInflater
+ import android.view.View
+-import android.view.ViewGroup
+ import android.widget.Button
+ import android.widget.TextView
+ import android.widget.Toast
+@@ -20,31 +18,23 @@
+ import net.d3b8g.vktestersmentoring.modules.UserConfData
+ 
+ 
+-class UserDataFragment : Fragment() {
++class UserDataFragment : Fragment(R.layout.fragment_userdata) {
+ 
+     lateinit var ident:TextView
+     lateinit var setIdent:TextInputEditText
+     lateinit var tlIdent:TextInputLayout
+-
+     lateinit var setPass:TextInputEditText
+     lateinit var tlPass:TextInputLayout
+-
+     lateinit var save:Button
+ 
+-    override fun onCreateView(
+-        inflater: LayoutInflater,
+-        container: ViewGroup?,
+-        savedInstanceState: Bundle?
+-    ): View? {
+-        val root = inflater.inflate(R.layout.fragment_userdata, container, false)
++    override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(root, savedInstanceState)
+ 
+         ident = root.findViewById(R.id.conf_uident)
+         setIdent = root.findViewById(R.id.conf_ident)
+         tlIdent = root.findViewById(R.id.conf_ident_tl)
+-
+         setPass = root.findViewById(R.id.conf_password)
+         tlPass = root.findViewById(R.id.conf_password_tl)
+-
+         save = root.findViewById(R.id.conf_save)
+ 
+         CreateUserExist(root.context).readConfData(uid)?.login?.apply {
+@@ -70,8 +60,8 @@
+                 tlPass.error = "Допустимо от 2 до 4 символов"
+             }
+         }
+-        return root
+     }
++
+ 
+     private fun genPass(ct: Context): String {
+         CreateUserExist(ct).readUserData(uid)!!.username.apply {
+@@ -112,7 +102,7 @@
+                 '6' -> "pu"
+                 '7' -> "nb"
+                 '8' -> "vw"
+-                '9' -> "as"
++                '9' -> "af"
+                 else -> "!WARN!"
+             } + "7$this"
+         } else this.toString()
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/back/DictoCors.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.back\n\nimport android.app.Service\nimport android.content.Intent\nimport android.media.MediaRecorder\nimport android.os.IBinder\nimport android.text.format.DateFormat\nimport android.util.Log\nimport net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicro\nimport net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath\nimport java.io.File\nimport java.util.*\n\nclass DictoCors:Service() {\n\n    override fun onStart(intent: Intent?, startId: Int) {\n        mMicro = MediaRecorder()\n\n        val path_mic = File(audioPath)\n        path_mic.mkdirs()\n\n        if(!path_mic.exists()) { path_mic.mkdirs() }\n\n        mMicro?.apply {\n            var file_out: File = File.createTempFile(\"${DateFormat.format(\"MM-dd_kk-mm\", Date().time)}_VKTMaudio\",\".3gp\",path_mic)\n            setAudioSource(MediaRecorder.AudioSource.MIC)\n            try{\n                setAudioSamplingRate(44100)\n                setAudioEncodingBitRate(96000)\n                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)\n                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)\n                setOutputFile(file_out.absolutePath)\n                prepare()\n                start()\n            }catch (e:Exception){\n                Log.e(\"VKTM_SYS\",\"Access_error\")\n            }\n        }\n//        NotificationCompagain(this).createNotificationChannel(\n//            ConstantsApp.channelIdAudio,\n//            ConstantsApp.channelName,\n//            getString(R.string.clickhere_to_stop),1)\n    }\n\n    override fun onBind(intent: Intent?): IBinder? =  null\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/back/DictoCors.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/back/DictoCors.kt	(date 1621810775199)
+@@ -4,11 +4,11 @@
+ import android.content.Intent
+ import android.media.MediaRecorder
+ import android.os.IBinder
+-import android.text.format.DateFormat
+ import android.util.Log
+ import net.d3b8g.vktestersmentoring.helper.Components.Companion.mMicro
+ import net.d3b8g.vktestersmentoring.helper.PathHelper.Companion.audioPath
+ import java.io.File
++import java.text.SimpleDateFormat
+ import java.util.*
+ 
+ class DictoCors:Service() {
+@@ -17,23 +17,21 @@
+         mMicro = MediaRecorder()
+ 
+         val path_mic = File(audioPath)
+-        path_mic.mkdirs()
+ 
+-        if(!path_mic.exists()) { path_mic.mkdirs() }
++        if (!path_mic.exists() || !path_mic.isDirectory) path_mic.mkdirs()
+ 
+         mMicro?.apply {
+-            var file_out: File = File.createTempFile("${DateFormat.format("MM-dd_kk-mm", Date().time)}_VKTMaudio",".3gp",path_mic)
+             setAudioSource(MediaRecorder.AudioSource.MIC)
+             try{
+                 setAudioSamplingRate(44100)
+                 setAudioEncodingBitRate(96000)
+                 setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+-                setOutputFile(file_out.absolutePath)
++                setOutputFile(audioPath + SimpleDateFormat("yyyy_mm_dd_hh:mm:ss").format(Date()))
+                 prepare()
+                 start()
+             }catch (e:Exception){
+-                Log.e("VKTM_SYS","Access_error")
++                Log.e("VKTM_SYS", "Access_error $e")
+             }
+         }
+ //        NotificationCompagain(this).createNotificationChannel(
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CMakeSettings\">\n    <configurations>\n      <configuration PROFILE_NAME=\"Debug\" CONFIG_NAME=\"Debug\" />\n    </configurations>\n  </component>\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" default=\"true\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\n  </component>\n  <component name=\"ProjectType\">\n    <option name=\"id\" value=\"Android\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ .idea/misc.xml	(date 1622237058753)
+@@ -5,7 +5,7 @@
+       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+     </configurations>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/bugs/BugsFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.bugs\n\nimport android.app.Activity\nimport android.os.Bundle\nimport android.preference.PreferenceManager\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.view.inputmethod.EditorInfo\nimport android.view.inputmethod.InputMethodManager\nimport android.widget.TextView\nimport androidx.core.content.edit\nimport androidx.fragment.app.Fragment\nimport com.google.android.material.textfield.TextInputEditText\nimport com.google.android.material.textfield.TextInputLayout\nimport net.d3b8g.vktestersmentoring.R\n\nclass BugsFragment : Fragment() {\n\n    lateinit var rep:TextInputEditText\n    lateinit var rep_wanna:TextInputEditText\n    lateinit var tN:TextView\n    lateinit var tW:TextView\n    lateinit var mT:TextView\n\n    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {\n        val root = inflater.inflate(R.layout.fragment_bugs, container, false)\n\n        rep = root.findViewById(R.id.count_rep)\n        rep_wanna = root.findViewById(R.id.count_rep_wanna)\n        val result = root.findViewById<TextView>(R.id.percent_result)\n        tN = root.findViewById(R.id.now_i_have)\n        tW = root.findViewById(R.id.i_will_have)\n        mT = root.findViewById(R.id.motivation_text)\n\n        setupTextValue()\n        rep.onFocusChangeListener = View.OnFocusChangeListener { view, hadFocus ->\n            if (!hadFocus && !rep.text.toString().isNullOrBlank() && rep.text.toString().filter { it.isDigit() }!= \"\" ) {\n                PreferenceManager.getDefaultSharedPreferences(root.context).edit {\n                    putInt(\"report_count_now\",rep.text.toString().filter { it.isDigit() }.toInt())\n                }\n                rep.clearFocus()\n                result.text = getPercent()\n                setupTextValue()\n            }else if(!rep.text.toString().isNullOrBlank() && !rep.text!!.matches(\"\\\\d+\".toRegex())){\n                var er = root.findViewById<TextInputLayout>(R.id.l_count_rep)\n                er.error = \"Поле должно содержать цифры. Текст будет автоматически удален.\"\n            }\n\n        }\n        rep_wanna.onFocusChangeListener = View.OnFocusChangeListener { view, hadFocus ->\n            if (!hadFocus && !rep_wanna.text.toString().isNullOrBlank() && rep_wanna.text.toString().filter { it.isDigit() } != \"\" && rep_wanna.text.toString()!= \"0\" ) {\n                PreferenceManager.getDefaultSharedPreferences(root.context).edit {\n                    putInt(\"report_count_wanna\", rep_wanna.text.toString().filter { it.isDigit() }.toInt())\n                }\n                rep_wanna.clearFocus()\n                result.text = getPercent()\n                setupTextValue()\n            }else if(!rep_wanna.text.toString().isNullOrBlank() && !rep_wanna.text!!.matches(\"\\\\d+\".toRegex())) {\n                var er = root.findViewById<TextInputLayout>(R.id.l_wanna_rep)\n                er.error = \"Поле должно содержать цифры. Текст будет автоматически удален.\"\n            }\n        }\n\n        rep_wanna.setOnEditorActionListener { it, i, keyEvent ->\n            if(i ==  EditorInfo.IME_ACTION_DONE && rep_wanna.text.toString() != \"0\") {\n                it.clearFocus()\n                val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager\n                imm.hideSoftInputFromWindow(it.windowToken, 0)\n                PreferenceManager.getDefaultSharedPreferences(root.context).edit {\n                    putInt(\"report_count_wanna\",it.text.toString().filter { it.isDigit() }.toInt())\n                }\n                result.text = getPercent()\n                setupTextValue()\n                true\n            }else{\n                rep_wanna.setText(\"\")\n                var er = root.findViewById<TextInputLayout>(R.id.l_wanna_rep)\n                er.error = \"О каком росте идет речь, если желаешь 0 отчетов? \"\n            }\n            false\n        }\n\n        result.text = getPercent()\n        return root\n    }\n\n    private fun getPercent() = ((100 * PreferenceManager.getDefaultSharedPreferences(activity).getInt(\"report_count_now\", 0)) /\n            PreferenceManager.getDefaultSharedPreferences(activity).getInt(\"report_count_wanna\", 1)).toString() + \"%\"\n\n    private fun setupTextValue() {\n        tN.text = \"Сейчас у меня: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt(\"report_count_now\",0)} отчетов\"\n        tW.text = \"Желаю зарепортить: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt(\"report_count_wanna\",1)}\"\n        mT.text = if(getPercent().dropLast(1).toInt() < 100) {\n            getText(R.string.bad_scope)\n        }else{\n            getText(R.string.well_scope)\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/bugs/BugsFragment.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/bugs/BugsFragment.kt	(date 1621810857028)
+@@ -91,7 +91,7 @@
+     private fun setupTextValue() {
+         tN.text = "Сейчас у меня: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_now",0)} отчетов"
+         tW.text = "Желаю зарепортить: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_wanna",1)}"
+-        mT.text = if(getPercent().dropLast(1).toInt() < 100) {
++        mT.text = if(getPercent().dropLast(1).toInt() < 101) {
+             getText(R.string.bad_scope)
+         }else{
+             getText(R.string.well_scope)
+Index: app/src/main/java/net/d3b8g/vktestersmentoring/ui/settings/Settings.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package net.d3b8g.vktestersmentoring.ui.settings\n\nimport android.content.Intent\nimport android.os.Bundle\nimport android.preference.PreferenceManager\nimport android.widget.Button\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.core.content.edit\nimport com.google.android.material.switchmaterial.SwitchMaterial\nimport net.d3b8g.vktestersmentoring.MainActivity\nimport net.d3b8g.vktestersmentoring.R\nimport net.d3b8g.vktestersmentoring.ui.login.LoginActivity\n\nclass Settings : AppCompatActivity() {\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContentView(R.layout.layout_settings)\n\n        val tracking = findViewById<SwitchMaterial>(R.id.s_tracking)\n        val avatar = findViewById<SwitchMaterial>(R.id.s_avatar)\n        val logout = findViewById<Button>(R.id.logout)\n\n        PreferenceManager.getDefaultSharedPreferences(this).apply {\n            tracking.isChecked = getBoolean(\"do_tracking\", false)\n            avatar.isChecked = getBoolean(\"do_avatar\", false)\n        }\n        tracking.setOnClickListener {\n            PreferenceManager.getDefaultSharedPreferences(this).edit {\n                putBoolean(\"do_tracking\", tracking.isChecked)\n            }\n        }\n        avatar.setOnClickListener {\n            PreferenceManager.getDefaultSharedPreferences(this).edit {\n                putBoolean(\"do_avatar\", avatar.isChecked)\n            }\n        }\n        logout.setOnClickListener {\n            PreferenceManager.getDefaultSharedPreferences(this).edit {\n                putBoolean(\"make_splash\", false)\n            }\n            startActivity(Intent(this, LoginActivity::class.java)\n                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)\n                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)\n                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))\n            finish()\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/net/d3b8g/vktestersmentoring/ui/settings/Settings.kt	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/java/net/d3b8g/vktestersmentoring/ui/settings/Settings.kt	(date 1621810857031)
+@@ -7,7 +7,6 @@
+ import androidx.appcompat.app.AppCompatActivity
+ import androidx.core.content.edit
+ import com.google.android.material.switchmaterial.SwitchMaterial
+-import net.d3b8g.vktestersmentoring.MainActivity
+ import net.d3b8g.vktestersmentoring.R
+ import net.d3b8g.vktestersmentoring.ui.login.LoginActivity
+ 
+Index: app/src/main/res/layout/cell_note.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<LinearLayout\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    android:layout_width=\"match_parent\"\n    android:weightSum=\"5\"\n    android:layout_height=\"100dp\">\n    <ImageView\n        android:padding=\"12dp\"\n        android:src=\"@drawable/ic_note_c\"\n        android:layout_weight=\"1\"\n        android:layout_width=\"0dp\"\n        android:layout_height=\"match_parent\"/>\n    <LinearLayout\n        android:orientation=\"vertical\"\n        android:weightSum=\"3\"\n        android:layout_weight=\"4\"\n        android:layout_width=\"0dp\"\n        android:layout_height=\"match_parent\">\n        <TextView\n            android:textStyle=\"bold\"\n            android:gravity=\"left|center\"\n            android:maxLength=\"50\"\n            android:text=\"Описание описание\"\n            android:id=\"@+id/note_titile\"\n            android:layout_weight=\"1\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"0dp\"/>\n        <TextView\n            android:maxLength=\"150\"\n            android:text=\"Привет, тут я описываю свою заметку, д, это очень круто\"\n            android:id=\"@+id/note_descr\"\n            android:layout_weight=\"2\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"0dp\"/>\n    </LinearLayout>\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/cell_note.xml	(revision fd6d7d71fd79110e0c4de050a030f3e42735f47b)
++++ app/src/main/res/layout/cell_note.xml	(date 1621810857032)
+@@ -26,6 +26,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="0dp"/>
+         <TextView
++            android:padding="6dp"
+             android:maxLength="150"
+             android:text="Привет, тут я описываю свою заметку, д, это очень круто"
+             android:id="@+id/note_descr"

@@ -109,24 +109,25 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
     private fun saveUserConf(ct: Context) {
         lifecycleScope.launch {
             val passwordGen = genPass(getUser())
-            val updateUserConf = confBase.update(ConfData(
-                id = uid,
-                ident = binding.confIdent.text.toString(),
-                password = passwordGen
-            ))
+            withContext(Dispatchers.IO) {
+                confBase.update(ConfData(
+                    id = uid,
+                    ident = binding.confIdent.text.toString(),
+                    password = passwordGen
+                ))
 
-            if (updateUserConf > 0) {
-                binding.confUident.text = binding.confIdent.text.toString()
-                binding.confIdentTl.visibility = View.GONE
-                binding.confPasswordTl.visibility = View.GONE
-                binding.confSave.isClickable = false
-
-                val clipboard = ct.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("Password Of VKTM", passwordGen)
-                clipboard.setPrimaryClip(clip)
-
-                Toast.makeText(ct, "Пароль скопирован в буффер", Toast.LENGTH_SHORT).show()
             }
+            binding.confUident.text = binding.confIdent.text.toString()
+            binding.confIdentTl.visibility = View.GONE
+            binding.confPasswordTl.visibility = View.GONE
+            binding.confSave.isClickable = false
+
+            val clipboard = ct.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Password Of VKTM", passwordGen)
+            clipboard.setPrimaryClip(clip)
+
+            Toast.makeText(ct, "Пароль скопирован в буффер", Toast.LENGTH_SHORT).show()
+
         }
     }
 

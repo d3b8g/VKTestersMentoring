@@ -27,10 +27,10 @@ class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
 
         frame.setCanceledOnTouchOutside(true)
 
-        var title = frame.findViewById<TextInputEditText>(R.id.title_note)
-        var descr = frame.findViewById<TextInputEditText>(R.id.descr_note)
+        val title = frame.findViewById<TextInputEditText>(R.id.title_note)
+        val descr = frame.findViewById<TextInputEditText>(R.id.descr_note)
 
-        var send = frame.findViewById<Button>(R.id.save_note)
+        val send = frame.findViewById<Button>(R.id.save_note)
 
         send.setOnClickListener {
             if(title.text!!.any { text-> text.isLetter() } && descr.text!!.any { text-> text.isLetter()}) {
@@ -41,7 +41,7 @@ class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
                     data = if(getString("my_notes", "") != "" ) {
                         var count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt
                         getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
-                            "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\\"+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" }], \"count\": ${count+1}}")
+                            "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" }], \"count\": ${count+1}}")
                     } else {
                         "{ \"notes\": [ { \"id\":0, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" } ], \"count\": 1 }"
                     }

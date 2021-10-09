@@ -1,21 +1,31 @@
 package net.d3b8g.vktestersmentoring.ui.settings
 
+/*
+Copyright (c) 2021 github.com/d3b8g
+All Rights Reserved
+
+This product is protected by copyright and distributed under
+licenses restricting copying, distribution and decompilation.
+
+Use this code only for non commercial purpose.
+*/
+
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.databinding.FragmentSettingsBinding
-import net.d3b8g.vktestersmentoring.ui.login.LoginFragmentDirections
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private lateinit var binding: FragmentSettingsBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        (requireActivity() as net.d3b8g.vktestersmentoring.interfaces.ActionBar).actionBarChange(true)
         binding = FragmentSettingsBinding.bind(view)
 
         val tracking = binding.sTracking
@@ -44,14 +54,22 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         logout.setOnClickListener {
-            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                putBoolean("make_splash", false)
-            }
-            0.changeFragment()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Выти из аккаунта?")
+                .setPositiveButton("Выйти") {_, _ ->
+                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
+                        putInt("active_user_id", -1)
+                    }
+                    0.changeFragment()
+                }
+                .setNegativeButton("Отменить") {d, _ ->
+                    d.dismiss()
+                }
+                .show()
         }
     }
 
-    fun Int.changeFragment() {
+    private fun Int.changeFragment() {
         val action = when (this) {
             0 -> SettingsFragmentDirections.actionNavSettingsToNavLogin()
             else -> SettingsFragmentDirections.actionNavSettingsToNavHome()

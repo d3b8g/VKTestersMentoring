@@ -18,17 +18,19 @@ import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.modules.NoteModule
 
 
-class NotesAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NotesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var notes:ArrayList<NoteModule> = ArrayList()
+    var notes: ArrayList<NoteModule> = ArrayList()
+
     fun updateArray(ct:Context){
         notes.clear()
         //var data_example = "{ \"notes\": [ { \"id\":0, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" }, { \"id\":1, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" }, { \"id\":2, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" }, { \"id\":3, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" }, { \"id\":4, \"title\":\"ТайтлЗаметки\", \"description\":\"Описание какой-то заметки, короче говоря короткая инфа с заметки твоей\", \"date_of_create\":\"2020-12-12\" } ], \"count\": 5}"
         PreferenceManager.getDefaultSharedPreferences(ct).apply {
-            if(getString("my_notes","")!=""){
+            if (getString("my_notes","") != "") {
+                Log.e("RRR","construction:${JsonParser.parseString(getString("my_notes",""))}" )
                 JsonParser.parseString(getString("my_notes","")).asJsonObject.getAsJsonArray("notes").forEach {
                     Log.e("RRR","construction:${it} \n dest: ${getString("my_notes","")}" )
-                    var note = NoteModule(
+                    val note = NoteModule(
                         id = it.asJsonObject.get("id").asInt,
                         title = it.asJsonObject.get("title").asString,
                         description = it.asJsonObject.get("description").asString,
@@ -64,8 +66,8 @@ class NotesAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             title.text = inf.title.replace("&#34;","\"")
             descr.text = inf.description.replace("&#34;","\"")
             itemView.setOnClickListener {
-                var clipBoard = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                var data = "{ \"id\":-1, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" }"
+                val clipBoard = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val data = "{ \"id\":-1, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" }"
                 val clip: ClipData = ClipData.newPlainText("VKTM-1", data)
                 clipBoard.setPrimaryClip(clip)
                 Toast.makeText(itemView.context,"Заметка скопирована",Toast.LENGTH_LONG).show()

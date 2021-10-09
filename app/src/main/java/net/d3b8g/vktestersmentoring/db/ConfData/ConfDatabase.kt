@@ -23,7 +23,7 @@ abstract class ConfDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         ct.applicationContext,
                         ConfDatabase::class.java,
-                        "confbase"
+                        "userbase"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
