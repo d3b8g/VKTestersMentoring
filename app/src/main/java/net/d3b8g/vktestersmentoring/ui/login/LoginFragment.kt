@@ -26,16 +26,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.adapters.UserAdapter
 import net.d3b8g.vktestersmentoring.databinding.FragmentLoginBinding
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
-import net.d3b8g.vktestersmentoring.interfaces.Login
-import net.d3b8g.vktestersmentoring.modules.UITypes
+import net.d3b8g.vktestersmentoring.helper.UITypes
 
-class LoginFragment : Fragment(R.layout.fragment_login), Login {
+class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
 
     private val listBack: ArrayList<UserData> = ArrayList()
     private lateinit var adapter: UserAdapter
@@ -140,9 +138,10 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
     }
 
     private fun openUserUI() {
-        val action = LoginFragmentDirections.actionNavLoginToNavHome2()
+        val action = LoginFragmentDirections.actionNavLoginToNavMain()
         findNavController().navigate(action)
-        (requireActivity() as MainActivity).updateUI(UITypes.ALL_DATA)
-        (requireActivity() as net.d3b8g.vktestersmentoring.interfaces.ActionBar).actionBarChange(false)
+        (requireActivity() as MainActivity).apply {
+            updateUI(UITypes.SHOW_TABBAR)
+        }
     }
 }

@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.adapters
+package net.d3b8g.vktestersmentoring.ui.notes
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -15,7 +15,6 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.modules.NoteModule
 
 
 class NotesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -62,7 +61,7 @@ class NotesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var title = itemView.findViewById<TextView>(R.id.note_titile)
         var descr = itemView.findViewById<TextView>(R.id.note_descr)
 
-        fun bind(inf:NoteModule){
+        fun bind(inf: NoteModule){
             title.text = inf.title.replace("&#34;","\"")
             descr.text = inf.description.replace("&#34;","\"")
             itemView.setOnClickListener {
@@ -74,11 +73,11 @@ class NotesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             itemView.setOnLongClickListener {
-                var urData = ""
+                var urData: String
                 PreferenceManager.getDefaultSharedPreferences(itemView.context).apply {
                     urData = when (JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt) {
                         1 -> ""
-                        position+1 -> getString("my_notes","")!!.replace(",{ \"id\":${inf.id}, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" }","").replace("\"count\": ${JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt}","\"count\": ${JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt-1}")
+                        adapterPosition + 1 -> getString("my_notes","")!!.replace(",{ \"id\":${inf.id}, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" }","").replace("\"count\": ${JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt}","\"count\": ${JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt-1}")
                         else -> getString("my_notes","")!!.replace("{ \"id\":${inf.id}, \"title\":\"${inf.title}\", \"description\":\"${inf.description}\", \"date_of_create\":\"${inf.date_of_create}\" } ,","").replace("\"count\": ${JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt}","\"count\": ${JsonParser().parse(getString("my_notes","")).asJsonObject.get("count").asInt-1}")
                     }
                 }

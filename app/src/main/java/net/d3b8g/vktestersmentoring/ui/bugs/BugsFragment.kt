@@ -7,13 +7,20 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.edit
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.databinding.FragmentBugsBinding
+import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
 
 class BugsFragment : Fragment(R.layout.fragment_bugs) {
+
     private lateinit var binding: FragmentBugsBinding
+    private val fragmentHeader: FragmentHeader by lazy {
+        binding.bugsHeader
+    }
 
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
         binding = FragmentBugsBinding.bind(root)
@@ -64,6 +71,14 @@ class BugsFragment : Fragment(R.layout.fragment_bugs) {
             false
         }
         binding.percentResult.text = getPercent()
+
+        fragmentHeader.setTitleText("Отчетность")
+        fragmentHeader.setRightButtonIcon(
+            ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+        )
+        fragmentHeader.setRightButtonListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun String.fieldChecker(): Boolean {

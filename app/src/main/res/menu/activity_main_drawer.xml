@@ -24,7 +24,7 @@
             android:icon="@drawable/ic_conf"/>
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_longrid"
+            android:icon="@drawable/ic_longread"
             android:title="@string/menu_longrid" />
         <item
             android:id="@+id/nav_mv"

@@ -10,113 +10,62 @@ licenses restricting copying, distribution and decompilation.
 Use this code only for non commercial purpose.
 */
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import com.google.android.material.navigation.NavigationView
-import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
+import com.google.android.material.snackbar.Snackbar
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import kotlinx.coroutines.*
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
-import net.d3b8g.vktestersmentoring.interfaces.ActionBar
+import net.d3b8g.vktestersmentoring.helper.UITypes
 import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
-import net.d3b8g.vktestersmentoring.modules.UITypes
-import net.d3b8g.vktestersmentoring.ui.home.MediaCenter
-import net.d3b8g.vktestersmentoring.ui.home.MediaCenter.Companion.recording_anim
+import net.d3b8g.vktestersmentoring.ui.longread.MediaCenter
+import net.d3b8g.vktestersmentoring.ui.longread.MediaCenter.Companion.recording_anim
 
-class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interfaces.MediaCenter, UpdateMainUI, ActionBar {
+class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.ui.dicto.MediaCenterInterface, UpdateMainUI {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var mineName: TextView
     lateinit var mCenter: FrameLayout
-    lateinit var navView: NavigationView
-    lateinit var headerLayoutInflater: View
-    lateinit var mineVisits: TextView
-    lateinit var userImage: CircleImageView
+    lateinit var navBar: ChipNavigationBar
 
-    private var job = Job()
-    private var scope = CoroutineScope(Dispatchers.Main + job)
-
+    private val navController by lazy {
+        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+    }
     private val userDatabase by lazy { UserDatabase.getInstance(this).userDatabaseDao }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        navBar = findViewById(R.id.bottom_navigation_menu)
+        navBar.setItemSelected(R.id.home, true)
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
-        mCenter = findViewById(R.id.media_center)
-
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home,
-                R.id.nav_bugs,
-                R.id.nav_slideshow,
-                R.id.nav_dictophone,
-                R.id.nav_upload,
-                R.id.nav_mv,
-                R.id.nav_notes,
-                R.id.nav_conf,
-                R.id.nav_settings
-            ), drawerLayout
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
-        actionBarChange(true)
-
-        headerLayoutInflater = navView.getHeaderView(0)
-        mineName = headerLayoutInflater.findViewById(R.id.main_user_name)
-        mineVisits = headerLayoutInflater.findViewById(R.id.main_user_visits)
-        userImage = headerLayoutInflater.findViewById(R.id.main_user_avatar)
+        navBar.setOnItemSelectedListener {
+            when (it) {
+                R.id.home -> {
+                    if (mainState == null) navController.navigate(R.id.nav_main)
+                }
+                R.id.notes -> navController.navigate(R.id.nav_notes)
+            }
+        }
 
         PreferenceManager.getDefaultSharedPreferences(this).apply {
-            getInt("active_user_id", -1).let {
-                uid = if (it > 0) {
-                    updateUI(UITypes.ALL_DATA)
-                    it
-                } else {
-                    1
-                }
-            }
+            if (getInt("active_user_id", -1) < 1) navBar.visibility = View.GONE
         }
     }
 
-    override fun updateUI(type: String) {
-        scope.launch {
-            val user = getUser()
-
-            if ((type == UITypes.ALL_DATA || type == UITypes.AVATAR) && user.avatar.isNotEmpty()) {
-                Picasso.get().load(user.avatar).resize(150,150).into(userImage)
-            }
-            if (type == UITypes.ALL_DATA || type == UITypes.USERNAME) {
-                mineName.text = user.username
-            }
-            if (type == UITypes.ALL_DATA || type == UITypes.VISITS) {
-                user.counter.let {
-                    visits = it + 1
-                    setScoreVisit(visits)
-                    updateVisitsCounter(visits)
-                }
-            }
+    override fun updateUI(type: UITypes) {
+        if (type == UITypes.SHOW_TABBAR) {
+            navBar.visibility = View.VISIBLE
         }
     }
 
@@ -141,34 +90,8 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun setScoreVisit(count: Int) {
-        mineVisits.text = "Вы посетили приложение: $count ${titleStatus(count)}"
-        when(count) {
-            in 51..100 -> {
-                mineVisits.setTextColor(Color.parseColor("#8b00ff"))
-            }
-            in 101..150 -> {
-                mineVisits.setTextColor(Color.parseColor("#fff211"))
-            }
-            in 151..200 -> {
-                mineVisits.setTextColor(Color.parseColor("#18ff0f"))
-            }
-            in 201..250 -> {
-                mineVisits.setTextColor(Color.parseColor("#321eff"))
-            }
-            in 251..300 -> {
-                mineVisits.setTextColor(Color.parseColor("#ff77ea"))
-            }
-            in 300..1900 -> {
-                mineVisits.setTextColor(Color.parseColor("#e13100"))
-            }
-        }
-    }
-
     override fun onResume() {
         super.onResume()
-        setScoreVisit(visits)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -183,14 +106,21 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.interface
         mCenter.visibility = View.VISIBLE
     }
 
-    override fun actionBarChange(hide: Boolean) {
-        if (hide) supportActionBar?.hide()
-        else supportActionBar?.show()
+    override fun onBackPressed() {
+        val history = navController.currentDestination?.id ?: false
+        val excludeNav = arrayListOf(R.id.nav_main, R.id.nav_splash, R.id.nav_notes)
+        if (!excludeNav.contains(history)) navController.popBackStack()
+        else {
+            Snackbar.make(findViewById(R.id.container), "Закрыть приложение?", Snackbar.LENGTH_SHORT)
+                .setAction("Закрыть") {
+                    finishAffinity()
+                }
+                .show()
+        }
     }
 
-    override fun onBackPressed() {}
-
     companion object {
+        var mainState: NavDirections? = null
         var uid = 1
         var visits = 0
     }

@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.adapters
+package net.d3b8g.vktestersmentoring.ui.longread
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,20 +7,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.interfaces.LonggridCall
-import net.d3b8g.vktestersmentoring.modules.LongGridModule
 import net.d3b8g.vktestersmentoring.prefs.getQualityParam
 import net.d3b8g.vktestersmentoring.prefs.getReadParam
 
-class LongGridAdapter(val terf:LonggridCall): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LongreadAdapter(val terf: LongreadCall): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val lG:ArrayList<LongGridModule> = ArrayList()
+    val lG:ArrayList<LongreadModule> = ArrayList()
 
     fun update(ct:Context){
         lG.clear()
         val titleList = arrayListOf("Charles, Чарлик или Ваза, взгляд сквозь тело","DevTools — must have для тестирования сервисов","Уязвимости для новичков","Глоссарий","I want you for Special Forces","История одного террориста","Снимаем логи на Android","Качаем скилл создания хороших отчетов","Тестируем по правилам","Как избегать создания дубликатов","Как снять логи и крашлоги на iPhone","Через тернии к баллам")
         val linkList = arrayListOf("https://vk.com/@testpool-charles-charlik-ili-vaza-vzglyad-skvoz-telo","https://vk.com/@testpool-devtools-must-have-dlya-testirovaniya-servisov","https://vk.com/@testpool-uyazvimosti-dlya-novichkov","https://vk.com/@testpool-glossarii","https://vk.com/@testpool-i-want-you-for-special-forces","https://vk.com/@testpool-istoriya-horoshego-terrorista","https://vk.com/@testpool-snimaem-logi-na-android","https://vk.com/@testpool-kachaem-skilly-qa-cherez-otchety","https://vk.com/@testpool-testiruem-po-pravilam","https://vk.com/@testpool-dubli","https://vk.com/@testpool-ios-logs","https://vk.com/@testpool-cherez-ternii-k-ballam")
-        for ( (index,title) in titleList.withIndex()) lG.add(LongGridModule(title = title, hadRead = getReadParam(ct, "check_box_$index"), quality = getQualityParam(ct, "quality_grid_$index"),link = linkList[index]))
+        for ( (index,title) in titleList.withIndex()) lG.add(LongreadModule(title = title, hadRead = getReadParam(ct, "check_box_$index"), quality = getQualityParam(ct, "quality_grid_$index"),link = linkList[index]))
         notifyDataSetChanged()
     }
 
@@ -41,7 +39,7 @@ class LongGridAdapter(val terf:LonggridCall): RecyclerView.Adapter<RecyclerView.
     inner class LonggridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val title = itemView.findViewById<TextView>(R.id.lg_name)
-        fun bind(item:LongGridModule) {
+        fun bind(item: LongreadModule) {
             title.text = item.title
             itemView.setOnClickListener {
                 terf.changeParam(item, adapterPosition)

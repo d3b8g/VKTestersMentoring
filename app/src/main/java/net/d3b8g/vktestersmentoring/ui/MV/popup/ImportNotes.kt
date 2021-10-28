@@ -13,13 +13,13 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
+import net.d3b8g.vktestersmentoring.ui.notes.UpdateNotesInterface
 
-class ImportNotes(val ct: Context, var tyty: UpdateNotes) {
+class ImportNotes(val ct: Context, var tyty: UpdateNotesInterface) {
     fun show() {
         val frame = Dialog(ct)
         frame.setContentView(R.layout.alert_import)
-        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.FILL_PARENT)
+        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
         frame.window!!.setGravity(Gravity.BOTTOM)
 
         frame.setCanceledOnTouchOutside(true)
@@ -33,10 +33,10 @@ class ImportNotes(val ct: Context, var tyty: UpdateNotes) {
                 var data = ""
                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
                     try {
-                        var yu = JsonParser.parseString(titleInput.text.toString()).asJsonObject
-                        var title = yu.asJsonObject.get("title").asString
-                        var descr = yu.asJsonObject.get("description").asString
-                        var dateTime = yu.asJsonObject.get("date_of_create").asString
+                        val yu = JsonParser.parseString(titleInput.text.toString()).asJsonObject
+                        val title = yu.asJsonObject.get("title").asString
+                        val descr = yu.asJsonObject.get("description").asString
+                        val dateTime = yu.asJsonObject.get("date_of_create").asString
                         if(title.length < 51) {
                             data = if(getString("my_notes","") != ""){
                                 var count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt

@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.adapters
+package net.d3b8g.vktestersmentoring.ui.login
 
 /*
 Copyright (c) 2021 github.com/d3b8g
@@ -20,9 +20,8 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
-import net.d3b8g.vktestersmentoring.interfaces.Login
 
-class UserAdapter(val login:Login) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UserAdapter(val login: LoginInterface) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var dataUser: ArrayList<UserData> = ArrayList()
 

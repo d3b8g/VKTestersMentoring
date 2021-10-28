@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.adapters.NotesAdapter
-import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
 import net.d3b8g.vktestersmentoring.ui.MV.popup.AddNewNotes
 import net.d3b8g.vktestersmentoring.ui.MV.popup.ImportNotes
 
-class NotesFragment : Fragment(), UpdateNotes {
+class NotesInterfaceFragment : Fragment(), UpdateNotesInterface {
 
     lateinit var adapter: NotesAdapter
 

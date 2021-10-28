@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListPopupWindow
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
@@ -12,15 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.adapters.GalleryAdapter
 import net.d3b8g.vktestersmentoring.databinding.FragmentSlideshowBinding
 import net.d3b8g.vktestersmentoring.helper.PathHelper
+import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
 import java.io.File
 
 class GalleryFragment : Fragment(R.layout.fragment_slideshow) {
 
     private lateinit var adapter: GalleryAdapter
     private lateinit var binding: FragmentSlideshowBinding
+    private val fragmentHeader: FragmentHeader by lazy {
+        binding.bugsHeader
+    }
 
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
         binding = FragmentSlideshowBinding.bind(root)
@@ -68,6 +72,14 @@ class GalleryFragment : Fragment(R.layout.fragment_slideshow) {
         binding.goToDictophone.setOnClickListener {
             val action = GalleryFragmentDirections.actionNavSlideshowToNavDictophone()
             findNavController().navigate(action)
+        }
+
+        fragmentHeader.setTitleText("Галерея")
+        fragmentHeader.setRightButtonIcon(
+            ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+        )
+        fragmentHeader.setRightButtonListener {
+            findNavController().popBackStack()
         }
 
     }

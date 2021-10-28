@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.ui.home
+package net.d3b8g.vktestersmentoring.ui.longread
 
 /*
 Copyright (c) 2021 github.com/d3b8g
@@ -19,29 +19,29 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.adapters.LongGridAdapter
-import net.d3b8g.vktestersmentoring.databinding.FragmentLonggridBinding
-import net.d3b8g.vktestersmentoring.interfaces.LonggridCall
-import net.d3b8g.vktestersmentoring.modules.LongGridModule
+import net.d3b8g.vktestersmentoring.databinding.FragmentLongreadBinding
 import net.d3b8g.vktestersmentoring.prefs.*
+import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
 
-class HomeFragment : Fragment(R.layout.fragment_longgrid), LonggridCall {
+class LongreadFragment : Fragment(R.layout.fragment_longread), LongreadCall {
 
-    private lateinit var binding: FragmentLonggridBinding
-    private lateinit var adapter: LongGridAdapter
+    private lateinit var binding: FragmentLongreadBinding
+    private lateinit var adapter: LongreadAdapter
     var displayWidth = 0
+    private val fragmentHeader: FragmentHeader by lazy {
+        binding.bugsHeader
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentLonggridBinding.bind(view)
+        binding = FragmentLongreadBinding.bind(view)
 
-        (requireActivity() as net.d3b8g.vktestersmentoring.interfaces.ActionBar).actionBarChange(
-            false
-        )
-        adapter = LongGridAdapter(this)
+        adapter = LongreadAdapter(this)
         binding.rcvLongrid.adapter = adapter
         binding.rcvLongrid.layoutManager =
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -49,10 +49,18 @@ class HomeFragment : Fragment(R.layout.fragment_longgrid), LonggridCall {
         adapter.update(view.context)
 
         displayWidth = requireActivity().windowManager.defaultDisplay.width
+
+        fragmentHeader.setTitleText("Лонгриды")
+        fragmentHeader.setRightButtonIcon(
+            ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+        )
+        fragmentHeader.setRightButtonListener {
+            findNavController().popBackStack()
+        }
     }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
-    override fun changeParam(item: LongGridModule, pos: Int) {
+    override fun changeParam(item: LongreadModule, pos: Int) {
         binding.plugText.visibility = View.GONE
         binding.lgComponentsBlock.visibility = View.VISIBLE
         binding.lgOpen.setOnClickListener {

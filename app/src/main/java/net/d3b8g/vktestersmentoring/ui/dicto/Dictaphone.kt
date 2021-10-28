@@ -18,21 +18,34 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.back.DictoCors
 import net.d3b8g.vktestersmentoring.databinding.FragmentDictoBinding
 import net.d3b8g.vktestersmentoring.helper.Components.mMicro
 import net.d3b8g.vktestersmentoring.helper.Components.mMicroActive
-import net.d3b8g.vktestersmentoring.interfaces.MediaCenter
+import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
 import net.d3b8g.vktestersmentoring.ui.dicto.DictaphonePermission.haveDictaphonesPermission
 
 class Dictaphone : Fragment(R.layout.fragment_dicto) {
 
     private lateinit var binding: FragmentDictoBinding
+    private val fragmentHeader: FragmentHeader by lazy {
+        binding.bugsHeader
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentDictoBinding.bind(view)
+
+        fragmentHeader.setTitleText("Диктофон")
+        fragmentHeader.setRightButtonIcon(
+            ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+        )
+        fragmentHeader.setRightButtonListener {
+            findNavController().popBackStack()
+        }
 
         binding.btnRecording.setOnClickListener {
             if (mMicroActive) {
@@ -41,7 +54,7 @@ class Dictaphone : Fragment(R.layout.fragment_dicto) {
                 mMicro = null
                 binding.btnRecording.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_mic))
                 mMicroActive = false
-                net.d3b8g.vktestersmentoring.ui.home.MediaCenter.recording_anim = false
+                net.d3b8g.vktestersmentoring.ui.longread.MediaCenter.recording_anim = false
             } else {
                 if (!requireContext().haveDictaphonesPermission()) {
                     if (Build.VERSION.SDK_INT > 28) {
@@ -65,7 +78,7 @@ class Dictaphone : Fragment(R.layout.fragment_dicto) {
                 } else {
                     requireContext().startService(Intent(requireActivity(), DictoCors::class.java))
                     binding.btnRecording.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
-                    (context as MediaCenter).startRecordingComponents()
+                    (context as MediaCenterInterface).startRecordingComponents()
                     mMicroActive = true
                 }
             }
@@ -79,7 +92,7 @@ class Dictaphone : Fragment(R.layout.fragment_dicto) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     requireContext().startService(Intent(requireActivity(), DictoCors::class.java))
                     binding.btnRecording.setBackgroundDrawable(requireContext().getDrawable(R.drawable.ic_stop))
-                    (requireActivity() as MediaCenter).startRecordingComponents()
+                    (requireActivity() as MediaCenterInterface).startRecordingComponents()
                 } else {
                     Toast.makeText(requireContext(),"Прокинь права приложению для микрофона", Toast.LENGTH_SHORT).show()
                 }

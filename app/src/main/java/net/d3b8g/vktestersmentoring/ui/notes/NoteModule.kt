@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.modules
+package net.d3b8g.vktestersmentoring.ui.notes
 
 data class NoteModule (
     var id:Int,

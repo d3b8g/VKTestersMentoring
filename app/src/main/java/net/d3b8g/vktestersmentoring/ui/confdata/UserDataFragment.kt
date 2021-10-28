@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,6 +21,7 @@ import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
+import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
 
 
 class UserDataFragment : Fragment(R.layout.fragment_userdata) {
@@ -27,6 +30,9 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
 
     private val confBase by lazy { ConfDatabase.getInstance(requireContext()).confDatabaseDao }
     private val userDatabase by lazy { UserDatabase.getInstance(requireContext()).userDatabaseDao }
+    private val fragmentHeader: FragmentHeader by lazy {
+        binding.bugsHeader
+    }
 
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
         binding = FragmentUserdataBinding.bind(root)
@@ -50,6 +56,14 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
                 else binding.confIdentTl.error = "Формат записи: Int и больше 2 цифр"
             }
             else binding.confPasswordTl.error = "Допустимо от 2 до 4 символов"
+        }
+
+        fragmentHeader.setTitleText("Инициализация")
+        fragmentHeader.setRightButtonIcon(
+            ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+        )
+        fragmentHeader.setRightButtonListener {
+            findNavController().popBackStack()
         }
     }
 

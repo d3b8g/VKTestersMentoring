@@ -1,5 +1,6 @@
 package net.d3b8g.vktestersmentoring.ui.MV.popup
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -13,16 +14,17 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
+import net.d3b8g.vktestersmentoring.ui.notes.UpdateNotesInterface
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
+class AddNewNotes(val ct: Context,var tyty: UpdateNotesInterface) {
 
+    @SuppressLint("SimpleDateFormat")
     fun show(){
         val frame = Dialog(ct)
         frame.setContentView(R.layout.alert_add_notes)
-        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.FILL_PARENT)
+        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
         frame.window!!.setGravity(Gravity.CENTER)
 
         frame.setCanceledOnTouchOutside(true)
@@ -34,9 +36,9 @@ class AddNewNotes(val ct: Context,var tyty:UpdateNotes) {
 
         send.setOnClickListener {
             if(title.text!!.any { text-> text.isLetter() } && descr.text!!.any { text-> text.isLetter()}) {
-                var titleR = title.text.toString().replace("\"","&#34;")
-                var descrR = descr.text.toString().replace("\"","&#34;")
-                var data = ""
+                val titleR = title.text.toString().replace("\"","&#34;")
+                val descrR = descr.text.toString().replace("\"","&#34;")
+                var data: String
                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
                     data = if(getString("my_notes", "") != "" ) {
                         var count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt

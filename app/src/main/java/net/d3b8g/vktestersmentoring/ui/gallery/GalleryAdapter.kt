@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.adapters
+package net.d3b8g.vktestersmentoring.ui.gallery
 
 /*
 Copyright (c) 2021 github.com/d3b8g
@@ -23,7 +23,6 @@ import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.helper.Components.mMicro
 import net.d3b8g.vktestersmentoring.helper.Components.mPlayer
 import net.d3b8g.vktestersmentoring.helper.PathHelper.audioPath
-import net.d3b8g.vktestersmentoring.modules.AudioAdapterModule
 import java.io.File
 
 
@@ -34,10 +33,12 @@ class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun update():Boolean{
         try {
             File(audioPath).listFiles()?.forEachIndexed { index, file ->
-                audioCounter.add(AudioAdapterModule(
+                audioCounter.add(
+                    AudioAdapterModule(
                     file_path = file.path,
                     file_title = "${index+1}"
-                ))
+                )
+                )
             }
         }catch (e:Exception){}
 
@@ -67,7 +68,7 @@ class GalleryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var box = itemView.findViewById<RelativeLayout>(R.id.audio_box)
         var aid = itemView.findViewById<TextView>(R.id.aid)
 
-        fun bind(inf:AudioAdapterModule){
+        fun bind(inf: AudioAdapterModule){
             aid.text = inf.file_title
             box.setOnClickListener {
                 if(mMicro == null && inf.file_path.contains("VKTMaudio") && inf.file_path.contains("-") && inf.file_path.takeLast(4)==".3gp"){

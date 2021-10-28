@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="3"
     android:orientation="vertical"
     android:layout_height="match_parent">
+
+    <net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
+        android:id="@+id/bugs_header"
+        app:nameHeader="Отчетность"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_longrid"
         android:layout_weight="2"

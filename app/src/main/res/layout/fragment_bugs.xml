@@ -4,116 +4,129 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_margin="16dp"
     android:layout_height="match_parent"
     tools:context=".ui.bugs.BugsFragment"
     android:orientation="vertical">
-    <TextView
-        android:text="@string/send_ur_count_rep"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:layout_height="wrap_content"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/l_count_rep"
+    <net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
+        android:id="@+id/bugs_header"
+        app:nameHeader="Отчетность"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        android:hint="Количество репортов"
-        app:startIconDrawable="@drawable/ic_bugs"
-        app:startIconContentDescription="Запиши сюда кол-во сделанных тобой репортов, которые ты уже нашел">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:focusableInTouchMode="true"
-            android:id="@+id/count_rep"
-            android:background="@null"
-            android:singleLine="true"
-            android:maxLength="6"
-            android:inputType="number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="60dp"/>
 
     <LinearLayout
-        android:layout_margin="16dp"
-        android:background="@color/colorGray"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
-        android:layout_height="2dp"/>
-    <TextView
-        android:id="@+id/now_i_have"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Сейчас у меня: 6 отчетов."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:text="@string/send_ur_wanna_count_rep"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:layout_height="wrap_content"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/l_wanna_rep"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Количество репортов"
-        app:startIconDrawable="@drawable/ic_bugs"
-        app:errorEnabled="true"
-        app:startIconContentDescription="Запиши сюда кол-во сделанных тобой репортов, которые ты уже нашел">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:focusableInTouchMode="true"
-            android:id="@+id/count_rep_wanna"
-            android:singleLine="true"
-            android:inputType="number"
-            android:background="@null"
-            android:maxLength="6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:layout_margin="16dp"
-        android:background="@color/colorGray"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"/>
-    <TextView
-        android:id="@+id/i_will_have"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Желаю зарепортить: 6 отчетов."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:layout_marginTop="36dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/motivation_text"
-            android:text="@string/bad_scope"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/percent_result"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="46sp"
-            android:layout_marginTop="16dp"
+            android:text="@string/send_ur_count_rep"
             android:layout_gravity="center"
-            android:text="25%"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="12dp"
+            android:textSize="16sp"
             android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/l_count_rep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            android:hint="Количество репортов"
+            app:startIconDrawable="@drawable/ic_bugs"
+            app:startIconContentDescription="Запиши сюда кол-во сделанных тобой репортов, которые ты уже нашел">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:focusableInTouchMode="true"
+                android:id="@+id/count_rep"
+                android:background="@null"
+                android:singleLine="true"
+                android:maxLength="6"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:background="@color/colorGray"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+        <TextView
+            android:id="@+id/now_i_have"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Сейчас у меня: 6 отчетов."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="@string/send_ur_wanna_count_rep"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/l_wanna_rep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Количество репортов"
+            app:startIconDrawable="@drawable/ic_bugs"
+            app:errorEnabled="true"
+            app:startIconContentDescription="Запиши сюда кол-во сделанных тобой репортов, которые ты уже нашел">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:focusableInTouchMode="true"
+                android:id="@+id/count_rep_wanna"
+                android:singleLine="true"
+                android:inputType="number"
+                android:background="@null"
+                android:maxLength="6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:background="@color/colorGray"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+        <TextView
+            android:id="@+id/i_will_have"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Желаю зарепортить: 6 отчетов."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_marginTop="36dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/motivation_text"
+                android:text="@string/bad_scope"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/percent_result"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="46sp"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:text="25%"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

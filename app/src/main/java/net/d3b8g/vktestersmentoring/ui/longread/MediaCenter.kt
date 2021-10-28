@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.ui.home
+package net.d3b8g.vktestersmentoring.ui.longread
 
 /*
 Copyright (c) 2021 github.com/d3b8g
