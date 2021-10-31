@@ -13,7 +13,6 @@ Use this code only for non commercial purpose.
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -83,11 +82,6 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
                 }
             }
         }
-
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {}
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun updateUserData() {

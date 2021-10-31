@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
+    <net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
         android:id="@+id/bugs_header"
         app:nameHeader="Отчетность"
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             <TextView
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:text="Использовать загруженную аватарку в навбаре "
+                android:text="Использовать загруженную аватарку в профиле"
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"/>
@@ -64,7 +64,7 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
-            android:weightSum="2"
+            android:weightSum="3"
             android:padding="8dp"
             android:gravity="center"
             android:layout_width="match_parent"
@@ -72,15 +72,13 @@
             <TextView
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:text="@string/default_fragment"
+                android:text="@string/hide_third_tab"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"/>
-            <Button
-                android:textAllCaps="false"
-                android:textSize="16sp"
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_weight="1"
-                android:id="@+id/default_fragment"
+                android:id="@+id/hide_tab"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

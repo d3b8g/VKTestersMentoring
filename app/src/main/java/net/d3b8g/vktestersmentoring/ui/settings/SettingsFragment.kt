@@ -17,10 +17,11 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
 import net.d3b8g.vktestersmentoring.databinding.FragmentSettingsBinding
-import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
+import net.d3b8g.vktestersmentoring.helper.UITypes
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
@@ -35,6 +36,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         val tracking = binding.sTracking
         val avatar = binding.sAvatar
         val logout = binding.logout
+
 
         PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
             tracking.isChecked = getBoolean("do_tracking", false)
@@ -54,34 +56,39 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         logout.setOnClickListener {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Выти из аккаунта?")
-                .setPositiveButton("Выйти") {_, _ ->
-                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                        putInt("active_user_id", -1)
-                    }
-                    0.changeFragment()
-                }
-                .setNegativeButton("Отменить") {d, _ ->
-                    d.dismiss()
-                }
-                .show()
+//            MaterialAlertDialogBuilder(requireContext())
+//                .setTitle("Выти из аккаунта?")
+//                .setPositiveButton("Выйти") {_, _ ->
+//                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
+//                        putInt("active_user_id", -1)
+//                    }
+//                    0.changeFragment()
+//                }
+//                .setNegativeButton("Отменить") {d, _ ->
+//                    d.dismiss()
+//                }
+//                .show()
+            val action = SettingsFragmentDirections.actionNavSettingsToNavLogin()
+            findNavController().navigate(action)
+            (requireActivity() as MainActivity).updateUI(UITypes.HIDE_TABBAR)
         }
 
-        fragmentHeader.setTitleText("Настройки")
-        fragmentHeader.setRightButtonIcon(
-            ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
-        )
-        fragmentHeader.setRightButtonListener {
-            findNavController().popBackStack()
-        }
-    }
+        binding.hideTab.setOnClickListener {
+            if (binding.hideTab.isChecked) {
 
-    private fun Int.changeFragment() {
-        val action = when (this) {
-            0 -> SettingsFragmentDirections.actionNavSettingsToNavLogin()
-            else -> SettingsFragmentDirections.actionNavSettingsToNavLogin()
+            } else {
+
+            }
         }
-        findNavController().navigate(action)
+
+        fragmentHeader.apply {
+            setTitleText("Настройки")
+            setRightButtonIcon(
+                ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+            )
+            setRightButtonListener {
+                findNavController().popBackStack()
+            }
+        }
     }
 }

@@ -11,15 +11,14 @@
         android:layout_width="65dp"
         android:layout_height="65dp"/>
     <TextView
-        android:layout_toRightOf="@id/a_icon"
+        android:layout_toEndOf="@id/a_icon"
         android:background="@drawable/shape_aid"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:padding="2dp"
         android:gravity="center"
         android:layout_marginStart="-24dp"
-        android:text="2"
         android:id="@+id/aid"
         android:layout_width="50dp"
         android:layout_height="wrap_content"/>

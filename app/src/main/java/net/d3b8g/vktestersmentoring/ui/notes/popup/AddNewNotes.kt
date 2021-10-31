@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.ui.MV.popup
+package net.d3b8g.vktestersmentoring.ui.notes.popup
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -18,10 +18,10 @@ import net.d3b8g.vktestersmentoring.ui.notes.UpdateNotesInterface
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddNewNotes(val ct: Context,var tyty: UpdateNotesInterface) {
+class AddNewNotes(val ct: Context, val tyty: UpdateNotesInterface) {
 
     @SuppressLint("SimpleDateFormat")
-    fun show(){
+    fun show() {
         val frame = Dialog(ct)
         frame.setContentView(R.layout.alert_add_notes)
         frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -35,13 +35,13 @@ class AddNewNotes(val ct: Context,var tyty: UpdateNotesInterface) {
         val send = frame.findViewById<Button>(R.id.save_note)
 
         send.setOnClickListener {
-            if(title.text!!.any { text-> text.isLetter() } && descr.text!!.any { text-> text.isLetter()}) {
+            if (title.text!!.any { text-> text.isLetter() } && descr.text!!.any { text-> text.isLetter()}) {
                 val titleR = title.text.toString().replace("\"","&#34;")
                 val descrR = descr.text.toString().replace("\"","&#34;")
                 var data: String
                 PreferenceManager.getDefaultSharedPreferences(ct).apply {
-                    data = if(getString("my_notes", "") != "" ) {
-                        var count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt
+                    data = if (getString("my_notes", "")!!.isNotEmpty()) {
+                        val count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt
                         getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
                             "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" }], \"count\": ${count+1}}")
                     } else {

@@ -16,12 +16,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
 import net.d3b8g.vktestersmentoring.databinding.FragmentUserdataBinding
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
-import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
 
 
 class UserDataFragment : Fragment(R.layout.fragment_userdata) {

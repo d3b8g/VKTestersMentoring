@@ -1,4 +1,4 @@
-package net.d3b8g.vktestersmentoring.ui.MV.popup
+package net.d3b8g.vktestersmentoring.ui.notes.popup
 
 import android.app.Dialog
 import android.content.Context

@@ -9,7 +9,6 @@
         android:maxSdkVersion="28"
         tools:ignore="ScopedStorage"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -31,7 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".back.DictoCors"/>
     </application>
 
 </manifest>

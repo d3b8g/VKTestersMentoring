@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
-    <net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
+    <net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
         android:id="@+id/bugs_header"
         app:nameHeader="Отчетность"
         android:layout_width="match_parent"

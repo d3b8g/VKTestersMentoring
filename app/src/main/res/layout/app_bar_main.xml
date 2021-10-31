@@ -8,7 +8,7 @@
 
     <include layout="@layout/content_main" />
     
-    <FrameLayout
+    <net.d3b8g.vktestersmentoring.customUI.mediaCenter.FragmentMediaCenter
         android:id="@+id/media_center"
         android:visibility="gone"
         android:layout_gravity="bottom"

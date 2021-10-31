@@ -1,5 +1,6 @@
 package net.d3b8g.vktestersmentoring.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -18,6 +19,9 @@ import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.databinding.FragmentMainBinding
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
+import net.d3b8g.vktestersmentoring.helper.DateHelper.getMonth
+import net.d3b8g.vktestersmentoring.helper.StringCase
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -47,6 +51,8 @@ class MainFragment : Fragment(R.layout.fragment_main), MainFragmentInterface {
             buttonNavigation(position)
         }
 
+        binding.dataInFragment.text = getTodayMainPattern()
+
         val inputImage = ResourcesCompat.getDrawable(resources, R.drawable.ic_search_24, resources.newTheme())!!.apply {
             setBounds(60,0,0,0)
         }
@@ -72,9 +78,18 @@ class MainFragment : Fragment(R.layout.fragment_main), MainFragmentInterface {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private fun getTodayMainPattern(): String {
+        val date = SimpleDateFormat("MM-dd").format(Date())
+        val dateWeek = SimpleDateFormat("EEEE").format(Date())
+        return "${date.split('-')[1]} " +
+                "${date.split('-')[0].toInt().getMonth(StringCase.Genitive)}, "+
+                dateWeek.replaceFirstChar { it.titlecase(Locale.getDefault())}
+    }
+
     private fun initFragmentObjects(): ArrayList<HashMap<Any, String>> =
         ArrayList<HashMap<Any, String>>().apply {
-            add(hashMapOf(R.drawable.ic_menu_gallery to "Галерея" ))
+            add(hashMapOf(R.drawable.ic_menu_gallery to "Галерея"))
             add(hashMapOf(R.drawable.ic_bugs to "Отчетность"))
             add(hashMapOf(R.drawable.ic_mic to "Диктофон"))
             add(hashMapOf(R.drawable.ic_mv to "Модальные окна"))
@@ -95,6 +110,7 @@ class MainFragment : Fragment(R.layout.fragment_main), MainFragmentInterface {
             3 -> MainFragmentDirections.actionNavMainToNavMv()
             4 -> MainFragmentDirections.actionNavMainToNavUpload()
             5 -> MainFragmentDirections.actionNavMainToNavLongread()
+            6 -> MainFragmentDirections.actionNavMainToNavConf()
             else -> MainFragmentDirections.actionNavMainToNavLongread()
         }
         findNavController().navigate(navigateTo)

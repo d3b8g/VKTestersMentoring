@@ -12,9 +12,8 @@ Use this code only for non commercial purpose.
 
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -24,18 +23,19 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import kotlinx.coroutines.*
+import net.d3b8g.vktestersmentoring.customUI.mediaCenter.FragmentMediaCenter
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 import net.d3b8g.vktestersmentoring.helper.UITypes
 import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
-import net.d3b8g.vktestersmentoring.ui.longread.MediaCenter
-import net.d3b8g.vktestersmentoring.ui.longread.MediaCenter.Companion.recording_anim
 
-class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.ui.dicto.MediaCenterInterface, UpdateMainUI {
+class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var mCenter: FrameLayout
-    lateinit var navBar: ChipNavigationBar
+    private lateinit var navBar: ChipNavigationBar
+    private val mediaCenter: FragmentMediaCenter by lazy {
+        findViewById(R.id.media_center)
+    }
 
     private val navController by lazy {
         (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
@@ -44,54 +44,55 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.ui.dicto.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         navBar = findViewById(R.id.bottom_navigation_menu)
         navBar.setItemSelected(R.id.home, true)
 
         navBar.setOnItemSelectedListener {
-            when (it) {
-                R.id.home -> {
-                    if (mainState == null) navController.navigate(R.id.nav_main)
+            val history = navController.currentDestination?.id ?: false
+            if (history != R.id.nav_splash) {
+                when (it) {
+                    R.id.profile -> navController.navigate(R.id.nav_profile)
+                    R.id.home -> {
+                        if (mainState == null) navController.navigate(R.id.nav_main)
+                    }
+                    R.id.notes -> navController.navigate(R.id.nav_notes)
                 }
-                R.id.notes -> navController.navigate(R.id.nav_notes)
             }
         }
 
         PreferenceManager.getDefaultSharedPreferences(this).apply {
             if (getInt("active_user_id", -1) < 1) navBar.visibility = View.GONE
+            else uid = getInt("active_user_id", -1)
         }
     }
 
     override fun updateUI(type: UITypes) {
-        if (type == UITypes.SHOW_TABBAR) {
-            navBar.visibility = View.VISIBLE
+        when(type) {
+            UITypes.SHOW_TABBAR -> navBar.visibility = View.VISIBLE
+            UITypes.HIDE_TABBAR -> navBar.visibility = View.GONE
+        }
+    }
+
+    override fun launchMediaCenter() {
+        FragmentMediaCenter.recording_anim = true
+        mediaCenter.apply {
+            visibility = View.VISIBLE
+            startReproduceAudio()
         }
     }
 
     private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
-        return@withContext userDatabase.getUserById(1)
+        return@withContext userDatabase.getUserById(uid)
     }
 
     private suspend fun updateVisitsCounter(visits: Int) = withContext(Dispatchers.IO) {
         userDatabase.updateVisitsCounter(visits)
     }
 
-    private fun titleStatus(count: Int?): String = when {
-        count in 5..20 -> "раз"
-        count.toString().takeLast(1) == "l" -> "1 раз"
-        else -> {
-            when (count.toString().takeLast(1).toInt()) {
-                in 0..1 -> "раз"
-                in 2..4 -> "раза"
-                in 5..9 -> "раз"
-                else -> "раз"
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
+    override fun onDestroy() {
+        lifecycleScope.launch { updateVisitsCounter(getUser().counter + 1) }
+        super.onDestroy()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -99,16 +100,9 @@ class MainActivity : AppCompatActivity(), net.d3b8g.vktestersmentoring.ui.dicto.
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun startRecordingComponents() {
-        recording_anim = true
-        val transaction = (this as FragmentActivity).supportFragmentManager.beginTransaction()
-        transaction.replace(mCenter.id, MediaCenter()).commit()
-        mCenter.visibility = View.VISIBLE
-    }
-
     override fun onBackPressed() {
         val history = navController.currentDestination?.id ?: false
-        val excludeNav = arrayListOf(R.id.nav_main, R.id.nav_splash, R.id.nav_notes)
+        val excludeNav = arrayListOf(R.id.nav_main, R.id.nav_splash, R.id.nav_notes, R.id.nav_login)
         if (!excludeNav.contains(history)) navController.popBackStack()
         else {
             Snackbar.make(findViewById(R.id.container), "Закрыть приложение?", Snackbar.LENGTH_SHORT)

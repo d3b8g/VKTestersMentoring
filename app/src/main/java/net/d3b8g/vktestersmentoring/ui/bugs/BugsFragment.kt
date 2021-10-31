@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
 import net.d3b8g.vktestersmentoring.databinding.FragmentBugsBinding
-import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
 
 class BugsFragment : Fragment(R.layout.fragment_bugs) {
 

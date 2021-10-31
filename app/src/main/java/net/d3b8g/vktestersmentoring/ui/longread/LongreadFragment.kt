@@ -25,9 +25,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
 import net.d3b8g.vktestersmentoring.databinding.FragmentLongreadBinding
 import net.d3b8g.vktestersmentoring.prefs.*
-import net.d3b8g.vktestersmentoring.ui.customUI.FragmentHeader
 
 class LongreadFragment : Fragment(R.layout.fragment_longread), LongreadCall {
 
