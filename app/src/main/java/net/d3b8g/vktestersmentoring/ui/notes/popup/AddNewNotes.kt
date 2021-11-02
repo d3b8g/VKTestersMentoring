@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
@@ -12,13 +13,17 @@ import android.widget.Toast
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.ui.notes.Notes
+import net.d3b8g.vktestersmentoring.ui.notes.Notes.getNotesJson
+import net.d3b8g.vktestersmentoring.ui.notes.Notes.saveNotesJson
 import net.d3b8g.vktestersmentoring.ui.notes.UpdateNotesInterface
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddNewNotes(val ct: Context, val tyty: UpdateNotesInterface) {
+class AddNewNotes(val ct: Context, private val updateNotesUI: UpdateNotesInterface) {
 
     @SuppressLint("SimpleDateFormat")
     fun show() {
@@ -31,27 +36,34 @@ class AddNewNotes(val ct: Context, val tyty: UpdateNotesInterface) {
 
         val title = frame.findViewById<TextInputEditText>(R.id.title_note)
         val descr = frame.findViewById<TextInputEditText>(R.id.descr_note)
-
         val send = frame.findViewById<Button>(R.id.save_note)
 
         send.setOnClickListener {
             if (title.text!!.any { text-> text.isLetter() } && descr.text!!.any { text-> text.isLetter()}) {
-                val titleR = title.text.toString().replace("\"","&#34;")
-                val descrR = descr.text.toString().replace("\"","&#34;")
-                var data: String
-                PreferenceManager.getDefaultSharedPreferences(ct).apply {
-                    data = if (getString("my_notes", "")!!.isNotEmpty()) {
-                        val count = JsonParser.parseString(getString("my_notes","")).asJsonObject.get("count").asInt
-                        getString("my_notes","")!!.replaceAfter("]",",").replace("]","") +  getString("my_notes","")!!.replace(getString("my_notes","")!!,
-                            "{ \"id\":${count}, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" }], \"count\": ${count+1}}")
-                    } else {
-                        "{ \"notes\": [ { \"id\":0, \"title\":\"${titleR}\", \"description\":\"${descrR}\", \"date_of_create\":\""+ SimpleDateFormat("yyyy/MM/dd").format(Date())+"\" } ], \"count\": 1 }"
-                    }
+                val notesJson = ct.getNotesJson()
+                val pushNotesJson: String = if (notesJson != null) {
+                    val jsonCount = notesJson.count
+                    notesJson.notes.add(
+                        Notes.NoteModel(
+                            id = jsonCount,
+                            title = title.toString(),
+                            description = descr.toString(),
+                            date_of_create = SimpleDateFormat("yyyy-MM-dd").format(Date())
+                    ))
+                    Gson().toJson(Notes.NoteModelFull(notesJson.notes, 0))
+                } else {
+                    Gson().toJson(Notes.NoteModelFull(
+                        arrayListOf(Notes.NoteModel(
+                            id = 0,
+                            title = title.toString(),
+                            description = descr.toString(),
+                            date_of_create = SimpleDateFormat("yyyy-MM-dd").format(Date())
+                        )), 0
+                    ))
                 }
-                PreferenceManager.getDefaultSharedPreferences(ct).edit {
-                    putString("my_notes", data)
-                }
-                tyty.updateNotes()
+
+                ct.saveNotesJson(pushNotesJson)
+                updateNotesUI.updateNotes()
                 frame.dismiss()
             } else {
                 Toast.makeText(ct,"Вы не заполнили одно из полей", Toast.LENGTH_SHORT).show()
@@ -59,6 +71,7 @@ class AddNewNotes(val ct: Context, val tyty: UpdateNotesInterface) {
         }
 
         frame.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        frame.setCanceledOnTouchOutside(true)
         frame.show()
     }
 }

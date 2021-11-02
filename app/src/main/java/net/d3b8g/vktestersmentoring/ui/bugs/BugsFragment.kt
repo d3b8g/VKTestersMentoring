@@ -39,7 +39,7 @@ class BugsFragment : Fragment(R.layout.fragment_bugs) {
             }
 
         }
-        binding.countRepWanna.onFocusChangeListener = View.OnFocusChangeListener { view, hadFocus ->
+        binding.countRepWanna.onFocusChangeListener = View.OnFocusChangeListener { _, hadFocus ->
             if (!hadFocus && binding.countRepWanna.text.toString().fieldChecker()) {
                     PreferenceManager.getDefaultSharedPreferences(root.context).edit {
                         putInt("report_count_wanna", binding.countRepWanna.text.toString().filter { it.isDigit() }.toInt())

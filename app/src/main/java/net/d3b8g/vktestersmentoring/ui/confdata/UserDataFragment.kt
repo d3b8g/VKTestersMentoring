@@ -58,12 +58,14 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
             else binding.confPasswordTl.error = "Допустимо от 2 до 4 символов"
         }
 
-        fragmentHeader.setTitleText("Инициализация")
-        fragmentHeader.setRightButtonIcon(
-            ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
-        )
-        fragmentHeader.setRightButtonListener {
-            findNavController().popBackStack()
+        fragmentHeader.apply {
+            setTitleText("Инициализация")
+            setRightButtonIcon(
+                ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+            )
+            setRightButtonListener {
+                findNavController().popBackStack()
+            }
         }
     }
 

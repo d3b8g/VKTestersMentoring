@@ -2,6 +2,7 @@ package net.d3b8g.vktestersmentoring.ui.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -76,6 +77,10 @@ class MainFragment : Fragment(R.layout.fragment_main), MainFragmentInterface {
             val user = getUser()
             setupAvatar(user.avatar)
         }
+
+        MainActivity.mainState?.let {
+            buttonNavigation(it)
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -113,8 +118,8 @@ class MainFragment : Fragment(R.layout.fragment_main), MainFragmentInterface {
             6 -> MainFragmentDirections.actionNavMainToNavConf()
             else -> MainFragmentDirections.actionNavMainToNavLongread()
         }
+        MainActivity.mainState = position
         findNavController().navigate(navigateTo)
-        MainActivity.mainState = navigateTo
     }
 
     override fun setupAvatar(url: String) {

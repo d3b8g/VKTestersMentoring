@@ -17,7 +17,6 @@ class ModalViewA:Fragment() {
     ): View? {
         val inflate = inflater.inflate(R.layout.fragment_mv,container,false)
         val mv_upload = inflate.findViewById<Button>(R.id.mv_upload)
-        val mv_wv = inflate.findViewById<Button>(R.id.mv_wv)
 
         mv_upload.setOnClickListener {
             UploadPhoto(requireContext()).show()

@@ -53,6 +53,8 @@ class UploadURL : Fragment(R.layout.fragment_upload) {
                 else {
                     tPlug.error = "Инпут должен содержать ссылку."
                 }
+
+                @Suppress("UNUSED_EXPRESSION")
                 true
             }
             false

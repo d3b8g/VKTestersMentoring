@@ -33,7 +33,7 @@ class LongreadFragment : Fragment(R.layout.fragment_longread), LongreadCall {
 
     private lateinit var binding: FragmentLongreadBinding
     private lateinit var adapter: LongreadAdapter
-    var displayWidth = 0
+
     private val fragmentHeader: FragmentHeader by lazy {
         binding.bugsHeader
     }
@@ -47,8 +47,6 @@ class LongreadFragment : Fragment(R.layout.fragment_longread), LongreadCall {
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         binding.rcvLongrid.setHasFixedSize(true)
         adapter.update(view.context)
-
-        displayWidth = requireActivity().windowManager.defaultDisplay.width
 
         fragmentHeader.setTitleText("Лонгриды")
         fragmentHeader.setRightButtonIcon(
@@ -64,7 +62,6 @@ class LongreadFragment : Fragment(R.layout.fragment_longread), LongreadCall {
         binding.plugText.visibility = View.GONE
         binding.lgComponentsBlock.visibility = View.VISIBLE
         binding.lgOpen.setOnClickListener {
-            Log.e("RRR", item.link)
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.link))
             ContextCompat.startActivity(requireActivity(), browserIntent, null)
         }

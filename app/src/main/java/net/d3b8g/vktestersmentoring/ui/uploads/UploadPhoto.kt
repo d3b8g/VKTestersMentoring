@@ -12,12 +12,11 @@ import androidx.core.content.ContextCompat.startActivity
 import net.d3b8g.vktestersmentoring.R
 
 
-class UploadPhoto(val ct: Context){
-
-    fun show(){
+class UploadPhoto(val ct: Context) {
+    fun show() {
         val frame = Dialog(ct)
         frame.setContentView(R.layout.alert_upload)
-        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.FILL_PARENT)
+        frame.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
         frame.window!!.setGravity(Gravity.BOTTOM)
 
         frame.setCanceledOnTouchOutside(true)
@@ -34,5 +33,4 @@ class UploadPhoto(val ct: Context){
         frame.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         frame.show()
     }
-
 }

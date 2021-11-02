@@ -53,9 +53,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
             if (history != R.id.nav_splash) {
                 when (it) {
                     R.id.profile -> navController.navigate(R.id.nav_profile)
-                    R.id.home -> {
-                        if (mainState == null) navController.navigate(R.id.nav_main)
-                    }
+                    R.id.home -> navController.navigate(R.id.nav_main)
                     R.id.notes -> navController.navigate(R.id.nav_notes)
                 }
             }
@@ -71,6 +69,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
         when(type) {
             UITypes.SHOW_TABBAR -> navBar.visibility = View.VISIBLE
             UITypes.HIDE_TABBAR -> navBar.visibility = View.GONE
+            UITypes.AVATAR -> {}
         }
     }
 
@@ -114,7 +113,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
     }
 
     companion object {
-        var mainState: NavDirections? = null
+        var mainState: Int? = null
         var uid = 1
         var visits = 0
     }

@@ -39,4 +39,5 @@ class NotesFragment : Fragment(R.layout.fragment_nots), UpdateNotesInterface {
     override fun updateNotes() {
         adapter.updateArray(requireContext())
     }
+
 }

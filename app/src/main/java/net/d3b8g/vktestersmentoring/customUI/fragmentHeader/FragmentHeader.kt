@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
 
 /*
@@ -49,6 +50,7 @@ class FragmentHeader @JvmOverloads constructor(
 
     override fun setRightButtonListener(onClick: OnClickListener) {
         rightButton.setOnClickListener(onClick)
+        MainActivity.mainState = null
     }
 
     override fun setLeftButtonIcon(drawable: Drawable) {

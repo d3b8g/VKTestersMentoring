@@ -20,6 +20,7 @@ import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.getGallerySize
+import net.d3b8g.vktestersmentoring.ui.notes.Notes.getNotesAmount
 
 class FragmentProfile : Fragment(R.layout.fragment_profile) {
 
@@ -39,7 +40,7 @@ class FragmentProfile : Fragment(R.layout.fragment_profile) {
             lifecycleScope.launch {
                 val confData = getConfData()
                 if (confData.ident.substring(0,4) == "null") setTitleText("Профиль")
-                else setTitleText(confData.ident.substring(0,4))
+                else setTitleText(confData.ident)
             }
             setRightButtonIcon(
                 ResourcesCompat.getDrawable(resources, R.drawable.ic_settings_24, resources.newTheme())!!
@@ -55,12 +56,25 @@ class FragmentProfile : Fragment(R.layout.fragment_profile) {
 
         lifecycleScope.launch {
             val user = getUser()
-            Picasso.get().load(user.avatar).into(avatar)
+            // Hackerman!!!
+            if (user.username.contains("<img src") ||
+                user.username.contains("<svg/") ||
+                user.username.contains("alert") ||
+                (user.username.contains("<") && user.username.contains(">"))) {
+                Picasso
+                    .get()
+                    .load("https://www.cloudav.ru/upload/iblock/331/pandasecurity-How-do-hackers-pick-their-targets.jpg")
+                    .into(avatar)
+            } else Picasso.get().load(user.avatar).into(avatar)
+
             username.text = user.username
             binding.profileVisitsCount.text = "Вы зашли в приложение ${user.counter} ${titleStatus(user.counter)}"
+
         }
         val gallerySize = requireContext().getGallerySize()
         binding.profileAudioCount.text = "$gallerySize ${titleStatus(gallerySize)} записали аудио в диктофоне"
+        // специальная ошибка, я не лох!!!!
+        binding.profileNotesCount.text = "Создал ${requireContext().getNotesAmount()} зометок"
     }
 
     private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
@@ -71,7 +85,7 @@ class FragmentProfile : Fragment(R.layout.fragment_profile) {
         return@withContext confBase.getUserById(MainActivity.uid)
     }
 
-    private fun titleStatus(count: Int?): String = when {
+    private fun titleStatus(count: Int): String = when {
         count in 5..20 -> "раз"
         count.toString().takeLast(1) == "l" -> "1 раз"
         else -> {
