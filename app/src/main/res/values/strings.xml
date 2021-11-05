@@ -32,4 +32,8 @@
     <string name="wrong_password">Неверный пароль</string>
     <string name="default_fragment">Начальное окно</string>
     <string name="splash_screen">Splash Screen</string>
+    <string name="plug_text_empty_grid">По запросу ничего на найдено.</string>
+    <string name="profile">Профиль</string>
+    <string name="third_tab">Изменить 3ий таб</string>
+    <string name="hide_third_tab">Скрыть 3ий таб</string>
 </resources>

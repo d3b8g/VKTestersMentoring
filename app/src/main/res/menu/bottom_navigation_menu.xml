@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile_24"
+        android:title="Профиль"
+        app:cnb_iconColor="@color/colorBlueStandard"/>
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_view_list_24"
+        android:title="Главная"
+        app:cnb_iconColor="@color/colorBlueStandard"/>
+    <item
+        android:id="@+id/notes"
+        android:icon="@drawable/ic_notes"
+        android:title="Заметки"
+        app:cnb_iconColor="@color/colorBlueStandard"/>
+</menu>

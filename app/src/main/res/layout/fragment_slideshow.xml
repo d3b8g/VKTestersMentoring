@@ -8,6 +8,12 @@
     tools:context=".ui.gallery.GalleryFragment"
     android:orientation="vertical">
 
+    <net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
+        android:id="@+id/bugs_header"
+        app:nameHeader="Отчетность"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
     <LinearLayout
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"

@@ -11,11 +11,8 @@ Use this code only for non commercial purpose.
 */
 
 import android.media.MediaPlayer
-import android.media.MediaRecorder
 
 object Components {
     val mediaTypeGallery = listOf("Аудиозаписи","test")
-    var mMicro: MediaRecorder? = null
-    var mMicroActive = false
     var mPlayer: MediaPlayer? = null
 }

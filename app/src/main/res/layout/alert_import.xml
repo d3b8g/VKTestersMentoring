@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/alert_shape"
+    android:background="@drawable/btn_shape"
     android:gravity="center"
     android:layout_gravity="bottom"
     android:weightSum="3"

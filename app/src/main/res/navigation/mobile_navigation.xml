@@ -11,8 +11,62 @@
         android:label="@string/login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_nav_login_to_nav_home2"
-            app:destination="@id/nav_home" />
+            android:id="@+id/action_nav_login_to_nav_main"
+            app:destination="@id/nav_main" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="net.d3b8g.vktestersmentoring.ui.profile.FragmentProfile"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_nav_profile_to_nav_settings"
+            app:destination="@id/nav_settings" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="net.d3b8g.vktestersmentoring.ui.main.MainFragment"
+        android:label="Главная"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_home"
+            app:destination="@id/nav_longread" />
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_notes"
+            app:destination="@id/nav_notes" />
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_conf"
+            app:destination="@id/nav_conf" />
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_bugs"
+            app:destination="@id/nav_bugs" />
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_upload"
+            app:destination="@id/nav_upload" />
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_mv"
+            app:destination="@id/nav_mv" />
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_longread"
+            app:destination="@id/nav_longread" />
+        <action
+            app:popUpTo="@id/nav_main"
+            android:id="@+id/action_nav_main_to_nav_dictophone"
+            app:destination="@id/nav_dictophone" />
     </fragment>
 
     <fragment
@@ -24,34 +78,15 @@
             android:id="@+id/action_nav_splash_to_nav_login"
             app:destination="@id/nav_login" />
         <action
-            android:id="@+id/action_nav_splash_to_nav_home"
-            app:destination="@id/nav_home" />
+            android:id="@+id/action_nav_splash_to_nav_main"
+            app:destination="@id/nav_main" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="net.d3b8g.vktestersmentoring.ui.home.HomeFragment"
+        android:id="@+id/nav_longread"
+        android:name="net.d3b8g.vktestersmentoring.ui.longread.LongreadFragment"
         android:label="@string/menu_longrid"
-        tools:layout="@layout/fragment_longgrid">
-        <action
-            android:id="@+id/action_nav_home_to_nav_upload"
-            app:destination="@id/nav_upload" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_bugs"
-            app:destination="@id/nav_bugs" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_mv"
-            app:destination="@id/nav_mv" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_conf"
-            app:destination="@id/nav_conf" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_notes"
-            app:destination="@id/nav_notes" />
-    </fragment>
+        tools:layout="@layout/fragment_longread"/>
 
     <fragment
         android:id="@+id/nav_bugs"
@@ -79,7 +114,7 @@
         android:id="@+id/nav_dictophone"
         tools:layout="@layout/fragment_dicto"
         android:label="@string/dicto"
-        android:name="net.d3b8g.vktestersmentoring.ui.dicto.Dictaphone"/>
+        android:name="net.d3b8g.vktestersmentoring.ui.dictaphone.Dictaphone"/>
     <fragment
         android:id="@+id/nav_mv"
         tools:layout="@layout/fragment_mv"
@@ -100,8 +135,5 @@
         <action
             android:id="@+id/action_nav_settings_to_nav_login"
             app:destination="@id/nav_login" />
-        <action
-            android:id="@+id/action_nav_settings_to_nav_home"
-            app:destination="@id/nav_home" />
     </fragment>
 </navigation>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
+        android:id="@+id/profile_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+     <de.hdodenhof.circleimageview.CircleImageView
+         android:id="@+id/profile_avatar"
+         android:src="@color/colorGray"
+         android:layout_marginTop="8dp"
+         android:layout_gravity="center"
+         android:layout_width="115dp"
+         android:layout_height="115dp"/>
+
+    <TextView
+        android:id="@+id/profile_username"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlack"
+        android:textSize="22sp"
+        android:text="Абоба Измайлова"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/profile_statistics"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/btn_sq_shape"
+        android:backgroundTint="@color/colorGray"
+        android:padding="12dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:text="Статистика"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/profile_notes_count"
+            android:text="Создал 16 заметок"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/profile_visits_count"
+            android:text="16 раз заходил в приложение"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/profile_audio_count"
+            android:text="5 раз записал аудио в диктофоне"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/profile_confdata"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/btn_sq_shape"
+        android:backgroundTint="@color/colorGray"
+        android:padding="12dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:gravity="center"
+            android:text="У отсутсвует альтернативный вход"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+        <Button
+            android:layout_marginStart="8dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:text="Изменить"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+</LinearLayout>

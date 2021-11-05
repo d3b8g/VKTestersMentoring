@@ -13,7 +13,6 @@ Use this code only for non commercial purpose.
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -26,16 +25,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.adapters.UserAdapter
 import net.d3b8g.vktestersmentoring.databinding.FragmentLoginBinding
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
-import net.d3b8g.vktestersmentoring.interfaces.Login
-import net.d3b8g.vktestersmentoring.modules.UITypes
+import net.d3b8g.vktestersmentoring.helper.UITypes
 
-class LoginFragment : Fragment(R.layout.fragment_login), Login {
+class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
 
     private val listBack: ArrayList<UserData> = ArrayList()
     private lateinit var adapter: UserAdapter
@@ -85,11 +82,6 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
                 }
             }
         }
-
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {}
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun updateUserData() {
@@ -140,9 +132,10 @@ class LoginFragment : Fragment(R.layout.fragment_login), Login {
     }
 
     private fun openUserUI() {
-        val action = LoginFragmentDirections.actionNavLoginToNavHome2()
+        val action = LoginFragmentDirections.actionNavLoginToNavMain()
         findNavController().navigate(action)
-        (requireActivity() as MainActivity).updateUI(UITypes.ALL_DATA)
-        (requireActivity() as net.d3b8g.vktestersmentoring.interfaces.ActionBar).actionBarChange(false)
+        (requireActivity() as MainActivity).apply {
+            updateUI(UITypes.SHOW_TABBAR)
+        }
     }
 }

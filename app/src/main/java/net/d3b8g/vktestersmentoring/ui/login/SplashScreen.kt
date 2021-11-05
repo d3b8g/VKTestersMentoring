@@ -26,11 +26,10 @@ class SplashScreen : Fragment(R.layout.splash_screen) {
         lifecycleScope.launch {
             delay(1500L)
             PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
-                val action = if (getInt("active_user_id", -1) > 0) SplashScreenDirections.actionNavSplashToNavHome()
+                val action = if (getInt("active_user_id", -1) > 0) SplashScreenDirections.actionNavSplashToNavMain()
                 else SplashScreenDirections.actionNavSplashToNavLogin()
 
-                val navOption = NavOptions.Builder().setPopUpTo(R.id.nav_home, true).build()
-
+                val navOption = NavOptions.Builder().setPopUpTo(R.id.nav_main, true).build()
                 findNavController().navigate(action, navOption)
             }
         }

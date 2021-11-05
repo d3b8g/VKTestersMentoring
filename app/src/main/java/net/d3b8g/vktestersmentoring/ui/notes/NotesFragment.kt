@@ -1,51 +1,43 @@
 package net.d3b8g.vktestersmentoring.ui.notes
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.adapters.NotesAdapter
-import net.d3b8g.vktestersmentoring.interfaces.UpdateNotes
-import net.d3b8g.vktestersmentoring.ui.MV.popup.AddNewNotes
-import net.d3b8g.vktestersmentoring.ui.MV.popup.ImportNotes
+import net.d3b8g.vktestersmentoring.databinding.FragmentNotsBinding
+import net.d3b8g.vktestersmentoring.ui.notes.popup.AddNewNotes
+import net.d3b8g.vktestersmentoring.ui.notes.popup.ImportNotes
 
-class NotesFragment : Fragment(), UpdateNotes {
-
+class NotesFragment : Fragment(R.layout.fragment_nots), UpdateNotesInterface {
+    lateinit var binding: FragmentNotsBinding
     lateinit var adapter: NotesAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val inflate = inflater.inflate(R.layout.fragment_nots,container,false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding = FragmentNotsBinding.bind(view)
 
-        val add = inflate.findViewById<Button>(R.id.add_notes)
-        val import = inflate.findViewById<Button>(R.id.import_notes)
-        val rcv = inflate.findViewById<RecyclerView>(R.id.rcv_notes)
+        val add = binding.addNotes
+        val importNotes = binding.importNotes
+        val rcv = binding.rcvNotes
 
         adapter = NotesAdapter()
         rcv.adapter = adapter
-        rcv.layoutManager = LinearLayoutManager(inflater.context, RecyclerView.VERTICAL,false)
+        rcv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
         rcv.setHasFixedSize(true)
-        adapter.updateArray(inflate.context)
+        adapter.updateArray(requireContext())
 
         add.setOnClickListener {
-            AddNewNotes(inflate.context,this).show()
-        }
-        import.setOnClickListener {
-            ImportNotes(inflate.context,this).show()
+            AddNewNotes(requireContext(),this).show()
         }
 
-        return inflate
+        importNotes.setOnClickListener {
+            ImportNotes(requireContext(),this).show()
+        }
     }
 
     override fun updateNotes() {
         adapter.updateArray(requireContext())
     }
+
 }
