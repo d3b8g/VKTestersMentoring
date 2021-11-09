@@ -7,10 +7,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
@@ -19,15 +18,14 @@ import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
+import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
+import net.d3b8g.vktestersmentoring.helper.UITypes
 import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.getGallerySize
 import net.d3b8g.vktestersmentoring.ui.notes.Notes.getNotesAmount
 
 class FragmentProfile : Fragment(R.layout.fragment_profile) {
 
     lateinit var binding: FragmentProfileBinding
-    val fragmentHeader: FragmentHeader by lazy {
-        binding.profileHeader
-    }
 
     private val userDatabase by lazy { UserDatabase.getInstance(requireContext()).userDatabaseDao }
     private val confBase by lazy { ConfDatabase.getInstance(requireContext()).confDatabaseDao }
@@ -36,45 +34,48 @@ class FragmentProfile : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentProfileBinding.bind(view)
 
-        fragmentHeader.apply {
+        with(binding) {
+
+            profileHeader.run {
+                lifecycleScope.launch {
+                    val confData = getConfData()
+                    if (confData.ident.length > 3 && confData.ident.substring(0,4) == "null") setTitleText("Профиль")
+                    else setTitleText(confData.ident)
+                }
+                setRightButtonIcon(
+                    ResourcesCompat.getDrawable(resources, R.drawable.ic_settings_24, resources.newTheme())!!
+                ){
+                    val action = FragmentProfileDirections.actionNavProfileToNavSettings()
+                    findNavController().navigate(action)
+                }
+            }
+
             lifecycleScope.launch {
-                val confData = getConfData()
-                if (confData.ident.substring(0,4) == "null") setTitleText("Профиль")
-                else setTitleText(confData.ident)
+                val user = getUser()
+                // Hackerman!!!
+                if (user.username.contains("<img src") ||
+                    user.username.contains("<svg/") ||
+                    user.username.contains("alert") ||
+                    (user.username.contains("<") && user.username.contains(">"))) {
+                    Picasso
+                        .get()
+                        .load("https://www.cloudav.ru/upload/iblock/331/pandasecurity-How-do-hackers-pick-their-targets.jpg")
+                        .into(profileAvatar)
+                } else Picasso.get().load(user.avatar).into(profileAvatar)
+
+                profileUsername.text = user.username
+                profileVisitsCount.text = "Вы зашли в приложение ${user.counter} ${titleStatus(user.counter)}"
+
             }
-            setRightButtonIcon(
-                ResourcesCompat.getDrawable(resources, R.drawable.ic_settings_24, resources.newTheme())!!
-            )
-            setRightButtonListener {
-                val action = FragmentProfileDirections.actionNavProfileToNavSettings()
-                findNavController().navigate(action)
+            val gallerySize = requireContext().getGallerySize()
+            profileAudioCount.text = "$gallerySize ${titleStatus(gallerySize)} записали аудио в диктофоне"
+            profileNotesCount.text = "Создал ${requireContext().getNotesAmount()} заметок"
+
+            profileDirectConf.setOnClickListener {
+                val nav = FragmentProfileDirections.actionNavProfileToNavConf()
+                findNavController().navigate(nav)
             }
         }
-
-        val avatar = binding.profileAvatar
-        val username = binding.profileUsername
-
-        lifecycleScope.launch {
-            val user = getUser()
-            // Hackerman!!!
-            if (user.username.contains("<img src") ||
-                user.username.contains("<svg/") ||
-                user.username.contains("alert") ||
-                (user.username.contains("<") && user.username.contains(">"))) {
-                Picasso
-                    .get()
-                    .load("https://www.cloudav.ru/upload/iblock/331/pandasecurity-How-do-hackers-pick-their-targets.jpg")
-                    .into(avatar)
-            } else Picasso.get().load(user.avatar).into(avatar)
-
-            username.text = user.username
-            binding.profileVisitsCount.text = "Вы зашли в приложение ${user.counter} ${titleStatus(user.counter)}"
-
-        }
-        val gallerySize = requireContext().getGallerySize()
-        binding.profileAudioCount.text = "$gallerySize ${titleStatus(gallerySize)} записали аудио в диктофоне"
-        // специальная ошибка, я не лох!!!!
-        binding.profileNotesCount.text = "Создал ${requireContext().getNotesAmount()} зометок"
     }
 
     private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {

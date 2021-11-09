@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.helper.Components.mPlayer
-import net.d3b8g.vktestersmentoring.ui.dictaphone.Dictaphone.Companion.mMicro
+import net.d3b8g.vktestersmentoring.ui.dictaphone.DictaphoneFragment.Companion.mMicro
 import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.getAudioModelList
 import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.getGallerySize
 

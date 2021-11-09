@@ -7,11 +7,18 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.edit
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.databinding.FragmentUploadBinding
+import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
+import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
 import net.d3b8g.vktestersmentoring.helper.UITypes
 import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
 
@@ -24,40 +31,47 @@ class UploadURL : Fragment(R.layout.fragment_upload) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentUploadBinding.bind(view)
 
-        val url = binding.uploadUrl
-        val img = binding.uploadImage
-        val plug = binding.plugAttach
-        val tPlug = binding.uploadL
+        with(binding) {
 
-        url.setOnClickListener { keyboardOpen = true }
+            uploadHeader.apply {
+                setTitleText("Загрузка")
+                setRightButtonIcon(
+                    ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+                ){
+                    findNavController().popBackStack()
+                }
+            }
 
-        url.setOnEditorActionListener { it, i, _ ->
-            if (i ==  EditorInfo.IME_ACTION_DONE) {
-                url.clearFocus()
-                val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(url.windowToken, 0)
-                keyboardOpen = false
-                Picasso.get().load(Uri.parse(url.text.toString())).into(img)
-                if (it.text.contains("https://") && it.text.split('/').size > 3) {
-                    tPlug.error = null
-                    plug.visibility = View.GONE
-                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                        putString("user_img",it.text.toString())
-                    }
-                    PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
-                        if (getBoolean("do_avatar",false)) {
-                            (requireActivity() as UpdateMainUI).updateUI(UITypes.AVATAR)
+            uploadUrl.setOnClickListener { keyboardOpen = true }
+
+            uploadUrl.setOnEditorActionListener { it, i, _ ->
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    uploadUrl.clearFocus()
+                    val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(uploadUrl.windowToken, 0)
+                    keyboardOpen = false
+                    appLog(this@UploadURL, uploadUrl.text.toString())
+                    Picasso.get().load(Uri.parse(uploadUrl.text.toString())).into(uploadImage)
+                    if (it.text.contains("https://") && it.text.split('/').size > 3) {
+                        uploadInputHint.error = null
+                        plugAttach.visibility = View.GONE
+                        val doUploadAvatar = PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean("do_avatar", false)
+                        if (doUploadAvatar) {
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                val bdUser = UserDatabase.getInstance(requireContext()).userDatabaseDao
+                                bdUser.updateUserAvatar(it.text!!.toString())
+                            }
                         }
                     }
-                }
-                else {
-                    tPlug.error = "Инпут должен содержать ссылку."
-                }
+                    else {
+                        uploadInputHint.error = "Инпут должен содержать ссылку."
+                    }
 
-                @Suppress("UNUSED_EXPRESSION")
-                true
+                    @Suppress("UNUSED_EXPRESSION")
+                    true
+                }
+                false
             }
-            false
         }
     }
 

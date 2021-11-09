@@ -6,8 +6,13 @@
     android:id="@+id/upload_layout"
     android:orientation="vertical">
 
+    <net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
+        android:id="@+id/upload_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/upload_l"
+        android:id="@+id/upload_input_hint"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +43,7 @@
             android:layout_width="64dp"
             android:layout_height="match_parent"/>
         <TextView
-            android:text="Изображение еще не загружено.Скопируйте и вставьте ссылку на изображение в инпут выше."
+            android:text="Изображение еще не загружено. Скопируйте и вставьте ссылку на изображение в инпут выше."
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
     </LinearLayout>

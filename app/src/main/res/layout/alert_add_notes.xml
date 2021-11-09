@@ -8,6 +8,7 @@
     android:layout_height="450dp">
 
 <LinearLayout
+    android:id="@+id/modal_view_add_notes"
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:background="@drawable/btn_shape"

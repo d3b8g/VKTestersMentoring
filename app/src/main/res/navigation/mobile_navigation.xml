@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_nav_profile_to_nav_settings"
             app:destination="@id/nav_settings" />
+        <action
+            android:id="@+id/action_nav_profile_to_nav_conf"
+            app:destination="@id/nav_conf" />
     </fragment>
 
     <fragment
@@ -114,7 +117,7 @@
         android:id="@+id/nav_dictophone"
         tools:layout="@layout/fragment_dicto"
         android:label="@string/dicto"
-        android:name="net.d3b8g.vktestersmentoring.ui.dictaphone.Dictaphone"/>
+        android:name="net.d3b8g.vktestersmentoring.ui.dictaphone.DictaphoneFragment"/>
     <fragment
         android:id="@+id/nav_mv"
         tools:layout="@layout/fragment_mv"

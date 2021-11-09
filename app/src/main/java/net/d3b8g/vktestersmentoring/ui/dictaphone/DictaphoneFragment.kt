@@ -37,7 +37,7 @@ import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.audioPath
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Dictaphone : Fragment(R.layout.fragment_dicto), DictaphoneInterface {
+class DictaphoneFragment : Fragment(R.layout.fragment_dicto), DictaphoneInterface {
 
     private lateinit var binding: FragmentDictoBinding
     private val fragmentHeader: FragmentHeader by lazy {
@@ -56,8 +56,7 @@ class Dictaphone : Fragment(R.layout.fragment_dicto), DictaphoneInterface {
             setTitleText("Диктофон")
             setRightButtonIcon(
                 ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
-            )
-            setRightButtonListener {
+            ){
                 findNavController().popBackStack()
             }
         }
@@ -112,15 +111,20 @@ class Dictaphone : Fragment(R.layout.fragment_dicto), DictaphoneInterface {
 
     @SuppressLint("SimpleDateFormat")
     override suspend fun recordingMicrophone() = withContext(Dispatchers.IO) {
-        mMicro = MediaRecorder()
-        mMicro?.let {
-            it.setAudioSource(MediaRecorder.AudioSource.MIC)
-            it.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-            it.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-            it.setOutputFile(requireContext().audioPath(SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Date())))
-            it.prepare()
-            it.start()
+        try {
+            mMicro = MediaRecorder()
+            mMicro?.let {
+                it.setAudioSource(MediaRecorder.AudioSource.MIC)
+                it.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                it.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                it.setOutputFile(requireContext().audioPath(SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Date())))
+                it.prepare()
+                it.start()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), e.stackTrace.toString() + e.message, Toast.LENGTH_LONG).show()
         }
+
     }
 
     private fun getRightsArray(): Array<String> {

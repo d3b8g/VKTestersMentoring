@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
+        android:id="@+id/mv_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
     <Button
         android:id="@+id/mv_upload"
         android:layout_margin="15pt"

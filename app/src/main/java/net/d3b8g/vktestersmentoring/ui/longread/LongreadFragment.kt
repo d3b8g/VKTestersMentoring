@@ -51,8 +51,7 @@ class LongreadFragment : Fragment(R.layout.fragment_longread), LongreadCall {
         fragmentHeader.setTitleText("Лонгриды")
         fragmentHeader.setRightButtonIcon(
             ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
-        )
-        fragmentHeader.setRightButtonListener {
+        ){
             findNavController().popBackStack()
         }
     }
