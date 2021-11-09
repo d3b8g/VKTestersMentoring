@@ -24,7 +24,6 @@
         android:textStyle="bold"
         android:textColor="@color/colorBlack"
         android:textSize="22sp"
-        android:text="Абоба Измайлова"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -57,17 +56,14 @@
             android:layout_height="1dp"/>
         <TextView
             android:id="@+id/profile_notes_count"
-            android:text="Создал 16 заметок"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/profile_visits_count"
-            android:text="16 раз заходил в приложение"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/profile_audio_count"
-            android:text="5 раз записал аудио в диктофоне"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -77,7 +73,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/btn_sq_shape"
         android:backgroundTint="@color/colorGray"
-        android:padding="12dp"
+        android:padding="8dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:layout_width="match_parent"
@@ -86,11 +82,12 @@
 
         <TextView
             android:gravity="center"
-            android:text="У отсутсвует альтернативный вход"
+            android:text="У отсутствует альтернативный вход"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
         <Button
-            android:layout_marginStart="8dp"
+            android:id="@+id/profile_direct_conf"
+            android:layout_marginStart="6dp"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textSize="16sp"
             android:textAllCaps="false"

@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
+import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
 import net.d3b8g.vktestersmentoring.ui.notes.Notes.getNotesJson
 import net.d3b8g.vktestersmentoring.ui.notes.Notes.removeNoteAtIndex
 
@@ -33,6 +34,7 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             notes.addAll(it.notes)
             notifyDataSetChanged()
         }
+        appLog(this, notes.toString())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -66,8 +68,12 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             itemView.setOnLongClickListener {
-                itemView.context.removeNoteAtIndex(adapterPosition)
-                updateArray(itemView.context)
+                Snackbar.make(itemView, "Вы уверены, что хотите удалить эту заметку?", Snackbar.LENGTH_LONG)
+                    .setAction("Да") {
+                        itemView.context.removeNoteAtIndex(adapterPosition)
+                        updateArray(itemView.context)
+                    }
+                    .show()
                 true
             }
         }

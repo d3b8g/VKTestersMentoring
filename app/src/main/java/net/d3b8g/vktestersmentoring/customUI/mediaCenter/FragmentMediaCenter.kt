@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.*
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.ui.dictaphone.Dictaphone
+import net.d3b8g.vktestersmentoring.ui.dictaphone.DictaphoneFragment
 
 class FragmentMediaCenter @JvmOverloads constructor(
     context: Context,
@@ -38,11 +38,11 @@ class FragmentMediaCenter @JvmOverloads constructor(
         actionButton.setOnClickListener {
             recording_anim = !recording_anim
             if (recording_anim) {
-                scope.launch { (context as Dictaphone).recordingMicrophone() }
+                scope.launch { (context as DictaphoneFragment).recordingMicrophone() }
                 startReproduceAudio()
             } else {
                 stopReproduceAudio()
-                Dictaphone.microphoneState = false
+                DictaphoneFragment.microphoneState = false
             }
         }
     }
@@ -80,7 +80,7 @@ class FragmentMediaCenter @JvmOverloads constructor(
     }
 
     companion object {
-        var recording_anim = Dictaphone.microphoneState
+        var recording_anim = DictaphoneFragment.microphoneState
         var mDictaphone: MediaRecorder? = null
         var isDictaphone: Boolean = true
     }

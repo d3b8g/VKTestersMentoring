@@ -79,8 +79,7 @@ class GalleryFragment : Fragment(R.layout.fragment_slideshow) {
             setTitleText("Галерея")
             setRightButtonIcon(
                 ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
-            )
-            setRightButtonListener {
+            ){
                 findNavController().popBackStack()
             }
         }
@@ -92,7 +91,7 @@ class GalleryFragment : Fragment(R.layout.fragment_slideshow) {
     }
 
     private fun setupDataCount(): String {
-        var count = requireContext().getGallerySize()
+        val count = requireContext().getGallerySize()
         return if (count in 5..20) {
             "У меня $count медиафайлов"
         } else {

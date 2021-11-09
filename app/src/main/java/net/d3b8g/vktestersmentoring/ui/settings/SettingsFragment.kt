@@ -70,7 +70,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 //                .show()
             val action = SettingsFragmentDirections.actionNavSettingsToNavLogin()
             findNavController().navigate(action)
-            (requireActivity() as MainActivity).updateUI(UITypes.HIDE_TABBAR)
+            (requireActivity() as MainActivity).run {
+                updateUI(UITypes.HIDE_TABBAR)
+            }
         }
 
         binding.hideTab.setOnClickListener {
@@ -85,8 +87,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             setTitleText("Настройки")
             setRightButtonIcon(
                 ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
-            )
-            setRightButtonListener {
+            ){
                 findNavController().popBackStack()
             }
         }

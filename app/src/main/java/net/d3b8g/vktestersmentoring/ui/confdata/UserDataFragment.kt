@@ -62,8 +62,7 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
             setTitleText("Инициализация")
             setRightButtonIcon(
                 ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
-            )
-            setRightButtonListener {
+            ){
                 findNavController().popBackStack()
             }
         }
@@ -136,7 +135,7 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
             binding.confUident.text = binding.confIdent.text.toString()
             binding.confIdentTl.visibility = View.GONE
             binding.confPasswordTl.visibility = View.GONE
-            binding.confSave.isClickable = false
+            binding.confSave.visibility = View.GONE
 
             val clipboard = ct.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("Password Of VKTM", passwordGen)

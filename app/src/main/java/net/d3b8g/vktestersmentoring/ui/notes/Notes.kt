@@ -31,12 +31,19 @@ object Notes {
     }
 
     fun Context.addNote(note: NoteModel) {
-        val noteJson = getNotesJson()!!
-        note.id = noteJson.count
-        noteJson.notes.add(note)
-        noteJson.count = noteJson.count + 1
-        Log.e("Notes", Gson().toJson(noteJson))
-        saveNotesJson(Gson().toJson(noteJson))
+        var noteJson = getNotesJson()
+        if (noteJson == null) {
+            noteJson = NoteModelFull(
+                notes = arrayListOf(note),
+                count = 1
+            )
+        } else {
+            note.id = noteJson.count
+            noteJson.notes.add(note)
+            noteJson.count = noteJson.count + 1
+        }
+        Log.e("Notes", Gson().toJson(noteJson, NoteModelFull::class.java))
+        saveNotesJson(Gson().toJson(noteJson, NoteModelFull::class.java))
     }
 
     fun Context.removeNoteAtIndex(index: Int) {

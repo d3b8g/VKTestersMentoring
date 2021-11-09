@@ -27,7 +27,7 @@ class UploadPhoto(val ct: Context) {
             intent.action = Intent.ACTION_VIEW
             intent.type = "image/*"
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(ct,intent,null)
+            startActivity(ct, intent,null)
         }
 
         frame.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

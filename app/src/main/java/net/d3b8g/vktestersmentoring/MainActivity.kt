@@ -26,6 +26,7 @@ import kotlinx.coroutines.*
 import net.d3b8g.vktestersmentoring.customUI.mediaCenter.FragmentMediaCenter
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
+import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
 import net.d3b8g.vktestersmentoring.helper.UITypes
 import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
 
@@ -48,13 +49,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
         navBar = findViewById(R.id.bottom_navigation_menu)
         navBar.setItemSelected(R.id.home, true)
 
-        navBar.setOnItemSelectedListener {
+        navBar.setOnClickListener {
             val history = navController.currentDestination?.id ?: false
             if (history != R.id.nav_splash) {
-                when (it) {
-                    R.id.profile -> navController.navigate(R.id.nav_profile)
-                    R.id.home -> navController.navigate(R.id.nav_main)
-                    R.id.notes -> navController.navigate(R.id.nav_notes)
+                navBar.setOnItemSelectedListener {
+                    when (it) {
+                        R.id.profile -> navController.navigate(R.id.nav_profile)
+                        R.id.home -> navController.navigate(R.id.nav_main)
+                        R.id.notes -> navController.navigate(R.id.nav_notes)
+                    }
                 }
             }
         }
@@ -63,12 +66,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
             if (getInt("active_user_id", -1) < 1) navBar.visibility = View.GONE
             else uid = getInt("active_user_id", -1)
         }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val user = getUser()
+            updateVisitsCounter(user.counter + 1)
+        }
     }
 
     override fun updateUI(type: UITypes) {
         when(type) {
             UITypes.SHOW_TABBAR -> navBar.visibility = View.VISIBLE
             UITypes.HIDE_TABBAR -> navBar.visibility = View.GONE
+            UITypes.NEW_USER -> {
+                navBar.visibility = View.VISIBLE
+                navBar.setItemSelected(R.id.home, true)
+            }
             UITypes.AVATAR -> {}
         }
     }
@@ -115,6 +127,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
     companion object {
         var mainState: Int? = null
         var uid = 1
-        var visits = 0
     }
 }

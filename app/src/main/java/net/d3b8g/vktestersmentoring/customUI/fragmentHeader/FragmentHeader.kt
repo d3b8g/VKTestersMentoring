@@ -24,7 +24,7 @@ class FragmentHeader @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0,
-) : LinearLayout(context, attrs, defStyle), FragmentHeaderInterface {
+) : LinearLayout(context, attrs, defStyle) {
 
     private val titleView: TextView
     private val leftButton: ImageButton
@@ -39,28 +39,21 @@ class FragmentHeader @JvmOverloads constructor(
         rightButton = findViewById(R.id.fragment_header_right_button)
     }
 
-    override fun setTitleText(title: String) {
+    fun setTitleText(title: String) {
         titleView.text = title
     }
 
-    override fun setRightButtonIcon(drawable: Drawable) {
+    fun setRightButtonIcon(drawable: Drawable, onClick: OnClickListener) {
         rightButton.visibility = View.VISIBLE
         rightButton.background = drawable
-    }
 
-    override fun setRightButtonListener(onClick: OnClickListener) {
         rightButton.setOnClickListener(onClick)
         MainActivity.mainState = null
     }
 
-    override fun setLeftButtonIcon(drawable: Drawable) {
+    fun setLeftButtonIcon(drawable: Drawable, onClick: OnClickListener) {
         leftButton.visibility = View.VISIBLE
         leftButton.background = drawable
-    }
-
-    override fun setLeftButtonListener(onClick: OnClickListener) {
         leftButton.setOnClickListener(onClick)
     }
-
-
 }
