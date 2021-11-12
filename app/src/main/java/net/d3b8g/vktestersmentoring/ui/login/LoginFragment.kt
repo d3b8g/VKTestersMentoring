@@ -75,7 +75,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
                             ))
                         }
                     }
-                    openUserUI(true)
+                    openUserUI()
                 } else if (listBack.any { user -> user.username == it.text!!.toString() }) {
                     Toast.makeText(requireContext(), "Такой юзер уже есть", Toast.LENGTH_SHORT).show()
                 } else {
@@ -114,7 +114,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
                                 putInt("active_user_id", id)
                                 MainActivity.uid = id
                             }
-                            openUserUI(false)
+                            openUserUI()
                         } else {
                             binding.tlInputPassword.error = getString(R.string.wrong_password)
                         }
@@ -125,7 +125,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
                     putInt("active_user_id", id)
                     MainActivity.uid = id
                 }
-                openUserUI(false)
+                openUserUI()
             }
         }
     }
@@ -134,11 +134,9 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
         return@withContext confDatabase.getUserById(id)
     }
 
-    private fun openUserUI(byButton: Boolean) {
-        if (byButton) {
-            (requireActivity() as MainActivity).updateUI(UITypes.SHOW_TABBAR)
-            val nav = LoginFragmentDirections.actionNavLoginToNavMain()
-            findNavController().navigate(nav)
-        } else (requireActivity() as MainActivity).updateUI(UITypes.NEW_USER)
+    private fun openUserUI() {
+        (requireActivity() as MainActivity).updateUI(UITypes.LOGIN_USER)
+        val nav = LoginFragmentDirections.actionNavLoginToNavMain()
+        findNavController().navigate(nav)
     }
 }

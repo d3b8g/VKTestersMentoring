@@ -69,6 +69,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+
             android:layout_gravity="center"
             android:background="@drawable/btn_sq_shape"
             android:id="@+id/conf_save"

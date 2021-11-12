@@ -22,9 +22,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.helper.Components.mPlayer
+import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
 import net.d3b8g.vktestersmentoring.ui.dictaphone.DictaphoneFragment.Companion.mMicro
 import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.getAudioModelList
 import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.getGallerySize
+import java.io.FileInputStream
 
 
 class GalleryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -60,13 +62,20 @@ class GalleryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             audioBox.setOnClickListener {
                 if (mMicro == null && inf.file_path.contains("VKTMaudio")) {
                     mPlayer = MediaPlayer().apply {
+
                         AudioAttributes.Builder()
                             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                             .setUsage(AudioAttributes.USAGE_MEDIA)
                             .build()
-                        setDataSource(inf.file_path)
-                        prepare()
-                        start()
+                        setDataSource(FileInputStream(inf.file_path).fd)
+                        setOnErrorListener { mp, what, extra ->
+                            Snackbar.make(itemView, what, Snackbar.LENGTH_LONG).show()
+                            true
+                        }
+                        setOnPreparedListener {
+                            start()
+                        }
+                        prepareAsync()
                     }
                 } else {
                     Snackbar.make(itemView,

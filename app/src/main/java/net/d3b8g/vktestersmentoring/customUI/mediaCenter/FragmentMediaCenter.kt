@@ -11,12 +11,13 @@ import androidx.core.content.ContextCompat
 import kotlinx.coroutines.*
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.ui.dictaphone.DictaphoneFragment
+import net.d3b8g.vktestersmentoring.ui.dictaphone.DictaphoneFragment.Companion.recordingMicrophone
 
 class FragmentMediaCenter @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = 0,
-) : RelativeLayout(context, attrs, defStyle) {
+    defStyle: Int = 0
+) : RelativeLayout(context, attrs, defStyle){
 
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.Main + job)
@@ -38,7 +39,9 @@ class FragmentMediaCenter @JvmOverloads constructor(
         actionButton.setOnClickListener {
             recording_anim = !recording_anim
             if (recording_anim) {
-                scope.launch { (context as DictaphoneFragment).recordingMicrophone() }
+                scope.launch {
+                    context.recordingMicrophone()
+                }
                 startReproduceAudio()
             } else {
                 stopReproduceAudio()

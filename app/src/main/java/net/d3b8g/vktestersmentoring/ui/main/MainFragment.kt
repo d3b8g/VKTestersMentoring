@@ -57,7 +57,7 @@ class MainFragment : Fragment(R.layout.fragment_main), MainFragmentInterface {
         val inputImage = ResourcesCompat.getDrawable(resources, R.drawable.ic_search_24, resources.newTheme())!!.apply {
             setBounds(60,0,0,0)
         }
-        DrawableCompat.setTint(inputImage, ContextCompat.getColor(requireContext(), R.color.colorBlack))
+        DrawableCompat.setTint(inputImage, ContextCompat.getColor(requireContext(), R.color.hintTextColor))
 
         binding.searchInFragment.setCompoundDrawablesWithIntrinsicBounds(inputImage, null, null, null)
         binding.searchInFragment.compoundDrawablePadding = 18

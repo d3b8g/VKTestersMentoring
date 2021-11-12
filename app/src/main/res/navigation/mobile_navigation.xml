@@ -136,6 +136,7 @@
         android:label="Настройки"
         android:name="net.d3b8g.vktestersmentoring.ui.settings.SettingsFragment">
         <action
+            app:popUpTo="@id/nav_main"
             android:id="@+id/action_nav_settings_to_nav_login"
             app:destination="@id/nav_login" />
     </fragment>

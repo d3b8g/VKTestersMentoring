@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:padding="6dp"
     android:orientation="vertical"
+    android:background="@color/backgroundShapeColorTint"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,13 +11,6 @@
         app:nameHeader="Отчетность"
         android:layout_width="match_parent"
         android:layout_height="60dp"/>
-
-    <LinearLayout
-        android:background="@color/colorGray"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -30,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:text="Включить трекинг отчетов "
                 android:layout_width="0dp"
@@ -50,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:text="Использовать загруженную аватарку в профиле"
                 android:layout_width="0dp"
@@ -70,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:text="@string/hide_third_tab"
                 android:layout_width="0dp"

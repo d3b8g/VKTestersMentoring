@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="8dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
@@ -8,10 +9,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
-        android:layout_height="50dp"
-        android:layout_width="50dp"
+        android:background="@drawable/alert_shape"
+        android:backgroundTint="#7E136FF6"
+        android:src="@drawable/ic_view_list_24"
+        android:padding="14dp"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
         android:scaleType="fitCenter"
-        android:id="@+id/imageInGrid"/>
+        android:id="@+id/imageInGrid"
+        app:tint="#F4F8FF" />
 
     <TextView
         android:layout_height="wrap_content"
@@ -19,6 +25,6 @@
         android:textSize="14sp"
         android:layout_width="wrap_content"
         android:text="Aboba"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textColor"
         android:id="@+id/titleInGrid"/>
 </LinearLayout>

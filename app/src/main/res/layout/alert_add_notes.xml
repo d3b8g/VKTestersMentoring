@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_gravity="center"
+<ScrollView android:layout_gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_margin="10dp"
@@ -9,6 +8,7 @@
 
 <LinearLayout
     android:id="@+id/modal_view_add_notes"
+    android:backgroundTint="@color/backgroundShapeColorTint"
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:background="@drawable/btn_shape"
@@ -19,7 +19,7 @@
             android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="  Название заметки">
+            android:hint="Название заметки">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:maxLength="50"

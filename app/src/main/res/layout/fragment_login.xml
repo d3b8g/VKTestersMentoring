@@ -3,6 +3,7 @@
     android:id="@+id/rotated_layout"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/backgroundShapeColorTint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -37,6 +38,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:hintTextColor="@color/colorBlueLight"
                     android:hint="Введите Имя и Фамилию"
                     app:startIconDrawable="@drawable/ic_portret"
                     app:startIconContentDescription="Впишите в это поле ваши ФИ">

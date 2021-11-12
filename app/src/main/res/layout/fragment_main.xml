@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/backgroundShapeColorTint"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,16 +21,17 @@
 
         <EditText
             android:id="@+id/search_in_fragment"
-            android:hint="Поиск"
-            android:paddingStart="8dp"
             android:layout_width="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_toEndOf="@id/user_image_main"
-            android:layout_marginStart="16dp"
             android:layout_height="40dp"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/user_image_main"
             android:background="@drawable/snackbar_shape"
-            android:backgroundTint="@color/colorGray"
+            android:backgroundTint="#A62B2929"
+            android:hint="Поиск"
+            android:textColorHint="@color/hintTextColor"
+            android:paddingStart="8dp"
             android:singleLine="true" />
     </RelativeLayout>
 
@@ -45,7 +47,7 @@
         android:layout_margin="12dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textColor"
         android:gravity="center"
         android:text="27 октября, Среда"
         android:layout_width="match_parent"
@@ -55,7 +57,7 @@
         android:id="@+id/plug_text_empty_grid"
         android:visibility="gone"
         android:text="@string/plug_text_empty_grid"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/textColor"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
