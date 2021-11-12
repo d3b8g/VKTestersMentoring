@@ -12,14 +12,12 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
 import net.d3b8g.vktestersmentoring.databinding.FragmentProfileBinding
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
-import net.d3b8g.vktestersmentoring.helper.UITypes
 import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.getGallerySize
 import net.d3b8g.vktestersmentoring.ui.notes.Notes.getNotesAmount
 
@@ -76,6 +74,8 @@ class FragmentProfile : Fragment(R.layout.fragment_profile) {
                 findNavController().navigate(nav)
             }
         }
+
+        appLog(this, MainActivity.uid.toString())
     }
 
     private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {

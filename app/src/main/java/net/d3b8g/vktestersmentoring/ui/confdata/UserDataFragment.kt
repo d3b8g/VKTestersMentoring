@@ -14,26 +14,24 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
-import net.d3b8g.vktestersmentoring.databinding.FragmentUserdataBinding
+import net.d3b8g.vktestersmentoring.databinding.FragmentConfdataBinding
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 
 
-class UserDataFragment : Fragment(R.layout.fragment_userdata) {
+class UserDataFragment : Fragment(R.layout.fragment_confdata) {
 
-    private lateinit var binding: FragmentUserdataBinding
+    private lateinit var binding: FragmentConfdataBinding
 
     private val confBase by lazy { ConfDatabase.getInstance(requireContext()).confDatabaseDao }
     private val userDatabase by lazy { UserDatabase.getInstance(requireContext()).userDatabaseDao }
 
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
-        binding = FragmentUserdataBinding.bind(root)
+        binding = FragmentConfdataBinding.bind(root)
 
         with(binding) {
 

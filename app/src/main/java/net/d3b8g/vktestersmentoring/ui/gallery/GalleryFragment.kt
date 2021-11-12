@@ -2,9 +2,6 @@ package net.d3b8g.vktestersmentoring.ui.gallery
 
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListPopupWindow
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -13,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
 import net.d3b8g.vktestersmentoring.databinding.FragmentSlideshowBinding
 import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.getGallerySize
 

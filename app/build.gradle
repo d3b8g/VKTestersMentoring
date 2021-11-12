@@ -15,8 +15,8 @@ android {
         applicationId "net.d3b8g.vktestersmentoring"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 3
-        versionName "2.1"
+        versionCode 4
+        versionName "3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

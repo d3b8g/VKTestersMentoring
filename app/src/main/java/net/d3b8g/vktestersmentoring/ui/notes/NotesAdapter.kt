@@ -5,17 +5,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.edit
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.google.gson.JsonParser
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
 import net.d3b8g.vktestersmentoring.ui.notes.Notes.getNotesJson

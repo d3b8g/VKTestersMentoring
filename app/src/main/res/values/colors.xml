@@ -17,4 +17,6 @@
     <color name="backgroundShapeColorTint">@color/colorWhite</color>
     <color name="editTextBackground">@color/colorGray</color>
     <color name="backgroundImageTint">#808080</color>
+    <color name="backgroundWidgets">@color/colorGray</color>
+    <color name="buttonBackgroundTint">@color/colorWhite</color>
 </resources>

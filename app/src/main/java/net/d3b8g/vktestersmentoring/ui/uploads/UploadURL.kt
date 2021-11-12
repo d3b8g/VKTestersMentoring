@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -19,8 +18,6 @@ import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.databinding.FragmentUploadBinding
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
-import net.d3b8g.vktestersmentoring.helper.UITypes
-import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
 
 
 class UploadURL : Fragment(R.layout.fragment_upload) {

@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -56,6 +55,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
                     R.id.home -> navController.navigate(R.id.nav_main)
                     R.id.notes -> navController.navigate(R.id.nav_notes)
                 }
+            } else {
+                navBar.setItemSelected(R.id.profile, false)
+                navBar.setItemSelected(R.id.notes, false)
+                navBar.setItemSelected(R.id.home, true)
             }
         }
 

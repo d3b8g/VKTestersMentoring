@@ -13,6 +13,7 @@
 
     <Button
         android:id="@+id/mv_upload"
+        android:backgroundTint="@color/buttonBackgroundTint"
         android:layout_margin="15pt"
         android:background="@drawable/btn_shape"
         android:textColor="@color/colorBlueStandard"

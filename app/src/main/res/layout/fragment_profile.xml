@@ -33,7 +33,7 @@
         android:id="@+id/profile_statistics"
         android:layout_marginTop="12dp"
         android:background="@drawable/btn_sq_shape"
-        android:backgroundTint="@color/colorGray"
+        android:backgroundTint="@color/backgroundWidgets"
         android:padding="12dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
@@ -44,7 +44,6 @@
             android:text="Статистика"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <LinearLayout
@@ -73,7 +72,7 @@
         android:id="@+id/profile_confdata"
         android:layout_marginTop="12dp"
         android:background="@drawable/btn_sq_shape"
-        android:backgroundTint="@color/colorGray"
+        android:backgroundTint="@color/backgroundWidgets"
         android:padding="8dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"

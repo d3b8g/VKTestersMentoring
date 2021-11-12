@@ -28,11 +28,11 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/user_image_main"
             android:background="@drawable/snackbar_shape"
-            android:backgroundTint="#A62B2929"
+            android:backgroundTint="@color/editTextBackground"
             android:hint="Поиск"
-            android:textColorHint="@color/hintTextColor"
             android:paddingStart="8dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColorHint="@color/hintTextColor" />
     </RelativeLayout>
 
     <LinearLayout

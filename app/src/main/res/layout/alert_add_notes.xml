@@ -8,7 +8,7 @@
 
 <LinearLayout
     android:id="@+id/modal_view_add_notes"
-    android:backgroundTint="@color/backgroundShapeColorTint"
+    android:backgroundTint="@color/backgroundWidgets"
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:background="@drawable/btn_shape"
