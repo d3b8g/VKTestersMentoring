@@ -128,7 +128,7 @@
         android:label="Заметки"
         android:name="net.d3b8g.vktestersmentoring.ui.notes.NotesFragment"/>
     <fragment android:id="@+id/nav_conf"
-        tools:layout="@layout/fragment_userdata"
+        tools:layout="@layout/fragment_confdata"
         android:label="Инициализация"
         android:name="net.d3b8g.vktestersmentoring.ui.confdata.UserDataFragment"/>
     <fragment android:id="@+id/nav_settings"
@@ -136,6 +136,7 @@
         android:label="Настройки"
         android:name="net.d3b8g.vktestersmentoring.ui.settings.SettingsFragment">
         <action
+            app:popUpTo="@id/nav_main"
             android:id="@+id/action_nav_settings_to_nav_login"
             app:destination="@id/nav_login" />
     </fragment>

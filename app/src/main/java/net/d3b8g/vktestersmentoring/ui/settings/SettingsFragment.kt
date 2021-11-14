@@ -17,6 +17,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.d3b8g.vktestersmentoring.MainActivity
 import net.d3b8g.vktestersmentoring.R
 import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
@@ -56,23 +57,22 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         logout.setOnClickListener {
-//            MaterialAlertDialogBuilder(requireContext())
-//                .setTitle("Выти из аккаунта?")
-//                .setPositiveButton("Выйти") {_, _ ->
-//                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-//                        putInt("active_user_id", -1)
-//                    }
-//                    0.changeFragment()
-//                }
-//                .setNegativeButton("Отменить") {d, _ ->
-//                    d.dismiss()
-//                }
-//                .show()
-            val action = SettingsFragmentDirections.actionNavSettingsToNavLogin()
-            findNavController().navigate(action)
-            (requireActivity() as MainActivity).run {
-                updateUI(UITypes.HIDE_TABBAR)
-            }
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Выти из аккаунта?")
+                .setNegativeButton("Выйти") {_, _ ->
+                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
+                        putInt("active_user_id", -1)
+                    }
+                    val action = SettingsFragmentDirections.actionNavSettingsToNavLogin()
+                    findNavController().navigate(action)
+                    (requireActivity() as MainActivity).run {
+                        updateUI(UITypes.HIDE_TABBAR)
+                    }
+                }
+                .setPositiveButton("Отменить") {d, _ ->
+                    d.dismiss()
+                }
+                .show()
         }
 
         binding.hideTab.setOnClickListener {

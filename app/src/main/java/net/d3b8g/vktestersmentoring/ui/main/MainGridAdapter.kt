@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import net.d3b8g.vktestersmentoring.R
 
 
@@ -53,7 +52,7 @@ class MainGridAdapter(private var listOfFragments: ArrayList<HashMap<Any, String
 
         title.text = listOfFragments[position].values.first()
         image.setImageDrawable(picture)
-        image.setColorFilter(ContextCompat.getColor(ct, android.R.color.tab_indicator_text))
+        //image.setColorFilter(ContextCompat.getColor(ct, R.color.backgroundImageTint))
 //        image.setBackgroundResource(R.drawable.alert_shape)
 //        image.background.alpha = 75
 

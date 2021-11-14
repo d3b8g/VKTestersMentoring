@@ -30,7 +30,6 @@ import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
-import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
 import net.d3b8g.vktestersmentoring.helper.UITypes
 
 class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
@@ -58,12 +57,10 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
                     it.text!!.contains(' ') &&
                     it.text!!.any { text -> text.isLetter() } &&
                     !listBack.any { user -> user.username == it.text!!.toString() }) {
-                    var userId: Int
-                    PreferenceManager.getDefaultSharedPreferences(context).apply {
-                        userId = getInt("active_user_id", 0) + 1
-                    }
+                    val userId: Int = listBack.size + 1
                     PreferenceManager.getDefaultSharedPreferences(context).edit {
                         putInt("active_user_id", userId)
+                        MainActivity.uid = userId
                     }
                     lifecycleScope.launch {
                         withContext(Dispatchers.IO) {
@@ -75,7 +72,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
                             ))
                         }
                     }
-                    openUserUI(true)
+                    openUserUI()
                 } else if (listBack.any { user -> user.username == it.text!!.toString() }) {
                     Toast.makeText(requireContext(), "Такой юзер уже есть", Toast.LENGTH_SHORT).show()
                 } else {
@@ -110,35 +107,36 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
                 binding.login.setOnClickListener {
                     binding.loginPassword.let {
                         if (!it.text.isNullOrEmpty() && it.text.toString() == pass) {
-                            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                                putInt("active_user_id", id)
-                                MainActivity.uid = id
-                            }
-                            openUserUI(false)
+                            id.saveLoginData()
                         } else {
                             binding.tlInputPassword.error = getString(R.string.wrong_password)
                         }
                     }
                 }
             } else {
-                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                    putInt("active_user_id", id)
-                    MainActivity.uid = id
-                }
-                openUserUI(false)
+                id.saveLoginData()
             }
         }
+    }
+
+    private fun Int.saveLoginData() {
+        PreferenceManager
+            .getDefaultSharedPreferences(requireContext())
+            .edit()
+            .putInt("active_user_id", this)
+            .apply()
+
+        MainActivity.uid = this
+        openUserUI()
     }
 
     private suspend fun getConfData(id: Int): ConfData = withContext(Dispatchers.IO) {
         return@withContext confDatabase.getUserById(id)
     }
 
-    private fun openUserUI(byButton: Boolean) {
-        if (byButton) {
-            (requireActivity() as MainActivity).updateUI(UITypes.SHOW_TABBAR)
-            val nav = LoginFragmentDirections.actionNavLoginToNavMain()
-            findNavController().navigate(nav)
-        } else (requireActivity() as MainActivity).updateUI(UITypes.NEW_USER)
+    private fun openUserUI() {
+        (requireActivity() as MainActivity).updateUI(UITypes.LOGIN_USER)
+        val nav = LoginFragmentDirections.actionNavLoginToNavMain()
+        findNavController().navigate(nav)
     }
 }

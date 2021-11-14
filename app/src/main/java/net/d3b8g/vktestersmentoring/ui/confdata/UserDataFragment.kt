@@ -16,64 +16,66 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.d3b8g.vktestersmentoring.MainActivity.Companion.uid
 import net.d3b8g.vktestersmentoring.R
-import net.d3b8g.vktestersmentoring.customUI.fragmentHeader.FragmentHeader
-import net.d3b8g.vktestersmentoring.databinding.FragmentUserdataBinding
+import net.d3b8g.vktestersmentoring.databinding.FragmentConfdataBinding
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfData
 import net.d3b8g.vktestersmentoring.db.ConfData.ConfDatabase
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
 
 
-class UserDataFragment : Fragment(R.layout.fragment_userdata) {
+class UserDataFragment : Fragment(R.layout.fragment_confdata) {
 
-    private lateinit var binding: FragmentUserdataBinding
+    private lateinit var binding: FragmentConfdataBinding
 
     private val confBase by lazy { ConfDatabase.getInstance(requireContext()).confDatabaseDao }
     private val userDatabase by lazy { UserDatabase.getInstance(requireContext()).userDatabaseDao }
-    private val fragmentHeader: FragmentHeader by lazy {
-        binding.bugsHeader
-    }
 
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
-        binding = FragmentUserdataBinding.bind(root)
+        binding = FragmentConfdataBinding.bind(root)
 
-        lifecycleScope.launch {
-            getConfData(uid).apply {
-                if (this.ident != "null@vktm") {
-                    binding.confUident.text = this.ident
-                    binding.confIdentTl.visibility = View.GONE
-                    binding.confPasswordTl.visibility = View.GONE
-                    binding.confSave.isClickable = false
+        with(binding) {
+
+            lifecycleScope.launch {
+                getConfData().let { confData ->
+                    withContext(Dispatchers.Main) {
+                        if (confData.ident != "null@vktm") {
+                            confUident.text = "Ваш идентификатор: ${confData.ident}"
+                            confIdentTl.visibility = View.GONE
+                            confPasswordTl.visibility = View.GONE
+                            confSave.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+
+            confSave.setOnClickListener {
+                if (confPassword.text.toString().length in 2..4) {
+                    if (confIdent.text.toString().length in 2..9 && confIdent.text.toString().matches("^\\d+\$".toRegex())) {
+                        saveUserConf(root.context)
+                    }
+                    else confIdentTl.error = "Формат записи: Int и больше 2 цифр"
+                }
+                else confPasswordTl.error = "Допустимо от 2 до 4 символов"
+            }
+
+            bugsHeader.apply {
+                setTitleText("Инициализация")
+                setRightButtonIcon(
+                    ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
+                ){
+                    findNavController().popBackStack()
                 }
             }
         }
 
-        binding.confSave.setOnClickListener {
-            if (binding.confPassword.text.toString().length in 2..4) {
-                if (binding.confIdent.text.toString().length > 2 && binding.confIdent.text.toString().matches("^\\d+\$".toRegex())) {
-                    saveUserConf(root.context)
-                }
-                else binding.confIdentTl.error = "Формат записи: Int и больше 2 цифр"
-            }
-            else binding.confPasswordTl.error = "Допустимо от 2 до 4 символов"
-        }
-
-        fragmentHeader.apply {
-            setTitleText("Инициализация")
-            setRightButtonIcon(
-                ResourcesCompat.getDrawable(resources ,R.drawable.ic_close, resources.newTheme())!!
-            ){
-                findNavController().popBackStack()
-            }
-        }
     }
 
     private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
-        return@withContext userDatabase.getUserById(1)
+        return@withContext userDatabase.getUserById(uid)
     }
 
-    private suspend fun getConfData(id: Int): ConfData = withContext(Dispatchers.IO) {
-        return@withContext confBase.getUserById(id)
+    private suspend fun getConfData(): ConfData = withContext(Dispatchers.IO) {
+        return@withContext confBase.getUserById(uid)
     }
 
     private fun genPass(user: UserData): String {
@@ -141,7 +143,7 @@ class UserDataFragment : Fragment(R.layout.fragment_userdata) {
             val clip = ClipData.newPlainText("Password Of VKTM", passwordGen)
             clipboard.setPrimaryClip(clip)
 
-            Toast.makeText(ct, "Пароль скопирован в буффер", Toast.LENGTH_SHORT).show()
+            Toast.makeText(ct, "Пароль скопирован в буфер", Toast.LENGTH_SHORT).show()
 
         }
     }

@@ -12,6 +12,7 @@ Use this code only for non commercial purpose.
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
@@ -37,16 +38,11 @@ import net.d3b8g.vktestersmentoring.ui.gallery.Gallery.audioPath
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DictaphoneFragment : Fragment(R.layout.fragment_dicto), DictaphoneInterface {
+class DictaphoneFragment : Fragment(R.layout.fragment_dicto) {
 
     private lateinit var binding: FragmentDictoBinding
     private val fragmentHeader: FragmentHeader by lazy {
         binding.bugsHeader
-    }
-
-    companion object {
-        var microphoneState: Boolean = false
-        var mMicro: MediaRecorder? = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -103,28 +99,10 @@ class DictaphoneFragment : Fragment(R.layout.fragment_dicto), DictaphoneInterfac
     }
 
     private fun startRecordingMicrophone() {
-        lifecycleScope.launch { recordingMicrophone() }
+        lifecycleScope.launch { requireContext().recordingMicrophone() }
         binding.btnRecording.background = ContextCompat.getDrawable(requireContext(), R.drawable.ic_stop)
-        (context as UpdateMainUI).launchMediaCenter()
+        (requireContext() as UpdateMainUI).launchMediaCenter()
         microphoneState = true
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    override suspend fun recordingMicrophone() = withContext(Dispatchers.IO) {
-        try {
-            mMicro = MediaRecorder()
-            mMicro?.let {
-                it.setAudioSource(MediaRecorder.AudioSource.MIC)
-                it.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-                it.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-                it.setOutputFile(requireContext().audioPath(SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Date())))
-                it.prepare()
-                it.start()
-            }
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), e.stackTrace.toString() + e.message, Toast.LENGTH_LONG).show()
-        }
-
     }
 
     private fun getRightsArray(): Array<String> {
@@ -143,5 +121,28 @@ class DictaphoneFragment : Fragment(R.layout.fragment_dicto), DictaphoneInterfac
                 )
             }
         }
+    }
+
+    companion object {
+
+        @SuppressLint("SimpleDateFormat")
+        suspend fun Context.recordingMicrophone() = withContext(Dispatchers.IO) {
+            try {
+                mMicro = MediaRecorder()
+                mMicro?.let {
+                    it.setAudioSource(MediaRecorder.AudioSource.MIC)
+                    it.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                    it.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                    it.setOutputFile(audioPath(SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Date())))
+                    it.prepare()
+                    it.start()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@recordingMicrophone, e.stackTrace.toString() + e.message, Toast.LENGTH_LONG).show()
+            }
+        }
+
+        var microphoneState: Boolean = false
+        var mMicro: MediaRecorder? = null
     }
 }

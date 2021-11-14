@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/backgroundShapeColorTint"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
         android:paddingStart="80dp"
+        android:backgroundTint="@color/buttonBackgroundTint"
         android:layout_centerInParent="true"
         android:paddingEnd="80dp"
         android:drawableStart="@drawable/ic_baseline_add_24"
@@ -23,26 +27,27 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_notes"
-        android:layout_below="@+id/add_notes"
-        android:layout_above="@id/import_notes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/import_notes"
+        android:layout_below="@+id/add_notes" />
 
     <Button
-        android:layout_centerInParent="true"
-        android:paddingStart="48dp"
-        android:paddingEnd="50dp"
-        android:drawableStart="@drawable/ic_note_add"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorBlueStandard"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:background="@drawable/btn_sq_shape"
-        android:textAllCaps="false"
-        android:text="Импортировать заметку"
         android:id="@+id/import_notes"
-        android:layout_marginBottom="60dp"
         android:layout_width="320dp"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/btn_sq_shape"
+        android:backgroundTint="@color/buttonBackgroundTint"
+        android:drawableStart="@drawable/ic_note_add"
+        android:gravity="center"
+        android:paddingEnd="50dp"
+        android:paddingStart="48dp"
+        android:text="Импортировать заметку"
+        android:textAllCaps="false"
+        android:textColor="@color/colorBlueStandard"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 </RelativeLayout>

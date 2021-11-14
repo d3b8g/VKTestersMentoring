@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/backgroundShapeColorTint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -37,7 +38,7 @@
             app:startIconContentDescription="Login">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:maxLength="60"
+                android:maxLength="9"
                 android:focusableInTouchMode="true"
                 android:singleLine="true"
                 android:background="@null"
@@ -58,7 +59,7 @@
             app:startIconContentDescription="Login">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:maxLength="60"
+                android:maxLength="7"
                 android:focusableInTouchMode="true"
                 android:singleLine="true"
                 android:background="@null"
@@ -71,6 +72,7 @@
         <Button
             android:layout_gravity="center"
             android:background="@drawable/btn_sq_shape"
+            android:backgroundTint="@color/buttonBackgroundTint"
             android:id="@+id/conf_save"
             android:textColor="@color/colorBlueStandard"
             android:layout_marginTop="16dp"

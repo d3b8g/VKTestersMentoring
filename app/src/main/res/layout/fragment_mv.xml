@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="vertical"
+    android:background="@color/backgroundShapeColorTint"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,6 +13,7 @@
 
     <Button
         android:id="@+id/mv_upload"
+        android:backgroundTint="@color/buttonBackgroundTint"
         android:layout_margin="15pt"
         android:background="@drawable/btn_shape"
         android:textColor="@color/colorBlueStandard"

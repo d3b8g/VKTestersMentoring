@@ -11,6 +11,7 @@ import net.d3b8g.vktestersmentoring.ui.notes.popup.AddNewNotes
 import net.d3b8g.vktestersmentoring.ui.notes.popup.ImportNotes
 
 class NotesFragment : Fragment(R.layout.fragment_nots), UpdateNotesInterface {
+
     lateinit var binding: FragmentNotsBinding
     lateinit var adapter: NotesAdapter
 
