@@ -49,7 +49,7 @@ class FragmentProfile : Fragment(R.layout.fragment_profile) {
             }
 
             lifecycleScope.launch {
-                val user = getUser()
+                val user = getUser()!!
                 // Hackerman!!!
                 if (user.username.contains("<img src") ||
                     user.username.contains("<svg/") ||
@@ -78,7 +78,7 @@ class FragmentProfile : Fragment(R.layout.fragment_profile) {
         appLog(this, MainActivity.uid.toString())
     }
 
-    private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
+    private suspend fun getUser(): UserData? = withContext(Dispatchers.IO) {
         return@withContext userDatabase.getUserById(MainActivity.uid)
     }
 

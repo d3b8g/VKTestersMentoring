@@ -86,13 +86,13 @@ class BugsFragment : Fragment(R.layout.fragment_bugs) {
         this.filter { it.isDigit() } != "" && this.take(1) != "0"
 
 
-    private fun getPercent() = ((100 * PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_now", 0)) /
-            PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_wanna", 1)).toString() + "%"
+    private fun getPercent() = ((100 * PreferenceManager.getDefaultSharedPreferences(requireContext()).getInt("report_count_now", 0)) /
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).getInt("report_count_wanna", 1)).toString() + "%"
 
     @SuppressLint("SetTextI18n")
     private fun setupTextValue() {
-        binding.nowIHave.text = "Сейчас у меня: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_now",0)} отчетов"
-        binding.iWillHave.text = "Желаю зарепортить: ${PreferenceManager.getDefaultSharedPreferences(activity).getInt("report_count_wanna",1)}"
+        binding.nowIHave.text = "Сейчас у меня: ${PreferenceManager.getDefaultSharedPreferences(requireContext()).getInt("report_count_now",0)} отчетов"
+        binding.iWillHave.text = "Желаю зарепортить: ${PreferenceManager.getDefaultSharedPreferences(requireContext()).getInt("report_count_wanna",1)}"
         binding.motivationText.text = if(getPercent().dropLast(1).toInt() < 101) {
             getText(R.string.bad_scope)
         } else {

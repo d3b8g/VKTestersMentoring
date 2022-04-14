@@ -58,7 +58,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginInterface {
                     it.text!!.any { text -> text.isLetter() } &&
                     !listBack.any { user -> user.username == it.text!!.toString() }) {
                     val userId: Int = listBack.size + 1
-                    PreferenceManager.getDefaultSharedPreferences(context).edit {
+                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
                         putInt("active_user_id", userId)
                         MainActivity.uid = userId
                     }

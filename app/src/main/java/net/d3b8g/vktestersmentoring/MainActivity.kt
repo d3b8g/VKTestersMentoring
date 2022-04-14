@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,7 +26,9 @@ import kotlinx.coroutines.*
 import net.d3b8g.vktestersmentoring.customUI.mediaCenter.FragmentMediaCenter
 import net.d3b8g.vktestersmentoring.db.UserData.UserData
 import net.d3b8g.vktestersmentoring.db.UserData.UserDatabase
+import net.d3b8g.vktestersmentoring.helper.ToolsShit.appLog
 import net.d3b8g.vktestersmentoring.helper.UITypes
+import net.d3b8g.vktestersmentoring.helper.UITypes.*
 import net.d3b8g.vktestersmentoring.interfaces.UpdateMainUI
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
@@ -48,17 +51,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
         navBar.setItemSelected(R.id.home, true)
 
         navBar.setOnItemSelectedListener {
-            val history = navController.currentDestination?.id ?: false
-            if (history != R.id.nav_splash) {
-                when (it) {
-                    R.id.profile -> navController.navigate(R.id.nav_profile)
-                    R.id.home -> navController.navigate(R.id.nav_main)
-                    R.id.notes -> navController.navigate(R.id.nav_notes)
-                }
-            } else {
-                navBar.setItemSelected(R.id.profile, false)
-                navBar.setItemSelected(R.id.notes, false)
-                navBar.setItemSelected(R.id.home, true)
+            when (it) {
+                R.id.profile -> navController.navigate(R.id.nav_profile)
+                R.id.home -> navController.navigate(R.id.nav_main)
+                R.id.notes -> navController.navigate(R.id.nav_notes)
             }
         }
 
@@ -67,18 +63,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
             else uid = getInt("active_user_id", -1)
         }
 
-        updateVisitsCounter()
+        lifecycleScope.launch(Dispatchers.IO) {
+            getUser()?.let { user ->
+                updateVisitsCounter(user.counter + 1)
+            }
+        }
     }
 
     override fun updateUI(type: UITypes) {
         when(type) {
-            UITypes.SHOW_TABBAR -> navBar.visibility = View.VISIBLE
-            UITypes.HIDE_TABBAR -> navBar.visibility = View.GONE
-            UITypes.LOGIN_USER -> {
-                navBar.visibility = View.VISIBLE
-                updateVisitsCounter()
-            }
-            UITypes.AVATAR -> {}
+            SHOW_TABBAR -> navBar.visibility = View.VISIBLE
+            HIDE_TABBAR -> navBar.visibility = View.GONE
+            AVATAR -> {}
+            LOGIN_USER -> {}
         }
     }
 
@@ -90,16 +87,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), UpdateMainUI {
         }
     }
 
-    private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
+    private suspend fun getUser(): UserData? = withContext(Dispatchers.IO) {
         return@withContext userDatabase.getUserById(uid)
     }
 
-    private fun updateVisitsCounter() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            getUser()?.let {
-                userDatabase.updateVisitsCounter(it.counter + 1)
-            }
-        }
+    private suspend fun updateVisitsCounter(visits: Int) = withContext(Dispatchers.IO) {
+        userDatabase.updateVisitsCounter(visits)
+    }
+
+    override fun onDestroy() {
+        lifecycleScope.launch { updateVisitsCounter(getUser()?.counter ?: 0 + 1) }
+        super.onDestroy()
     }
 
     override fun onSupportNavigateUp(): Boolean {

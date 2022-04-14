@@ -70,7 +70,7 @@ class UserDataFragment : Fragment(R.layout.fragment_confdata) {
 
     }
 
-    private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
+    private suspend fun getUser(): UserData? = withContext(Dispatchers.IO) {
         return@withContext userDatabase.getUserById(uid)
     }
 
@@ -125,7 +125,7 @@ class UserDataFragment : Fragment(R.layout.fragment_confdata) {
 
     private fun saveUserConf(ct: Context) {
         lifecycleScope.launch {
-            val passwordGen = genPass(getUser())
+            val passwordGen = genPass(getUser()!!)
             withContext(Dispatchers.IO) {
                 confBase.update(ConfData(
                     id = uid,

@@ -24,7 +24,7 @@ interface UserDatabaseDao {
     fun updateUserAvatar(avatar: String)
 
     @Query("SELECT * FROM userbase WHERE id == :id")
-    fun getUserById(id: Int): UserData
+    fun getUserById(id: Int): UserData?
 
     @Query("SELECT * FROM userbase")
     fun getAllData(): List<UserData>

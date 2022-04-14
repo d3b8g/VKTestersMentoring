@@ -73,8 +73,9 @@ class MainFragment : Fragment(R.layout.fragment_main), MainFragmentInterface {
         }
 
         lifecycleScope.launch {
-            val user = getUser()
-            setupAvatar(user.avatar)
+            getUser()?.let {
+                setupAvatar(it.avatar)
+            }
         }
 
         MainActivity.mainState?.let {
@@ -102,7 +103,7 @@ class MainFragment : Fragment(R.layout.fragment_main), MainFragmentInterface {
             add(hashMapOf(R.drawable.ic_conf to "Инициализация"))
     }
 
-    private suspend fun getUser(): UserData = withContext(Dispatchers.IO) {
+    private suspend fun getUser(): UserData? = withContext(Dispatchers.IO) {
         return@withContext userDatabase.getUserById(1)
     }
 
